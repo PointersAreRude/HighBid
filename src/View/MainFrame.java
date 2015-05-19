@@ -8,10 +8,21 @@ public class MainFrame extends JFrame{
 	 * generated serial
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	/**
+	 * window's width
+	 */
+	protected static final int WIDTH = 1200;
+	
+	/**
+	 * window's height
+	 */
+	protected static final int HEIGHT = 800;
 
 	public MainFrame() {
 		setTitle("HighBid");
-		setSize(1200,800);
+		setSize(WIDTH,HEIGHT);
+		setResizable(false);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		addComponents();
@@ -21,7 +32,7 @@ public class MainFrame extends JFrame{
 	 * Adding components like JPanel here.
 	 */
 	private void addComponents() {
-		
+		this.add(new StartScreen());
 		
 	}
 	

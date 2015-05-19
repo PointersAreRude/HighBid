@@ -8,8 +8,7 @@ public class HighBidMain {
 		EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-				final MainFrame gui = new MainFrame();  
-                gui.setVisible(true);
+            	new MainFrame().setVisible(true);  
             }
         });
 	}
