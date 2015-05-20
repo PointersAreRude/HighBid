@@ -1,11 +1,19 @@
 package View;
 
+import java.awt.CardLayout;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
-public class MainFrame extends JFrame{
+/**
+ * Main frame
+ * 
+ * @author Long Nguyen
+ * @version 5/19/2015
+ */
+public class MainFrame extends JFrame {
 	
 	/**
-	 * generated serial
+	 * default serial
 	 */
 	private static final long serialVersionUID = 1L;
 	
@@ -18,6 +26,16 @@ public class MainFrame extends JFrame{
 	 * window's height
 	 */
 	protected static final int HEIGHT = 800;
+	
+	/**
+	 * panel container
+	 */
+	protected static final JPanel CONTAINER = new JPanel();
+	
+	/**
+	 * card layout
+	 */
+	protected static final CardLayout CLAYOUT = new CardLayout();
 
 	public MainFrame() {
 		setTitle("HighBid");
@@ -25,16 +43,25 @@ public class MainFrame extends JFrame{
 		setResizable(false);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		addComponents();
+        setCardLayout();
 	}
 	
 	/**
-	 * Adding components like JPanel here.
+	 * Adding components like JPanel 
+	 * here to the main container
+	 * that is using CardLayout.
 	 */
-	private void addComponents() {
-		this.add(new StartScreen());
+	private void setCardLayout() {
+		// Instantiate new instance for each panel
+		final StartScreen start = new StartScreen();
+		final CreatePanel create = new CreatePanel();
 		
+		// Setting up CardLayout
+		CONTAINER.setLayout(CLAYOUT);
+		CONTAINER.add(start, "StartScreen");
+		CONTAINER.add(create,"CreatePanel");
+		CLAYOUT.show(CONTAINER, "StartScreen");
+		this.add(CONTAINER);
 	}
-	
-	
+
 }
