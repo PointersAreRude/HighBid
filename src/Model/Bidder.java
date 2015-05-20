@@ -7,7 +7,7 @@ public class Bidder {
 	
 	private int _id; //added after constructed
 	private String _nickName;
-//	private Map<Item, int>_itemsBidOn;
+//	private Map<Item, Integer>_itemsBidOn;
 	private List<Item> _itemsWon;
 	
 		
