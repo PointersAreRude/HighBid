@@ -11,15 +11,21 @@ import java.util.TreeSet;
  * Bidder class
  * 
  * @author Robert Nichols
- * @version 5/20/2015
+ * @version 5/21/2015
  */
 
 public class Bidder extends Person{
-
 	
-	private int _id; //added after constructed
+	/** The Bidder's unique ID number.	 */
+	private int _id;
+	
+	/** The Bidder's nickname. Possible use for name tags. */
 	private String _nickName;
+	
+	/**	A set of the Items this Bidder has bid on. */
 	private Set<Item>_itemsBidOn = new TreeSet<Item>();
+	
+	/**	A set of the Items the Bidder has won. */
 	private Set<Item> _itemsWon = new TreeSet<Item>();
 	
 	/**
@@ -29,8 +35,8 @@ public class Bidder extends Person{
 	 * @param theNickName		- the nickname of the Bidder
 	 */
 	public Bidder (String theFirstName, String theLastName, String theEmail, String theAddress
-			, String theNickname){
-		super(theFirstName, theLastName, theEmail, theAddress);
+			, String theNickname, String thePhone){
+		super(theFirstName, theLastName, theEmail, theAddress, thePhone);
 		_nickName = theNickname;
 	}
 	
@@ -89,7 +95,6 @@ public class Bidder extends Person{
 	 * @param theItem The Item won.
 	 */
 	public void addItemWon(Item theItem){
-		//create safe copy?
 		_itemsWon.add(theItem);
 	}
 	
