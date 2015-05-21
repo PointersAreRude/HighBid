@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -97,7 +98,11 @@ public class CreatePanel extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		JButton src = (JButton) e.getSource();
 		if (src == _backBtn) {
-			MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "StartScreen");
+			int choice = JOptionPane.showConfirmDialog(null, "Your information in this form "
+					+ "will not be saved.  Continue back?", "Warning", JOptionPane.OK_CANCEL_OPTION);
+			if (choice == JOptionPane.OK_OPTION) {
+				MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "StartScreen");
+			}
 		} else {
 			// TODO: add functionality for Save & continue button
 		}

@@ -3,6 +3,8 @@ package Model;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * Bidder class
@@ -11,13 +13,13 @@ import java.util.List;
  * @version 5/20/2015
  */
 
-public class Bidder {
+public class Bidder extends Person{
 
 	
 	private int _id; //added after constructed
 	private String _nickName;
-//	private Set<Item>_itemsBidOn = new TreeSet<Item>();;
-	private List<Item> _itemsWon = new ArrayList<Item>();;
+	private Set<Item>_itemsBidOn = new TreeSet<Item>();
+	private Set<Item> _itemsWon = new TreeSet<Item>();
 	
 	/**
 	 * Default Bidder constructor. id is added later as Registration takes place before id assignment.	
@@ -25,9 +27,10 @@ public class Bidder {
 	 * @param theName 			- the name of the Bidder
 	 * @param theNickName		- the nickname of the Bidder
 	 */
-	public Bidder (String theName /*,contact info*/, String theNickName){
-//		super(/*theName, contact info*/);
-		_nickName = theName;
+	public Bidder (String theFirstName, String theLastName, String theEmail, String theAddress
+			, String theNickname){
+		super(theFirstName, theLastName, theEmail, theAddress);
+		_nickName = theNickname;
 	}
 	
 	/**
@@ -73,21 +76,10 @@ public class Bidder {
 	 * @param theItem The Item bid on.
 	 */
 	public void placeBid(Item theItem){
-		addItemBid(theItem); // maybe just add straight to the map?
+		_itemsBidOn.add(theItem);
+		theItem.addBidder(this);
 		//Test in conjunction with Item class. Place bids on Items and test both the Item and _itemsBidOn.
 		//SOMETHING
-	}
-	
-	/**
-	 * Buys out the specified Item.
-	 * 
-	 * @param theItem The Item to buy out.
-	 */
-	public void buyOut(Item theItem){
-		//Test in conjunction with Item class and _itemsWon. Bids should not be able to be placed on
-		//the bought out Item.
-		//SOMETHING
-		addItemWon(theItem); //
 	}
 	
 	/**
@@ -99,9 +91,5 @@ public class Bidder {
 		//create safe copy?
 		_itemsWon.add(theItem);
 	}
-	
-	private void addItemBid(Item theItem){
-		//SOMETHING	
-		//_itemsBidOn.add(theItem);
-	}	
+		
 }
