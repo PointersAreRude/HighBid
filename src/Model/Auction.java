@@ -1,6 +1,7 @@
 package Model;
 
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -196,8 +197,9 @@ public class Auction {
 	 * Creates a new file for this Auction, placing all it's info into a csv file titled with  
 	 * the facilitator's name and the date of the Auction; 
 	 * currently the file is saved in a folder under this project called "tempOutput".
+	 * @throws IOException 
 	 */
-	public void exportFile() {
+	public void exportFile() throws IOException {
 		PrintWriter writeFile = new PrintWriter(new FileWriter(myFileName, true));
 		writeFile.println("#,Auction Info");
 		writeFile.println("+," + myFacilitator + "," + myDate + "," + myStartTime + "," + myEndTime);
@@ -205,9 +207,12 @@ public class Auction {
 		//write out all items.
 		writeFile.println("#,Items");
 		for (Item item : myItems) {
-			writeFile.print("+," + item.getName() + "," + item.getDescription() + "," + item.getMinIncrement()
+			
+			writeFile.println("+," + item.toString());
+			
+			/*writeFile.print("+," + item.getName() + "," + item.getDescription() + "," + item.getMinIncrement()
 					+ "," + item.getStartingPrice() + "," + item.getDonor().getName() + "," + item.getQr()
-					/*+ "," + item.getImage()*/);
+					+ "," + item.getImage());
 			
 			//this needs to change to Map<Bidder, Integer>
 			Map<Item, Integer> itemMap = item.getBids();
@@ -216,27 +221,35 @@ public class Auction {
 				Map.Entry<Item, Integer> entry = (Entry<Item, Integer>) itr.next();
 				//change "getQr()" to "getid()" when it changes to Bidder instead of Item
 				writeFile.print("," + entry.getKey()  + ":" + entry.getKey().getQr() + "," + entry.getValue());
-			}
+			}*/
 			writeFile.println();
 		}
 		
 		//write out Donors
 		writeFile.println("#,Donors");
 		for (Donor donor : myDonors) {
-			writeFile.print("+," + donor.getName() + "," + donor.getPhone() + "," + donor.getEmail()
-					+ "," + donor.getAddress() /*+ ",* + donor.getImage()*/);
+			
+			writeFile.println("+," + donor.toString());
+			
+			/*writeFile.print("+," + donor.getName() + "," + donor.getPhone() + "," + donor.getEmail()
+					+ "," + donor.getAddress() + "," + donor.getImage());
 			
 			ArrayList<Item> itemsDonated = donor.getItems();
 			for (Item item : itemsDonated) {
 				writeFile.print("," + item.getName() + ":" + item.getQr());
-			}
+			}*/
 			writeFile.println();
 		}
 		
 		//write out Bidders
+		
+		
 		writeFile.println("#,Bidders");
 		for (Bidder bidder : myBidders) {
-			writeFile.println("+," + bidder.getName() + "," + bidder.getNickName() + "," + bidder.getid()
+			
+			writeFile.println("+," + bidder.toString());
+			
+			/*writeFile.println("+," + bidder.getName() + "," + bidder.getNickName() + "," + bidder.getid()
 					+ "," + bidder.getPhone() + "," + bidder.getEmail() + "," + bidder.getAddress());
 			
 			writeFile.print("-,");
@@ -252,7 +265,7 @@ public class Auction {
 			while (itr.hasNext()) {
 				Map.Entry<Item, Integer> entry = (Entry<Item, Integer>) itr.next();
 				writeFile.print("," + entry.getKey() + ":" + entry.getKey().getQr() + "," + entry.getValue());
-			}
+			}*/
 			writeFile.println();
 		}
 		
