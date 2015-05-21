@@ -38,6 +38,14 @@ public class CreatePanel extends JPanel implements ActionListener {
 	 */
 	private JButton _backBtn;
 	
+	/**
+	 * continue button
+	 */
+	private JButton _continueBtn;
+	
+	/**
+	 * Form panel (using GridBagLayout)
+	 */
 	private JPanel _gbag;
 	
 	public CreatePanel() {
@@ -59,30 +67,75 @@ public class CreatePanel extends JPanel implements ActionListener {
 		
 		// Set back button
 		_backBtn = new JButton("Back");
-		_backBtn.setBounds((int)(20), MainFrame.HEIGHT - 100, 150, 60);
+		_backBtn.setBounds(20, MainFrame.HEIGHT - 100, 175, 60);
 		_backBtn.setFont(new Font("Tahoma", 0, 36));
 		_backBtn.addActionListener(this);
 		
+		// Set back button
+		_continueBtn = new JButton("Continue");
+		_continueBtn.setBounds(MainFrame.WIDTH - 200, MainFrame.HEIGHT - 100, 175, 60);
+		_continueBtn.setFont(new Font("Tahoma", 0, 36));
+		_continueBtn.addActionListener(this);
+		
 		// TODO: add JLabel and JTextField for the form.
+		creatingForm();
+		
+	}
+
+	private void creatingForm() {
 		_gbag = new JPanel(new GridBagLayout());
 		_gbag.setBorder(BorderFactory.createTitledBorder("Auction's Details"));
 		_gbag.setBounds(300, 120, 580, 500);
 		GridBagConstraints gc = new GridBagConstraints();
 		gc.gridx = 0;
 		gc.gridy = 0;
+		gc.anchor = GridBagConstraints.LINE_END;
 		
 		JLabel facilitatorLabel = new JLabel("Facilitator name: ");
 		facilitatorLabel.setFont(new Font("Tahoma", 0, 30));
 		_gbag.add(facilitatorLabel, gc);
 		
-		gc.gridx++;
+		gc.gridy++;
+		JLabel startTimeLabel = new JLabel("Start time: ");
+		startTimeLabel.setFont(new Font("Tahoma", 0, 30));
+		_gbag.add(startTimeLabel, gc);
+		
+		gc.gridy++;
+		JLabel endTimeLabel = new JLabel("End time: ");
+		endTimeLabel.setFont(new Font("Tahoma", 0, 30));
+		_gbag.add(endTimeLabel, gc);
+		
+		gc.gridy++;
+		JLabel dateLabel = new JLabel("Date: ");
+		dateLabel.setFont(new Font("Tahoma", 0, 30));
+		_gbag.add(dateLabel, gc);
+		
+		gc.weighty = 1;
+				
+		gc.gridy = 0;
+		gc.gridx = 1;
 		JTextField facilitatorTF = new JTextField(20);
 		facilitatorTF.setPreferredSize(new Dimension(0,30));
 		facilitatorTF.setFont(new Font("Tahoma", 0, 15));
 		_gbag.add(facilitatorTF, gc);
 		
 		gc.gridy++;
-		gc.gridx=0;
+		JTextField startTimeTF = new JTextField(20);
+		startTimeTF.setPreferredSize(new Dimension(0,30));
+		startTimeTF.setFont(new Font("Tahoma", 0, 15));
+		_gbag.add(startTimeTF, gc);
+		
+		gc.gridy++;
+		JTextField endTimeTF = new JTextField(20);
+		endTimeTF.setPreferredSize(new Dimension(0,30));
+		endTimeTF.setFont(new Font("Tahoma", 0, 15));
+		_gbag.add(endTimeTF, gc);
+		
+		gc.gridy++;
+		JTextField dateTF = new JTextField(20);
+		dateTF.setPreferredSize(new Dimension(0,30));
+		dateTF.setFont(new Font("Tahoma", 0, 15));
+		_gbag.add(dateTF, gc);
 		
 	}
 
@@ -93,6 +146,7 @@ public class CreatePanel extends JPanel implements ActionListener {
 		this.add(_label);
 		this.add(_backBtn);
 		this.add(_gbag);
+		this.add(_continueBtn);
 	}
 
 	public void actionPerformed(ActionEvent e) {
