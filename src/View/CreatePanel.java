@@ -1,13 +1,18 @@
 package View;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 /**
  * A form panel for creating auction
@@ -31,6 +36,8 @@ public class CreatePanel extends JPanel implements ActionListener {
 	 * back button
 	 */
 	private JButton _backBtn;
+	
+	private JPanel _gbag;
 	
 	public CreatePanel() {
 		setSize(MainFrame.WIDTH, MainFrame.HEIGHT);
@@ -56,6 +63,26 @@ public class CreatePanel extends JPanel implements ActionListener {
 		_backBtn.addActionListener(this);
 		
 		// TODO: add JLabel and JTextField for the form.
+		_gbag = new JPanel(new GridBagLayout());
+		_gbag.setBorder(BorderFactory.createTitledBorder("Auction's Details"));
+		_gbag.setBounds(300, 120, 580, 500);
+		GridBagConstraints gc = new GridBagConstraints();
+		gc.gridx = 0;
+		gc.gridy = 0;
+		
+		JLabel facilitatorLabel = new JLabel("Facilitator name: ");
+		facilitatorLabel.setFont(new Font("Tahoma", 0, 30));
+		_gbag.add(facilitatorLabel, gc);
+		
+		gc.gridx++;
+		JTextField facilitatorTF = new JTextField(20);
+		facilitatorTF.setPreferredSize(new Dimension(0,30));
+		facilitatorTF.setFont(new Font("Tahoma", 0, 15));
+		_gbag.add(facilitatorTF, gc);
+		
+		gc.gridy++;
+		gc.gridx=0;
+		
 	}
 
 	/**
@@ -64,6 +91,7 @@ public class CreatePanel extends JPanel implements ActionListener {
 	private void addComponents() {
 		this.add(_label);
 		this.add(_backBtn);
+		this.add(_gbag);
 	}
 
 	public void actionPerformed(ActionEvent e) {

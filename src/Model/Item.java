@@ -24,10 +24,6 @@ public class Item {
 	private ImageIcon _image;
 	private List<Bidder> _bidderList = new ArrayList<Bidder>();
 	
-	//shouldn't this map be <Bidder, Integer> to record which bidders have placed which bids on this item?
-	//Abby - 5/20
-	private Map<Item, Integer> _bidList = new HashMap<Item, Integer>();
-	
 	/**
 	 * Default constructor if image, or donor is optional.
 	 * 
@@ -82,14 +78,6 @@ public class Item {
 	 */
 	public List<Bidder> getBidderList() {
 		return _bidderList;
-	}
-	
-	public void addBid(Item item, int price) {
-		_bidList.put(item, price);
-	}
-	
-	public Map<Item, Integer> getBids() {
-		return _bidList;
 	}
 
 	public String getName() {
