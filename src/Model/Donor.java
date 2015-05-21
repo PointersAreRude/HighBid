@@ -10,8 +10,8 @@ public class Donor extends Person{
     private List<Item> _itemList = new ArrayList<Item>();
     private ImageIcon _donrLogo;
     
-    public Donor(String firstName, String lastName, String Email, String Address){
-        super(firstName, lastName, Email, Address);
+    public Donor(String firstName, String lastName, String Email, String Address, String phone){
+        super(firstName, lastName, Email, Address, phone);
         // TODO Auto-generated constructor stub
     }
 
