@@ -13,7 +13,7 @@ import java.util.TreeSet;
  * @version 5/20/2015
  */
 
-public class Bidder {
+public class Bidder extends Person{
 
 	
 	private int _id; //added after constructed
@@ -27,9 +27,10 @@ public class Bidder {
 	 * @param theName 			- the name of the Bidder
 	 * @param theNickName		- the nickname of the Bidder
 	 */
-	public Bidder (String theName /*,contact info*/, String theNickName){
-//		super(/*theName, contact info*/);
-		_nickName = theName;
+	public Bidder (String theFirstName, String theLastName, String theEmail, String theAddress
+			, String theNickname){
+		super(theFirstName, theLastName, theEmail, theAddress);
+		_nickName = theNickname;
 	}
 	
 	/**
@@ -75,21 +76,10 @@ public class Bidder {
 	 * @param theItem The Item bid on.
 	 */
 	public void placeBid(Item theItem){
-		addItemBid(theItem); // maybe just add straight to the map?
+		_itemsBidOn.add(theItem);
+//		theItem
 		//Test in conjunction with Item class. Place bids on Items and test both the Item and _itemsBidOn.
 		//SOMETHING
-	}
-	
-	/**
-	 * Buys out the specified Item.
-	 * 
-	 * @param theItem The Item to buy out.
-	 */
-	public void buyOut(Item theItem){
-		//Test in conjunction with Item class and _itemsWon. Bids should not be able to be placed on
-		//the bought out Item.
-		//SOMETHING
-		addItemWon(theItem); //
 	}
 	
 	/**
@@ -100,10 +90,7 @@ public class Bidder {
 	public void addItemWon(Item theItem){
 		//create safe copy?
 		_itemsWon.add(theItem);
+		theItem.addBidder(this);
 	}
-	
-	private void addItemBid(Item theItem){
-		//SOMETHING	
-		//_itemsBidOn.add(theItem);
-	}	
+		
 }
