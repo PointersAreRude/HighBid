@@ -23,4 +23,14 @@ public class Donor extends Person{
         _itemList.remove(item);
     }
     
+    public String toString() {
+    	String toReturn = getFirstName() + " " + getLastName() + "," + getPhone() + "," + getEmail() + "," + getAddress();
+    	
+    	for (Item item : _itemList) {
+    		toReturn += "," + item.getName() + ":" + item.getQr();
+    	}
+    	
+    	return toReturn;
+    }
+    
 }
