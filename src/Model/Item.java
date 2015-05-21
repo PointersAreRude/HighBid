@@ -135,5 +135,15 @@ public class Item {
 	public void setImage(ImageIcon image) {
 		this._image = image;
 	}
+	
+	public String toString() {
+		String toReturn = _itemName + "," + _description + "," + _minIncrement
+				+ "," + _startingPrice + "," + _donor.getFirstName() + "," + _donor.getLastName() + "," + _qr;
+		
+		for (Bidder bidder : _bidderList) {
+			toReturn += "," + bidder.getFirstName() + " " + bidder.getLastName() + ":" + bidder.getid();
+		}
+		return toReturn;
+	}
 
 }
