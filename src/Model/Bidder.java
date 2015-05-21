@@ -100,13 +100,13 @@ public class Bidder extends Person{
 		Iterator<Item> itr = _itemsBidOn.iterator();
 		while (itr.hasNext()) {
 			Item item = (Item) itr.next();
-			toReturn += "," + item.getName() + ":" + item.getQr();
+			toReturn += "-," + item.getName() + ":" + item.getQr();
 		}
 		
 		itr = _itemsWon.iterator();
 		while (itr.hasNext()) {
 			Item item = (Item) itr.next();
-			toReturn += "," + item.getName() + ":" + item.getQr();
+			toReturn += "-," + item.getName() + ":" + item.getQr();
 		}
 		
 		return toReturn;
