@@ -18,8 +18,8 @@ public class Bidder extends Person{
 	
 	private int _id; //added after constructed
 	private String _nickName;
-	private Set<Item>_itemsBidOn = new TreeSet<Item>();;
-	private List<Item> _itemsWon = new ArrayList<Item>();;
+	private Set<Item>_itemsBidOn = new TreeSet<Item>();
+	private Set<Item> _itemsWon = new TreeSet<Item>();
 	
 	/**
 	 * Default Bidder constructor. id is added later as Registration takes place before id assignment.	
@@ -77,7 +77,7 @@ public class Bidder extends Person{
 	 */
 	public void placeBid(Item theItem){
 		_itemsBidOn.add(theItem);
-//		theItem
+		theItem.addBidder(this);
 		//Test in conjunction with Item class. Place bids on Items and test both the Item and _itemsBidOn.
 		//SOMETHING
 	}
@@ -90,7 +90,6 @@ public class Bidder extends Person{
 	public void addItemWon(Item theItem){
 		//create safe copy?
 		_itemsWon.add(theItem);
-		theItem.addBidder(this);
 	}
 		
 }
