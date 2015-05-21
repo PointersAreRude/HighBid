@@ -76,7 +76,7 @@ public class Auction {
 		myItems = new ArrayList<Item>();
 		myBidders = new ArrayList<Bidder>();
 		
-		String fileName = "tempOutput/" + myFacilitator + ":" + myDate + ".csv";
+		String fileName = "output/" + myFacilitator + ":" + myDate + ".csv";
 	}
 	
 	/**
