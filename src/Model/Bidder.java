@@ -3,6 +3,8 @@ package Model;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * Bidder class
@@ -16,7 +18,7 @@ public class Bidder {
 	
 	private int _id; //added after constructed
 	private String _nickName;
-//	private Set<Item>_itemsBidOn = new TreeSet<Item>();;
+	private Set<Item>_itemsBidOn = new TreeSet<Item>();;
 	private List<Item> _itemsWon = new ArrayList<Item>();;
 	
 	/**
