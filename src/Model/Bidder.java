@@ -98,6 +98,30 @@ public class Bidder extends Person{
 		_itemsWon.add(theItem);
 	}
 	
+	/**
+	 * Creates and returns a shallow copy of _itemsWon.
+	 * 
+	 * @return A shallow copy of _itemsWon.
+	 */
+	public Set<Item> getItemsWon(){
+		Set<Item> set = new TreeSet<Item>();
+		for (Item it : _itemsWon)
+			set.add(it);
+		return set;
+	}
+	
+	/**
+	 * Creates and returns a shallow copy of _itemsBidOn.
+	 * 
+	 * @return A shallow copy of _itemsBidOn.
+	 */
+	public Set<Item> getItemsBidOn(){
+		Set<Item> set = new TreeSet<Item>();
+		for (Item it : _itemsBidOn)
+			set.add(it);
+		return set;
+	}
+	
 	public String toString() {
 		String toReturn = getFirstName() + " " + getLastName() + "," + _nickName + "," + _id + ","
 				+ getPhone() + "," + getEmail() + "," + getAddress() + "\n";
