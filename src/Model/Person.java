@@ -5,12 +5,14 @@ public abstract class Person{
     private String _personLastName;
     private String _personEmail;
     private String _personAddress;
+    private String _phoneNumber;
     
-    public Person(String firstName, String lastName, String Email, String Address){
+    public Person(String firstName, String lastName, String Email, String Address, String phoneNum){
         this._personFirstName = firstName;
         this._personLastName = lastName;
         this._personEmail = Email;
         this._personAddress = Address;
+        this._phoneNumber = phoneNum;
     }
     
     public void setFirstName(String name){
@@ -44,4 +46,13 @@ public abstract class Person{
     public String getAddress(){
         return _personAddress;
     }
+    
+    public void setPhone(String phone) {
+    	this._phoneNumber = phone;
+    }
+    
+    public String getPhone() {
+    	return _phoneNumber;
+    }
+    
 }
