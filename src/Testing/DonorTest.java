@@ -44,6 +44,8 @@ public class DonorTest {
 	public void testDelete() {
 		// testing delete method in Donor class
 		// if sucessfully removed, size of the list should be decreased.
+		donor.add(item);
+		donor.add(secondItem);
 		donor.delete(secondItem);
 		int size =  donor.getItemList().size();
 		int sizeExpected = 1;
