@@ -19,7 +19,7 @@ import javax.swing.JTextField;
  * A form panel for creating auction
  * 
  * @author Long Nguyen
- * @version 5/20/2015
+ * @version 5/21/2015
  */
 public class CreatePanel extends JPanel implements ActionListener {
 
@@ -82,6 +82,9 @@ public class CreatePanel extends JPanel implements ActionListener {
 		
 	}
 
+	/**
+	 * Creating the form.
+	 */
 	private void creatingForm() {
 		_gbag = new JPanel(new GridBagLayout());
 		_gbag.setBorder(BorderFactory.createTitledBorder("Auction's Details"));

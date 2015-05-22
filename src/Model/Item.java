@@ -1,9 +1,7 @@
 package Model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.swing.ImageIcon;
 
@@ -11,9 +9,9 @@ import javax.swing.ImageIcon;
  * Item class
  * 
  * @author Long Nguyen
- * @version 5/19/2015
+ * @version 5/21/2015
  */
-public class Item {
+public class Item implements Comparable<Item> {
 
 	private String _itemName;
 	private String _description;
@@ -52,7 +50,7 @@ public class Item {
 	 */
 	public Item(String name, String description
 			, int minIncrement, int startingPrice
-			, Donor donor, long qr, ImageIcon image) {		
+			, Donor donor, long qr, ImageIcon image) {
 		this.setName(name);
 		this.setDescription(description);
 		this.setMinIncrement(minIncrement);
@@ -68,7 +66,9 @@ public class Item {
 	 * @param bidder - the bidder to be added to the list.
 	 */
 	public void addBidder(Bidder bidder) {
-		_bidderList.add(bidder);
+		if(bidder != null) {
+			_bidderList.add(bidder);
+		}
 	}
 	
 	/**
@@ -78,6 +78,31 @@ public class Item {
 	 */
 	public List<Bidder> getBidderList() {
 		return _bidderList;
+	}
+	
+	/**
+	 * get the bidder who won.
+	 * 
+	 * @return a bidder
+	 */
+	public Bidder winningBidder() {
+		if(!_bidderList.isEmpty()) {
+			return _bidderList.get(_bidderList.size()-1);
+		}
+		return null;
+	}
+	
+	/**
+	 * Get the winning price
+	 * 
+	 * @return winning price.
+	 */
+	public int winningPrice() {
+		int price = 0;
+		if(!_bidderList.isEmpty() && _minIncrement >= 0 && _startingPrice > 0) {
+			price = (_bidderList.size() * _minIncrement) + _startingPrice;
+		}
+		return price;
 	}
 
 	public String getName() {
@@ -144,6 +169,13 @@ public class Item {
 			toReturn += "," + bidder.getFirstName() + " " + bidder.getLastName() + ":" + bidder.getid();
 		}
 		return toReturn;
+	}
+
+	/**
+	 * Comparing item base on item's name
+	 */
+	public int compareTo(Item o) {
+		return this._itemName.compareTo(o._itemName);
 	}
 
 }

@@ -1,6 +1,9 @@
 package View;
 
 import java.awt.CardLayout;
+import java.awt.Image;
+
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -44,6 +47,14 @@ public class MainFrame extends JFrame {
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
         setCardLayout();
+        
+        /*
+         * Auction icon for main frame.
+         * source: http://www.veryicon.com/icons/system/fresh-addon/auction-1.html
+         */
+        ImageIcon ImageIcon = new ImageIcon("input/images/Auction.png");
+        Image image = ImageIcon.getImage();
+        setIconImage(image);
 	}
 	
 	/**

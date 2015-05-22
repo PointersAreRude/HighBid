@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.swing.ImageIcon;
 
-public class Donor extends Person{
+public class Donor extends Person {
 
     private List<Item> _itemList = new ArrayList<Item>();
     private ImageIcon _donrLogo;
@@ -23,11 +23,22 @@ public class Donor extends Person{
         _itemList.remove(item);
     }
     
+    /*
+     * I need a way to get the list of item from this class
+     * , so that I could do test on these methods, so I added
+     * this method.
+     * 
+     * Long Nguyen - 5/21/2015
+     */
+    public List<Item> getItemList() {
+    	return _itemList;
+    }
+    
     public String toString() {
-    	String toReturn = getFirstName() + " " + getLastName() + "," + getPhone() + "," + getEmail() + "," + getAddress();
+    	String toReturn = getFirstName() + " " + getLastName() + ", " + getPhone() + ", " + getEmail() + ", " + getAddress();
     	
     	for (Item item : _itemList) {
-    		toReturn += "," + item.getName() + ":" + item.getQr();
+    		toReturn += ", " + item.getName() + ": " + item.getQr();
     	}
     	
     	return toReturn;
