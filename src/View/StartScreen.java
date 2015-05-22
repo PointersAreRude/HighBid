@@ -4,8 +4,10 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -13,7 +15,7 @@ import javax.swing.JPanel;
  * Start screen JPanel
  * 
  * @author Long Nguyen
- * @version 5/19/2015
+ * @version 5/21/2015
  */
 public class StartScreen extends JPanel implements ActionListener {
 	
@@ -37,6 +39,11 @@ public class StartScreen extends JPanel implements ActionListener {
 	 */
 	private JButton _openBtn;
 	
+	/**
+	 * File chooser
+	 */
+	private JFileChooser fc = new JFileChooser();
+	
 
 	public StartScreen() {
 		setSize(MainFrame.WIDTH, MainFrame.HEIGHT);
@@ -58,13 +65,13 @@ public class StartScreen extends JPanel implements ActionListener {
 		// Set create button
 		_createBtn = new JButton("Create Auction");
 		_createBtn.setBounds((int)(MainFrame.WIDTH / 4.5), 350, 270, 100);
-		_createBtn.setFont(new Font("Tahoma", 0, 36));
+		_createBtn.setFont(MainFrame.BUTTON_FONT);
 		_createBtn.addActionListener(this);
 		
 		// Set open button
 		_openBtn = new JButton("Open Auction");
 		_openBtn.setBounds((int)(MainFrame.WIDTH / 1.9), 350, 270, 100);
-		_openBtn.setFont(new Font("Tahoma", 0, 36));
+		_openBtn.setFont(MainFrame.BUTTON_FONT);
 		_openBtn.addActionListener(this);
 	}
 
@@ -83,6 +90,11 @@ public class StartScreen extends JPanel implements ActionListener {
 			MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "CreatePanel");
 		} else {
 			// TODO: add open auction functionality
+			int returnVal = fc.showOpenDialog(StartScreen.this);
+			
+			if(returnVal == JFileChooser.APPROVE_OPTION ) {
+				File file = fc.getSelectedFile();
+			}
 		}
 	}
 }

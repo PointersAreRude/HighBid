@@ -66,9 +66,10 @@ public class Item implements Comparable<Item> {
 	 * @param bidder - the bidder to be added to the list.
 	 */
 	public void addBidder(Bidder bidder) {
-		if(bidder != null) {
-			_bidderList.add(bidder);
+		if(bidder == null) {
+			throw new IllegalArgumentException("not a bidder.");
 		}
+		_bidderList.add(bidder);
 	}
 	
 	/**
@@ -85,7 +86,7 @@ public class Item implements Comparable<Item> {
 	 * 
 	 * @return a bidder
 	 */
-	public Bidder winningBidder() {
+	public Bidder getWinningBidder() {
 		if(!_bidderList.isEmpty()) {
 			return _bidderList.get(_bidderList.size()-1);
 		}
@@ -97,7 +98,7 @@ public class Item implements Comparable<Item> {
 	 * 
 	 * @return winning price.
 	 */
-	public int winningPrice() {
+	public int getWinningPrice() {
 		int price = 0;
 		if(!_bidderList.isEmpty() && _minIncrement >= 0 && _startingPrice > 0) {
 			price = (_bidderList.size() * _minIncrement) + _startingPrice;

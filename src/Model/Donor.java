@@ -15,8 +15,8 @@ public class Donor extends Person {
         // TODO Auto-generated constructor stub
     }
 
-    public void add(Item item){
-        _itemList.add(item);
+    public void add(Item item) {
+    	_itemList.add(item);
     }
     
     public void delete(Item item){
