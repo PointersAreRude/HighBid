@@ -14,9 +14,9 @@ import java.util.TreeSet;
  * @version 5/21/2015
  */
 
-public class Bidder extends Person{
+public class Bidder extends Person implements Comparable<Bidder>{
 	
-	/** The Bidder's unique ID number.	 */
+	/** The Bidder's unique ID number. Initialized to -1	 */
 	private int _id;
 	
 	/** The Bidder's nickname. Possible use for name tags. */
@@ -38,6 +38,7 @@ public class Bidder extends Person{
 			, String theNickname, String thePhone){
 		super(theFirstName, theLastName, theEmail, theAddress, thePhone);
 		_nickName = theNickname;
+		_id = -1;
 	}//perhaps add a constructor that doesn't need nick names?
 	
 	/**
@@ -141,5 +142,37 @@ public class Bidder extends Person{
 		return toReturn;
 	}
 		
-	//needs a compareTo and/or equals
+
+	/**
+	 * Compares two bidders.
+	 * 
+	 * @param theBidder The bidder to compare this bidder with.
+	 * @return 0 if the bidders are equal to each other. 
+	 */
+	public int compareTo(Bidder theBidder) {
+		if (_id == -1 || theBidder.getid() == -1){
+			
+			return this.getFirstName().compareTo(theBidder.getFirstName()) + 
+					this.getLastName().compareTo(theBidder.getLastName());
+		} else {
+			if(_id == theBidder.getid())
+				return 0;
+			else
+				return -1;
+		}
+	}
+	
+	//should this and compareTo be modified to test the object ids/mem addresses instead of field data?
+	/**
+	 * Returns true if the two bidders being compared are the same.
+	 * 
+	 * @param theBidder the bidder to compare equality against.
+	 * @return True if the two bidders are equal, false otherwise.
+	 */
+	public boolean equals(Bidder theBidder){
+		if( this.compareTo(theBidder) == 0)
+			return true;
+		else 
+			return false;
+	}
 }

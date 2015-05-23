@@ -203,6 +203,7 @@ private final int incr = 1;
 		}
 
 
+	//How do you test for images without adding images?
 	/**
 	 * Test method for {@link Model.Item#getImage()}.
 	 */
