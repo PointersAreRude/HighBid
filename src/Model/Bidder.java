@@ -38,7 +38,7 @@ public class Bidder extends Person{
 			, String theNickname, String thePhone){
 		super(theFirstName, theLastName, theEmail, theAddress, thePhone);
 		_nickName = theNickname;
-	}
+	}//perhaps add a constructor that doesn't need nick names?
 	
 	/**
 	 * Assigns the id of the Bidder.
@@ -141,4 +141,5 @@ public class Bidder extends Person{
 		return toReturn;
 	}
 		
+	//needs a compareTo and/or equals
 }
