@@ -17,6 +17,13 @@ public class Donor extends Person {
     private List<Item> _itemList = new ArrayList<Item>();
     private ImageIcon _donrLogo;
     
+    /**
+     * @param firstName the first name of person
+     * @param lastName the last name of person
+     * @param Email the e-mail of person
+     * @param Address the address of the person
+     * @param phoneNum the phone number of the person
+     */
     public Donor(String firstName, String lastName, String Email, String Address, String phone){
         super(firstName, lastName, Email, Address, phone);
         // TODO Auto-generated constructor stub
