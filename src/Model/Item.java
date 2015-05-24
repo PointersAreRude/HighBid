@@ -52,17 +52,6 @@ public class Item implements Comparable<Item> {
 			, int minIncrement, int startingPrice
 			, Donor donor, long qr, ImageIcon image) {
 		
-		this.setName(name);
-		this.setDescription(description);
-		this.setMinIncrement(minIncrement);
-		this.setStartingPrice(startingPrice);
-		this.setDonor(donor);
-		this.setQr(qr);
-		this.setImage(image);
-		//when you assign local parameters to global fields, I'm not sure if you should be using your
-		//setter methods, should'nt you just be assigning them directly, such as below:
-		
-		/*
 		_itemName = name;
 		_description = description;
 		_minIncrement = minIncrement;
@@ -70,7 +59,6 @@ public class Item implements Comparable<Item> {
 		_donor = donor;
 		_qr = qr;
 		_image = image;
-		*/
 	}
 
 	/**
