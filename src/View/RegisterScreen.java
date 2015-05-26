@@ -14,6 +14,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import Model.Bidder;
+
 public class RegisterScreen extends JPanel implements ActionListener  {
 	 private static int FWIDTH = 20;
 	/**
@@ -174,11 +176,14 @@ public class RegisterScreen extends JPanel implements ActionListener  {
 		
 	}
 
+	
 	public void actionPerformed(ActionEvent e) {
 		//from Long's code
 	
 		JButton src = (JButton) e.getSource();
 		if (src == _backBtn) {
+			//flush entered text
+			//show warning
 //			int choice = JOptionPane.showConfirmDialog(null, "Your information in this form "
 //					+ "will not be saved.  Continue back?", "Warning", JOptionPane.OK_CANCEL_OPTION);
 //			if (choice == JOptionPane.OK_OPTION) {
@@ -186,7 +191,16 @@ public class RegisterScreen extends JPanel implements ActionListener  {
 //				_warningLabel.setText("");
 //			}
 		} else if (src == _createBtn) {
-		
-	}
+			String fname = _fNameF.getText();
+			String lname = _lNameF.getText();
+			String email = _emailF.getText();
+			String address = _addressF.getText();
+			String nname = _nNameF.getText();
+			String phone = _phoneF.getText();
+			
+			Bidder aBidder = new Bidder(fname, lname, email, address, nname, phone);
+			
+			MainFrame._auction.addBidder(aBidder);
+		}
 	}
 }
