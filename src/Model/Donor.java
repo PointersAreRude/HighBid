@@ -34,6 +34,9 @@ public class Donor extends Person {
      * @param item to add
      */
     public void add(Item item) {
+    	if(item == null){
+    		throw new IllegalArgumentException("Item is null");
+    	}
     	_itemList.add(item);
     }
     
@@ -42,6 +45,9 @@ public class Donor extends Person {
      * @param item to delete
      */
     public void delete(Item item){
+    	if(item == null){
+    		throw new IllegalArgumentException("Item is null");
+    	}
         _itemList.remove(item);
     }
     
