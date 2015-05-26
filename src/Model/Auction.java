@@ -403,4 +403,10 @@ public class Auction {
 		}
 	}
 	
+	public void main (int[] args) {
+		if (args.length == 2) {
+			placeBid(args[0], args[1]);
+		}
+	}
+	
 }
