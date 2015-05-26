@@ -60,7 +60,7 @@ public class Donor extends Person {
     	String toReturn = getFirstName() + " " + getLastName() + ", " + getPhone() + ", " + getEmail() + ", " + getAddress();
     	
     	for (Item item : _itemList) {
-    		toReturn += ", " + item.getName() + ": " + item.getQr();
+    		toReturn += ", " + item.getName() + ":" + item.getQr();
     	}
     	
     	return toReturn;

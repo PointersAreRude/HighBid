@@ -3,10 +3,12 @@ package Model;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Scanner;
 
 /**
  * Auction class; 
@@ -58,8 +60,12 @@ public class Auction {
 	 */
 	private String myFileName;
 	
+	public Auction() {
+		this(null, null, null, null);
+	}
+	
 	/**
-	 * Auction constructor
+	 * Auction constructor with parameters.
 	 * 
 	 * @param aDate The date of the Auction; must be of "mm/dd/yyyy" format.
 	 * @param aStartTime The Auction's start time; must be of "hh:mm" format.
@@ -274,9 +280,127 @@ public class Auction {
 	
 	/**
 	 * This would read in an Auction file and populate the software with the data in the file.
+	 * @throws IOException 
 	 */
-	public void importFile() {
+	public void importFile(String filePath) throws IOException {
+		Scanner reader = new Scanner (Paths.get(filePath));
+		String line;
+		String[] input;
+		if (reader.hasNext()) {
+			line = reader.next(); //eat the "#Auction Info" line
+			if (reader.hasNext()) {
+				line = reader.next(); //grab the line with Auction info
+				input = line.split(",");
+				myFacilitator = input[1];
+				myDate = input[2];
+				myStartTime = input[3];
+				myEndTime = input[4];
+				
+				if (reader.hasNext()) {
+					line = reader.next(); //eat the "#Items" line
+					
+					parseItems(reader);
+					//have parseInts return a list of lists that gives proper bidding history, then after
+					//parseBidders, read in that list and "place the bids" as appropriate
+					parseDonors(reader);
+					parseBidders(reader);
+					
+				}
+			}
+		}
 		
+		reader.close();
+	}
+	
+	private void parseItems(Scanner reader) {
+		if (reader.hasNext()) {
+			String line = reader.next(); //grab the next line, will either be a "+" or a "#" line
+			String[] input = line.split(",");
+			while (input[0].equals("+")) { //the Items info
+				String name = input[1];
+				String description = input[2];
+				int minInc = Integer.parseInt(input[3]);
+				int startingPrice = Integer.parseInt(input[4]);
+				long qr = Long.parseLong(input[6]);
+				Item item = new Item(name, description, minInc, startingPrice, qr);
+				myItems.add(item);
+				if (reader.hasNext()) {
+					line = reader.next(); //grab the next line with Items info, or the "#Donors" line
+					input = line.split(",");
+				}
+			}
+		}
+	}
+	
+	private void parseDonors(Scanner reader) {
+		if (reader.hasNext()) {
+			String line = reader.next();
+			String[] input = line.split(",");
+			while (input[0].equals("+")) {
+				String firstName = input[1];
+				String lastName = input[2];
+				String phone = input[4];
+				String email = input[5];
+				String address = input[6];
+				Donor donor = new Donor(firstName, lastName, email, address, phone);
+				for (int i = 7; i < input.length; i++) {
+					String[] input2 = input[i].split(":");
+					for (Item item : myItems) {
+						if (item.getName().equals(input2[0]) && item.getQr() == Long.parseLong(input[1])) {
+							donor.add(item);
+							item.setDonor(donor);
+							break;
+						}
+					}
+				}
+				myDonors.add(donor);
+				
+				if (reader.hasNext()) {
+					line = reader.next(); //grab the next line with Donor info, or the "#Bidders" line
+					input = line.split(",");
+				}
+			}
+		}
+	}
+	
+	private void parseBidders(Scanner reader) {
+		if (reader.hasNext()) {
+			String line = reader.next();
+			String[] input = line.split(",");
+			while (input[0].equals("+")) {
+				String firstName = input[1];
+				String lastName = input[2];
+				String nickName = input[3];
+				String phone = input[5];
+				String email = input[6];
+				String address = input[7];
+				int id = Integer.parseInt(input[4]);
+				
+				Bidder bidder = new Bidder(firstName, lastName, email, address, nickName, phone);
+				bidder.setid(id);
+				
+				if (reader.hasNext()) {
+					line = reader.next(); //eat the "-items bid on" line
+					if (reader.hasNext()) {
+						line = reader.next(); //read in the "-items won" line
+						input = line.split(",");
+						if (input.length > 1) { //here read in items won only
+							for (int i = 1; i < input.length; i++) {
+								String[] input2 = input[i].split(":");
+								for (Item item : myItems) {
+									if (item.getQr() == Long.parseLong(input[1])) {
+										bidder.addItemWon(item);
+										break;
+									}
+								}
+							}
+						}
+					}
+				}
+				
+				myBidders.add(bidder);
+			}
+		}
 	}
 	
 }

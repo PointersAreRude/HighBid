@@ -65,8 +65,9 @@ public class DonorTest {
 	
 	@Test(expected=IllegalArgumentException.class)
 	public void testNullArgument() {
-		// Should throw an exception when adding/deleting a null object
+		// Should throw an exception when adding a null object
 		list.add(null);
+		// Should throw an exception when deleting a null object
 		list.remove(null);
 	}
 	

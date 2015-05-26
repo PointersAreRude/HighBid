@@ -51,13 +51,14 @@ public class Item implements Comparable<Item> {
 	public Item(String name, String description
 			, int minIncrement, int startingPrice
 			, Donor donor, long qr, ImageIcon image) {
-		this.setName(name);
-		this.setDescription(description);
-		this.setMinIncrement(minIncrement);
-		this.setStartingPrice(startingPrice);
-		this.setDonor(donor);
-		this.setQr(qr);
-		this.setImage(image);
+		
+		_itemName = name;
+		_description = description;
+		_minIncrement = minIncrement;
+		_startingPrice = startingPrice;
+		_donor = donor;
+		_qr = qr;
+		_image = image;
 	}
 
 	/**
