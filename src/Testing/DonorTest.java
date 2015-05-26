@@ -1,7 +1,9 @@
 package Testing;
 
 import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
@@ -45,7 +47,7 @@ public class DonorTest {
 	@Test
 	public void testDelete() {
 		// testing delete method in Donor class
-		// if sucessfully removed, size of the list should be decreased.
+		// if successfully removed, size of the list should be decreased.
 		donor.add(item);
 		donor.add(secondItem);
 		donor.delete(secondItem);
@@ -69,6 +71,20 @@ public class DonorTest {
 		list.add(null);
 		// Should throw an exception when deleting a null object
 		list.remove(null);
+	}
+	
+	@Test
+	public void testGetList() {
+		// Test if two list are equals.
+		List<Item> expected = new ArrayList<Item>();
+		expected.add(item);
+		expected.add(secondItem);
+		
+		donor.add(item);
+		donor.add(secondItem);
+		
+		assertThat(donor.getItemList(), is(expected));
+		//assertThat(donor.getItemList(), is(not(expected)));		
 	}
 	
 	@Test

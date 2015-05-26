@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 /**
  * Main frame
  * 
- * This class acts like a controller for all the panel.
+ * This class acts like a backbone for all the panels.
  * Here, We can change frame'size, text field dimension,
  * fonts, etc... These components are used in different
  * panels. This class is also where we add the panel

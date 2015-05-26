@@ -79,7 +79,8 @@ public class Item implements Comparable<Item> {
 	 * @return list of bidders.
 	 */
 	public List<Bidder> getBidderList() {
-		return _bidderList;
+		List<Bidder> temp = new ArrayList<Bidder>(_bidderList);
+		return temp;
 	}
 	
 	/**
