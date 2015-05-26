@@ -10,11 +10,21 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import Model.Bidder;
+
+/**
+ * RegisterScreen
+ * 
+ * This class takes user input from text boxes
+ * and creates a Bidder object, which is then added
+ * to the global _auction field in MainFrame.
+ * 
+ * @author Robbie Nichols
+ * @version 5/26/2015
+ */
 
 public class RegisterScreen extends JPanel implements ActionListener  {
 	 private static int FWIDTH = 20;
@@ -182,8 +192,17 @@ public class RegisterScreen extends JPanel implements ActionListener  {
 	
 		JButton src = (JButton) e.getSource();
 		if (src == _backBtn) {
-			//flush entered text
 			//show warning
+			
+			
+			//flush entered text
+			_fNameF.setText("");
+			_lNameF.setText("");
+			_emailF.setText("");
+			_addressF.setText("");
+			_nNameF.setText("");
+			_phoneF.setText("");
+			
 //			int choice = JOptionPane.showConfirmDialog(null, "Your information in this form "
 //					+ "will not be saved.  Continue back?", "Warning", JOptionPane.OK_CANCEL_OPTION);
 //			if (choice == JOptionPane.OK_OPTION) {
