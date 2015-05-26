@@ -128,15 +128,17 @@ public class Bidder extends Person implements Comparable<Bidder>{
 				+ getPhone() + "," + getEmail() + "," + getAddress() + "\n";
 		
 		Iterator<Item> itr = _itemsBidOn.iterator();
+		toReturn += "-Items bid on:";
 		while (itr.hasNext()) {
 			Item item = (Item) itr.next();
-			toReturn += "-," + item.getName() + ":" + item.getQr();
+			toReturn += "," + item.getName() + ":" + item.getQr();
 		}
 		
 		itr = _itemsWon.iterator();
+		toReturn += "\n-Items won:";
 		while (itr.hasNext()) {
 			Item item = (Item) itr.next();
-			toReturn += "-," + item.getName() + ":" + item.getQr();
+			toReturn += "," + item.getName() + ":" + item.getQr();
 		}
 		
 		return toReturn;
