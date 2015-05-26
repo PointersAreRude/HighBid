@@ -22,6 +22,10 @@ import javax.swing.JPanel;
  * @version 5/22/2015
  */
 public class MainFrame extends JFrame {
+	/**
+	 * the auction object
+	 */
+	protected static Auction _auction;
 	
 	/**
 	 * default serial
