@@ -229,7 +229,7 @@ public class CreatePanel extends JPanel implements ActionListener {
 			if(empty) {
 				_warningLabel.setText("Please enter all required fields.");
 			} else {
-				_auction = new Auction(date, startTime, endTime, facilitatorName);
+				MainFrame._auction = new Auction(date, startTime, endTime, facilitatorName);
 				MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "HomeScreen");
 			}
 			
