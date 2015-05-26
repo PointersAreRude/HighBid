@@ -403,10 +403,11 @@ public class Auction {
 		}
 	}
 	
-	public void main (int[] args) {
+	public static void main (String[] args) throws IOException {
+		Auction a = new Auction();
+		a.importFile("");
 		if (args.length == 2) {
-			placeBid(args[0], args[1]);
+			a.placeBid(Integer.parseInt(args[0]), Long.parseLong(args[1]));
 		}
 	}
-	
 }
