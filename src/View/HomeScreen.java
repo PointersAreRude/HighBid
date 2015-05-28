@@ -96,14 +96,14 @@ public class HomeScreen extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		JButton src = (JButton) e.getSource();
 		if(src == _ItemsAndDonorOptionBtn) {
-			MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "CreatePanel");
-		} else {
-			// TODO: add open auction functionality
-			int returnVal = fc.showOpenDialog(null);
-			
-			if(returnVal == JFileChooser.APPROVE_OPTION ) {
-				File file = fc.getSelectedFile();
-			}
+			//TODO: add the Item panel
+		} 
+		else if(src == _registrationBtn){
+			//TODO: add the registration panel
+		}
+		else {
+			// TODO: add the viewAcution panel
+
 		}
 	}
 	
