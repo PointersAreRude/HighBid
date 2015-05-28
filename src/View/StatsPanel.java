@@ -14,6 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.TreeSet;
 
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -29,6 +30,7 @@ import javax.swing.event.ListSelectionListener;
 import Model.Bidder;
 import Model.Donor;
 import Model.Item;
+import Model.Person;
 
 public class StatsPanel<E> extends JPanel {
 
@@ -76,7 +78,16 @@ public class StatsPanel<E> extends JPanel {
 		c.weighty = 0.1;
 		c.gridheight = 1;
 		c.gridwidth = 5;
-		myLabel = new JLabel("Items");
+		
+		myLabel = new JLabel();
+		if (myArray[0] != null && myArray[0] instanceof Item) {
+			myLabel.setText("Items");
+		} else if (myArray[0] != null && myArray[0] instanceof Bidder) {
+			myLabel.setText("Bidders");
+		} else if (myArray[0] != null && myArray[0] instanceof Donor) {
+			myLabel.setText("Donors");
+		}
+		
 		myLabel.setFont(MainFrame.FORM_LABEL_FONT);
 		bag.setConstraints(myLabel, c);
 		add(myLabel);
@@ -92,7 +103,7 @@ public class StatsPanel<E> extends JPanel {
 		
 		c.gridheight = 50;
 		c.weighty = 2.0;
-		c.gridwidth = 1;
+		c.gridwidth = 5;
 		myList = new JList<E>(myArray);
 		myList.setCellRenderer(new MyCellRenderer());
 		myScroller = new JScrollPane(myList);
@@ -100,8 +111,11 @@ public class StatsPanel<E> extends JPanel {
 		add(myScroller);
 		
 		c.gridwidth = GridBagConstraints.REMAINDER;
+		//c.gridx = 10;
 		myText = new JTextArea();
 		myText.setEditable(false);
+		myText.setLineWrap(true);
+		myText.setWrapStyleWord(true);
 		myText.setFont(MainFrame.FORM_TF_FONT);
 		myText.setText("Please select an option from the list.");
 		bag.setConstraints(myText, c);
@@ -138,14 +152,53 @@ public class StatsPanel<E> extends JPanel {
 			String text = "";
 			if (selected instanceof Item) {
 				Item item = (Item) selected;
-				text += item.getName() + "\n" + item.getDescription();
+				text += item.getName() + "\n\nDonor: ";
 				
-			} else if (selected instanceof Bidder) {
-				Bidder bidder = (Bidder) selected;
+				Donor donor = item.getDonor();
+				if (donor != null) {
+					text += donor.getFirstName() + " " + donor.getLastName() + "\n\n";
+				} else {
+					text += "No Donor\n\n";
+				}
 				
-			} else if (selected instanceof Donor) {
-				Donor donor = (Donor) selected;
+				text += "Description: " + item.getDescription() + "\n\nStarting Price: $" + item.getStartingPrice()
+						+ "\nIncrement Amount: $" + item.getMinIncrement() + "\n\nQR code: " + item.getQr()
+						+ "\n\nBid History";
 				
+				ArrayList<Bidder> bidders = (ArrayList<Bidder>) item.getBidderList();
+				for (int i = 0; i < bidders.size(); i++) {
+					Bidder bddr = bidders.get(i);
+					text += "\n        " + (i + 1) + ". " + bddr.getFirstName() + " " + bddr.getLastName() + " : " + bddr.getid();
+				}
+				
+			} else if (selected instanceof Person) {
+				Person person = (Person) selected;
+				text += person.getFirstName() + " " + person.getLastName() + "\n\nContact Information\n        Address: "
+						+ person.getAddress() + "\n        Phone #: " + person.getPhone() + "\n        Email: " + person.getEmail();
+				
+				if (person instanceof Bidder) {
+					Bidder bidder = (Bidder) person;
+					text += "\n\nNickName: " + bidder.getNickName() + "\n\nBidder's ID #: " + bidder.getid()
+						+ "\n\nItems Bid on";
+				
+					TreeSet<Item> itms = (TreeSet<Item>) bidder.getItemsBidOn();
+					for (Item item : itms) {
+						text += "\n        " + item.getName() + " : " + item.getQr();
+					}
+						
+					text += "\n\nItems Won";
+					itms = (TreeSet<Item>) bidder.getItemsWon();
+					for (Item item : itms) {
+						text += "\n        " + item.getName() + " : " + item.getQr();
+					}
+				} else if (person instanceof Donor) {
+					Donor donor = (Donor) person;
+					text += "\n\nItems Donated";
+					ArrayList<Item> items = (ArrayList<Item>) donor.getItemList();
+					for (Item itm : items) {
+						text += "\n        " + itm.getName() + " : " + itm.getQr();
+					}
+				}
 			}
 			myText.setText(text);
 			
