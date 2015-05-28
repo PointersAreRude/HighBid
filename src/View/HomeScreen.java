@@ -97,6 +97,7 @@ public class HomeScreen extends JPanel implements ActionListener {
 		JButton src = (JButton) e.getSource();
 		if(src == _ItemsAndDonorOptionBtn) {
 			//TODO: add the Item panel
+			MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "OptionsPanel");
 		} 
 		else if(src == _registrationBtn){
 			//TODO: add the registration panel
