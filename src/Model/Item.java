@@ -166,7 +166,13 @@ public class Item implements Comparable<Item> {
 	
 	public String toString() {
 		String toReturn = _itemName + "," + _description + "," + _minIncrement
-				+ "," + _startingPrice + "," + _donor.getFirstName() + "," + _donor.getLastName() + "," + _qr;
+				+ "," + _startingPrice + ",";
+		
+		if (_donor != null) {
+			toReturn += _donor.getFirstName() + "," + _donor.getLastName() + ",";
+		}
+		
+		toReturn += _qr;
 		
 		for (Bidder bidder : _bidderList) {
 			toReturn += "," + bidder.getFirstName() + " " + bidder.getLastName() + ":" + bidder.getid();
