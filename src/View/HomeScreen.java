@@ -12,6 +12,11 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+ * @author Mark Ditianquin
+ * @version 5/28
+ * Home screen panel
+ */
 public class HomeScreen extends JPanel implements ActionListener {
 	
 	/**
