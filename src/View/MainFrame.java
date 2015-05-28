@@ -101,12 +101,15 @@ public class MainFrame extends JFrame {
 		final StartScreen start = new StartScreen();
 		final CreatePanel create = new CreatePanel();
 		final HomeScreen home = new HomeScreen();
+		final OptionsPanel option = new OptionsPanel();
 		
 		// Setting up CardLayout
 		CONTAINER.setLayout(CLAYOUT);
 		CONTAINER.add(start, "StartScreen");
 		CONTAINER.add(create,"CreatePanel");
 		CONTAINER.add(home, "HomeScreen");
+		CONTAINER.add(option, "OptionsPanel");
+		
 		CLAYOUT.show(CONTAINER, "StartScreen");
 		this.add(CONTAINER);
 	}
