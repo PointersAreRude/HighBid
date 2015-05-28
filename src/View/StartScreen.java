@@ -4,11 +4,10 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -38,11 +37,6 @@ public class StartScreen extends JPanel implements ActionListener {
 	 * open button
 	 */
 	private JButton _openBtn;
-	
-	/**
-	 * File chooser
-	 */
-	private JFileChooser fc = new JFileChooser();
 	
 
 	public StartScreen() {
@@ -90,11 +84,16 @@ public class StartScreen extends JPanel implements ActionListener {
 			MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "CreatePanel");
 		} else {
 			// TODO: add open auction functionality
-			int returnVal = fc.showOpenDialog(StartScreen.this);
+//			int returnVal = fc.showOpenDialog(StartScreen.this);
+//			
+//			if(returnVal == JFileChooser.APPROVE_OPTION ) {
+//				File file = fc.getSelectedFile();
+//			}
+			JOptionPane.showMessageDialog(null, "File has been loaded. Please click OK to continue...");
 			
-			if(returnVal == JFileChooser.APPROVE_OPTION ) {
-				File file = fc.getSelectedFile();
-			}
+			// TODO: add import file functionality here
+			
+			MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "HomeScreen");
 		}
 	}
 }

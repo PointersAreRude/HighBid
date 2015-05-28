@@ -68,9 +68,9 @@ public class DonorTest {
 	@Test(expected=IllegalArgumentException.class)
 	public void testNullArgument() {
 		// Should throw an exception when adding a null object
-		list.add(null);
+		donor.add(null);
 		// Should throw an exception when deleting a null object
-		list.remove(null);
+		donor.delete(null);
 	}
 	
 	@Test
@@ -91,7 +91,7 @@ public class DonorTest {
 	public void testToString() {
 		// Testing toString() method from Donor class.
 		donor.add(item);
-		String item = list.get(0).getName() + ": " + list.get(0).getQr();
+		String item = list.get(0).getName() + ":" + list.get(0).getQr();
 		String expected = "First Name Last Name, 111-111-1111, Email, 2222 22th Ave S, " + item;
 		assertEquals("Two strings are not the same", expected, donor.toString());
 	}

@@ -50,11 +50,6 @@ public class CreatePanel extends JPanel implements ActionListener {
 	private JPanel _gbag;
 	
 	/**
-	 * Auction class
-	 */
-	private Auction _auction;
-	
-	/**
 	 * facilitator text field
 	 */
 	private JTextField _facilitatorTF;
@@ -203,21 +198,29 @@ public class CreatePanel extends JPanel implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 		JButton src = (JButton) e.getSource();
+		
+		String facilitatorName = _facilitatorTF.getText();
+		String startTime = _startTimeTF.getText();
+		String endTime = _endTimeTF.getText();
+		String date = _dateTF.getText();
+		String[] arr = {facilitatorName, startTime, endTime, date};
+		JTextField[] tf_arr = {_facilitatorTF, _startTimeTF, _endTimeTF, _dateTF};
+		
 		if (src == _backBtn) {
 			int choice = JOptionPane.showConfirmDialog(null, "Your information in this form "
 					+ "will not be saved.  Continue back?", "Warning", JOptionPane.OK_CANCEL_OPTION);
 			if (choice == JOptionPane.OK_OPTION) {
 				MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "StartScreen");
 				_warningLabel.setText("");
+				
+				// Clear all the text field.
+				for(JTextField tf : tf_arr) {
+					tf.setText("");
+				}
 			}
 		} else if (src == _continueBtn) {
-
-			String facilitatorName = _facilitatorTF.getText();
-			String startTime = _startTimeTF.getText();
-			String endTime = _endTimeTF.getText();
-			String date = _dateTF.getText();
-			String[] arr = {facilitatorName, startTime, endTime, date};
 			
+			// Check if one of the fields is empty.
 			boolean empty = false;
 			for(int i = 0; i < arr.length; i++) {
 				if(arr[i].equals("")) {
