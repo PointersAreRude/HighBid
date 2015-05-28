@@ -1,7 +1,6 @@
 package View;
 
 import java.awt.BasicStroke;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -10,7 +9,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -45,10 +43,6 @@ public class StatsPanel<E> extends JPanel {
 	private JButton myBack;
 	
 	private E[] myArray;
-	
-	private JPanel myLabelPanel;
-	
-	private JPanel myListPanel;
 	
 	@SuppressWarnings("unchecked")
 	public StatsPanel(ArrayList<E> list) {
@@ -126,11 +120,6 @@ public class StatsPanel<E> extends JPanel {
 //        g2d.setStroke(new BasicStroke(10));
 //        g2d.draw(rectangle);
 //	}
-
-//	public void actionPerformed(ActionEvent arg0) {
-//		// TODO Auto-generated method stub
-//		
-//	}
 	
 	private class MyListSelectionListener implements ListSelectionListener {
 		
@@ -166,12 +155,8 @@ public class StatsPanel<E> extends JPanel {
 	
 	private class MyCellRenderer extends JLabel implements ListCellRenderer<E> {
 
-		public Component getListCellRendererComponent(
-				JList<? extends E> list,
-				E value, 
-				int index, 
-				boolean isSelected, 
-				boolean cellHasFocus) {
+		public Component getListCellRendererComponent(JList<? extends E> list, E value, int index, 
+														boolean isSelected, boolean cellHasFocus) {
 			String toDisplay = "";
 			if (value instanceof Item) {
 				Item theValue = (Item) value;
