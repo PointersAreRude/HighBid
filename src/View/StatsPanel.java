@@ -212,7 +212,6 @@ public class StatsPanel<E> extends JPanel implements ActionListener {
 		JButton source = (JButton) event.getSource();
 		
 		if (source == myBack) {
-			System.out.println("Here");
 			MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "StatsHomePanel");
 		}
 	}
