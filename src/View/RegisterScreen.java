@@ -41,22 +41,22 @@ public class RegisterScreen extends JPanel implements ActionListener  {
 	private JPanel _gbag;
 	
 	/**	First name text box*/
-	private JTextField _fNameF;
+	protected JTextField _fNameF;
 	
 	/**	Last name text box*/
-	private JTextField _lNameF;
+	protected JTextField _lNameF;
 	
 	/**	Email text box*/
-	private JTextField _emailF;
+	protected JTextField _emailF;
 	
 	/**	Address text box*/
-	private JTextField _addressF;
+	protected JTextField _addressF;
 	
 	/**	Nick name text box*/
-	private JTextField _nNameF;
+	protected JTextField _nNameF;
 	
 	/**	Phone number text box*/	
-	private JTextField _phoneF;
+	protected JTextField _phoneF;
 
 	private static final long serialVersionUID = 1L;
 
