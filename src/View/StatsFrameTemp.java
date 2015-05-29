@@ -51,7 +51,7 @@ public class StatsFrameTemp<E> extends JFrame {
 		Item itm7 = new Item("Rubber Ducky", "If it looks like a duck, swims like a duck, and quacks like a duck... it's probably not a rubber ducky.", 1, 5, 7655432);
 		Item itm8 = new Item("Rock-em Sock-em Robots Game", "It's a blast from the past!  Try to knock out your opponenet's robot, or get knocked out yourself!", 5, 20, 65656677);
 		Item itm9 = new Item("Pen Set", "Black ink pens, for everyday use (or sticking to the ceiling of your classroom).", 2, 10, 556212354);
-		Item itm10 = new Item("Laptop", "Durable, long battery life, and a sleek case!  Warrenty not included.", 50, 500, 112334534);
+		Item itm10 = new Item("Opera Tickets", "For all you opera fans, come and listen to the fat lady sing!", 20, 60, 52314111);
 		
 		Bidder bddr1 = new Bidder("Sally", "Seashore", "seashellSeller@oceans.com", "879 Beaches Ave, Portland, OR", 
 				"byTheShore", "123-456-Shells");
