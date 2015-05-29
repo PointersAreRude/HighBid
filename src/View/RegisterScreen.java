@@ -28,24 +28,16 @@ import Model.Bidder;
 
 public class RegisterScreen extends JPanel implements ActionListener  {
 	 private static int FWIDTH = 20;
-	/**
-	 * label for register panel's form
-	 */
+	/** label for register panel's form */
 	private JLabel _label;
 	
-	/**
-	 * back button
-	 */
+	/** back button */
 	private JButton _backBtn;
 	
-	/**
-	 * create button
-	 */
+	/** create button */
 	private JButton _createBtn;
 	
-	/**
-	 * Form panel (using GridBagLayout)
-	 */
+	/** Form panel (using GridBagLayout) */
 	private JPanel _gbag;
 	
 	/**	First name text box*/
@@ -66,9 +58,6 @@ public class RegisterScreen extends JPanel implements ActionListener  {
 	/**	Phone number text box*/	
 	private JTextField _phoneF;
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	public RegisterScreen() {
@@ -190,26 +179,10 @@ public class RegisterScreen extends JPanel implements ActionListener  {
 	public void actionPerformed(ActionEvent e) {
 		//from Long's code
 	
+		
+		//currently does NOT have confirmation screens
 		JButton src = (JButton) e.getSource();
-		if (src == _backBtn) {
-			//show warning
-			
-			
-			//flush entered text
-			_fNameF.setText("");
-			_lNameF.setText("");
-			_emailF.setText("");
-			_addressF.setText("");
-			_nNameF.setText("");
-			_phoneF.setText("");
-			
-//			int choice = JOptionPane.showConfirmDialog(null, "Your information in this form "
-//					+ "will not be saved.  Continue back?", "Warning", JOptionPane.OK_CANCEL_OPTION);
-//			if (choice == JOptionPane.OK_OPTION) {
-//				MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "StartScreen");
-//				_warningLabel.setText("");
-//			}
-		} else if (src == _createBtn) {
+		if (src == _createBtn) {
 			String fname = _fNameF.getText();
 			String lname = _lNameF.getText();
 			String email = _emailF.getText();
@@ -221,5 +194,14 @@ public class RegisterScreen extends JPanel implements ActionListener  {
 			
 			MainFrame._auction.addBidder(aBidder);
 		}
+			//alawys flushes text and returns to prev screen
+			_fNameF.setText("");
+			_lNameF.setText("");
+			_emailF.setText("");
+			_addressF.setText("");
+			_nNameF.setText("");
+			_phoneF.setText("");
+			MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "RegPortal");
+
 	}
 }

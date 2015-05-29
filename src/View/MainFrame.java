@@ -108,6 +108,8 @@ public class MainFrame<E> extends JFrame {
 		final HomeScreen home = new HomeScreen();
 		final OptionsPanel option = new OptionsPanel();
 		final StatsHomePanel stats = new StatsHomePanel(this);
+		final RegistrationPortal regHome = new RegistrationPortal();
+		final RegisterScreen reg = new RegisterScreen();
 		
 		// Setting up CardLayout
 		CONTAINER.setLayout(CLAYOUT);
@@ -117,6 +119,8 @@ public class MainFrame<E> extends JFrame {
 		CONTAINER.add(option, "OptionsPanel");
 		CONTAINER.add(stats, "StatsHomePanel");
 		CONTAINER.add(statsView, "StatsView");
+		CONTAINER.add(regHome, "RegPortal");
+		CONTAINER.add(reg, "BidderReg");
 		
 		CLAYOUT.show(CONTAINER, "StartScreen");
 		this.add(CONTAINER);
