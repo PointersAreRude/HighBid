@@ -105,6 +105,7 @@ public class HomeScreen extends JPanel implements ActionListener {
 			MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "OptionsPanel");
 		} 
 		else if(src == _registrationBtn){
+			MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "RegPortal");
 			//TODO: add the registration panel
 		}
 		else {
