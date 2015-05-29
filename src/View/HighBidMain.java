@@ -12,7 +12,7 @@ public class HighBidMain {
 			  different JDK environments or something)
 			  Abigail - 5/20/2015 */
             public void run() {
-            	new MainFrame().setVisible(true);  
+            	new MainFrame<Object>().setVisible(true);  
             }
         });
 	}

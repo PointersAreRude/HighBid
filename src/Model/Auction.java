@@ -60,6 +60,8 @@ public class Auction {
 	 */
 	private String myFileName;
 	
+	private int BidderID;
+	
 	public Auction() {
 		this(null, null, null, null);
 	}
@@ -77,6 +79,7 @@ public class Auction {
 		myStartTime = aStartTime;
 		myEndTime = anEndTime;
 		myFacilitator = aFacilitator;
+		BidderID = 0;
 		
 		myDonors = new ArrayList<Donor>();
 		myItems = new ArrayList<Item>();
@@ -184,6 +187,8 @@ public class Auction {
 			}
 		}
 		
+		
+		
 		for (Item anItem : myItems) {
 			if (anItem.getQr() == anItemQR) {
 				itemBidOn = anItem;
@@ -197,6 +202,11 @@ public class Auction {
 			throw new IllegalArgumentException("One of the parameters is invalid.");
 		}
 		
+	}
+	
+	public int assignID() {
+		BidderID++;
+		return BidderID;
 	}
 	
 	/**

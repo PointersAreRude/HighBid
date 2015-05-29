@@ -32,7 +32,7 @@ import Model.Donor;
 import Model.Item;
 import Model.Person;
 
-public class StatsPanel<E> extends JPanel {
+public class StatsPanel<E> extends JPanel implements ActionListener {
 
 	private JScrollPane myScroller;
 	
@@ -47,8 +47,12 @@ public class StatsPanel<E> extends JPanel {
 	private E[] myArray;
 	
 	@SuppressWarnings("unchecked")
-	public StatsPanel(ArrayList<E> list) {
-		
+	public StatsPanel() {
+
+	}
+	
+	public void createList(ArrayList<E> list) {
+
 		if (!list.isEmpty() && list.get(0) instanceof Item) {
 			myArray = (E[]) new Item[list.size()];
 			
@@ -57,14 +61,13 @@ public class StatsPanel<E> extends JPanel {
 			
 		} else if (!list.isEmpty() && list.get(0) instanceof Donor) {
 			myArray = (E[]) new Donor[list.size()];
-			
-		}
+		} 
+		
 		for (int i = 0; i < list.size(); i++) {
 			myArray[i] = list.get(i);
 		}
 		
 		setUp();
-		
 	}
 	
 	public void setUp() {
@@ -80,12 +83,16 @@ public class StatsPanel<E> extends JPanel {
 		c.gridwidth = 5;
 		
 		myLabel = new JLabel();
-		if (myArray[0] != null && myArray[0] instanceof Item) {
-			myLabel.setText("Items");
-		} else if (myArray[0] != null && myArray[0] instanceof Bidder) {
-			myLabel.setText("Bidders");
-		} else if (myArray[0] != null && myArray[0] instanceof Donor) {
-			myLabel.setText("Donors");
+		if (myArray != null) {
+			if (myArray[0] instanceof Item) {
+				myLabel.setText("Items");
+			} else if (myArray[0] instanceof Bidder) {
+				myLabel.setText("Bidders");
+			} else if (myArray[0] instanceof Donor) {
+				myLabel.setText("Donors");
+			}
+		} else {
+			myLabel.setText("No List Available");
 		}
 		
 		myLabel.setFont(MainFrame.FORM_LABEL_FONT);
@@ -97,6 +104,7 @@ public class StatsPanel<E> extends JPanel {
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.weighty = 0.0;
 		myBack = new JButton("Back");
+		myBack.addActionListener(this);
 		myBack.setFont(MainFrame.FORM_TF_FONT);
 		bag.setConstraints(myBack, c);
 		add(myBack);
@@ -104,7 +112,11 @@ public class StatsPanel<E> extends JPanel {
 		c.gridheight = 50;
 		c.weighty = 2.0;
 		c.gridwidth = 5;
-		myList = new JList<E>(myArray);
+		if (myArray != null) {
+			myList = new JList<E>(myArray);
+		} else {
+			myList = new JList<E>();
+		}
 		myList.setCellRenderer(new MyCellRenderer());
 		myScroller = new JScrollPane(myList);
 		bag.setConstraints(myScroller, c);
@@ -124,16 +136,6 @@ public class StatsPanel<E> extends JPanel {
 		
 		myList.addListSelectionListener(new MyListSelectionListener(myText, myList));
 	}
-	
-//	public void paintComponent(Graphics aGraphics) {
-//		super.paintComponent(aGraphics);
-//        Graphics2D g2d = (Graphics2D) aGraphics;
-//        
-//        Shape rectangle = new Rectangle2D.Double(0, 0, getWidth(), getHeight());
-//        g2d.setPaint(Color.RED);
-//        g2d.setStroke(new BasicStroke(10));
-//        g2d.draw(rectangle);
-//	}
 	
 	private class MyListSelectionListener implements ListSelectionListener {
 		
@@ -204,6 +206,14 @@ public class StatsPanel<E> extends JPanel {
 			
 		}
 		
+	}
+
+	public void actionPerformed(ActionEvent event) {
+		JButton source = (JButton) event.getSource();
+		
+		if (source == myBack) {
+			MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "StatsHomePanel");
+		}
 	}
 	
 	private class MyCellRenderer extends JLabel implements ListCellRenderer<E> {

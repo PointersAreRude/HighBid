@@ -35,11 +35,19 @@ public class Bidder extends Person implements Comparable<Bidder>{
 	 * @param theNickName		- the nickname of the Bidder
 	 */
 	public Bidder (String theFirstName, String theLastName, String theEmail, String theAddress
+			, String theNickname, String thePhone, int theID){
+		super(theFirstName, theLastName, theEmail, theAddress, thePhone);
+		_nickName = theNickname;
+		_id = theID;
+	}
+	
+	//constructor w/o ID
+	public Bidder (String theFirstName, String theLastName, String theEmail, String theAddress
 			, String theNickname, String thePhone){
 		super(theFirstName, theLastName, theEmail, theAddress, thePhone);
 		_nickName = theNickname;
 		_id = -1;
-	}//perhaps add a constructor that doesn't need nick names?
+	}
 	
 	/**
 	 * Assigns the id of the Bidder.

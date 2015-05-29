@@ -27,8 +27,10 @@ public class StatsFrameTemp<E> extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		
-		createLists();
-		myPanel = new StatsPanel<E>(myBidderList);
+		//createLists();
+		myItemList = (ArrayList<E>) new ArrayList<Item>();
+		myPanel = new StatsPanel();
+		myPanel.createList(myItemList);
 		add(myPanel);
 		
 	}
@@ -45,7 +47,7 @@ public class StatsFrameTemp<E> extends JFrame {
 		Item itm3 = new Item("Giant Cheese Wheel", "It's yellow, and holy is it big!  Good for up to 1000 crackers!  Or to garnish you're wine cellar!", 15, 30, 876641);
 		Item itm4 = new Item("Froyo Maker", "For all your froyo cravings!  Just put in any flavor of base you want and voila, you got froyo!  "
 				+ "*Froyo base, toppings, bowls, spoons, batteries, box, and ice not included*", 10, 50, 54545454);
-		Item itm5 = new Item("Juggler's Guide for Dummy's", "Tired of dropping balls all over the floor?  Want to impress your friends at a party? "
+		Item itm5 = new Item("Juggler's Guide for Dummies", "Tired of dropping balls all over the floor?  Want to impress your friends at a party? "
 				+ " Don't have time to learn how to juggle?  Are you a dummy?  Well then this is the book for you!  Learn to juggle in one hour!", 5, 15, 300098);
 		Item itm6 = new Item("Pillow", "A cozy blue pillow to rest your pretty little head on!", 5, 10, 76535796);
 		Item itm7 = new Item("Rubber Ducky", "If it looks like a duck, swims like a duck, and quacks like a duck... it's probably not a rubber ducky.", 1, 5, 7655432);

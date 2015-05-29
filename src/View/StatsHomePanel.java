@@ -54,8 +54,11 @@ public class StatsHomePanel extends JPanel implements ActionListener {
 	 */
 	private JFileChooser fc = new JFileChooser();
 	
+	private MainFrame myFrame;
+	
 
-	public StatsHomePanel() {
+	public StatsHomePanel(MainFrame frame) {
+		myFrame = frame;
 		setSize(MainFrame.WIDTH, MainFrame.HEIGHT);
 		setLayout(null);
 		setComponents();
@@ -125,13 +128,16 @@ public class StatsHomePanel extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		JButton src = (JButton) e.getSource();
 		if(src == _viewDonorsBtn) {
-			//TODO: add donors panel
+			myFrame.setUpStatsView(MainFrame._auction.getDonors());
+			MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "StatsView");
 		} 
 		else if(src == _viewItemsBtn){
-			//TODO: add the items panel
+			myFrame.setUpStatsView(MainFrame._auction.getItems());
+			MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "StatsView");
 		}
 		else if(src == _viewBiddersBtn){
-			// TODO: add the bidder panel
+			myFrame.setUpStatsView(MainFrame._auction.getBidders());
+			MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "StatsView");
 		}
 		else{
 			//TODO: back button

@@ -28,47 +28,36 @@ import Model.Bidder;
 
 public class RegisterScreen extends JPanel implements ActionListener  {
 	 private static int FWIDTH = 20;
-	/**
-	 * label for register panel's form
-	 */
+	/** label for register panel's form */
 	private JLabel _label;
 	
-	/**
-	 * back button
-	 */
-	private JButton _backBtn;
+	/** back button */
+	protected JButton _backBtn;
 	
-	/**
-	 * create button
-	 */
-	private JButton _createBtn;
+	/** create button */
+	protected JButton _createBtn;
 	
-	/**
-	 * Form panel (using GridBagLayout)
-	 */
+	/** Form panel (using GridBagLayout) */
 	private JPanel _gbag;
 	
 	/**	First name text box*/
-	private JTextField _fNameF;
+	protected JTextField _fNameF;
 	
 	/**	Last name text box*/
-	private JTextField _lNameF;
+	protected JTextField _lNameF;
 	
 	/**	Email text box*/
-	private JTextField _emailF;
+	protected JTextField _emailF;
 	
 	/**	Address text box*/
-	private JTextField _addressF;
+	protected JTextField _addressF;
 	
 	/**	Nick name text box*/
-	private JTextField _nNameF;
+	protected JTextField _nNameF;
 	
 	/**	Phone number text box*/	
-	private JTextField _phoneF;
+	protected JTextField _phoneF;
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	public RegisterScreen() {
@@ -109,7 +98,7 @@ public class RegisterScreen extends JPanel implements ActionListener  {
 	
 	private void setupForm(){
 		_gbag = new JPanel(new GridBagLayout());
-		_gbag.setBorder(BorderFactory.createTitledBorder("Registration Fields"));
+		_gbag.setBorder(BorderFactory.createTitledBorder("<html>Registration Fields</html>"));
 		_gbag.setBounds(300, 120, 580, 500);
 		GridBagConstraints gc = new GridBagConstraints();
 		gc.gridx = 0;
@@ -190,26 +179,10 @@ public class RegisterScreen extends JPanel implements ActionListener  {
 	public void actionPerformed(ActionEvent e) {
 		//from Long's code
 	
+		
+		//currently does NOT have confirmation screens
 		JButton src = (JButton) e.getSource();
-		if (src == _backBtn) {
-			//show warning
-			
-			
-			//flush entered text
-			_fNameF.setText("");
-			_lNameF.setText("");
-			_emailF.setText("");
-			_addressF.setText("");
-			_nNameF.setText("");
-			_phoneF.setText("");
-			
-//			int choice = JOptionPane.showConfirmDialog(null, "Your information in this form "
-//					+ "will not be saved.  Continue back?", "Warning", JOptionPane.OK_CANCEL_OPTION);
-//			if (choice == JOptionPane.OK_OPTION) {
-//				MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "StartScreen");
-//				_warningLabel.setText("");
-//			}
-		} else if (src == _createBtn) {
+		if (src == _createBtn) {
 			String fname = _fNameF.getText();
 			String lname = _lNameF.getText();
 			String email = _emailF.getText();
@@ -217,9 +190,20 @@ public class RegisterScreen extends JPanel implements ActionListener  {
 			String nname = _nNameF.getText();
 			String phone = _phoneF.getText();
 			
-			Bidder aBidder = new Bidder(fname, lname, email, address, nname, phone);
+//			Bidder aBidder = new Bidder(fname, lname, email, address, nname, phone,
+//					MainFrame._auction.assignID());
 			
+			Bidder aBidder = new Bidder(fname, lname, email, address, nname, phone);
 			MainFrame._auction.addBidder(aBidder);
 		}
+			//alawys flushes text and returns to prev screen
+			_fNameF.setText("");
+			_lNameF.setText("");
+			_emailF.setText("");
+			_addressF.setText("");
+			_nNameF.setText("");
+			_phoneF.setText("");
+			MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "RegPortal");
+
 	}
 }

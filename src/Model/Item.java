@@ -21,9 +21,24 @@ public class Item implements Comparable<Item> {
 	private long _qr;
 	private ImageIcon _image;
 	private List<Bidder> _bidderList = new ArrayList<Bidder>();
+		
+	/**
+	 * Default constructor if image is optional.
+	 * 
+	 * @param name               - Name of item
+	 * @param description        - Item's description
+	 * @param minIncrement       - minimum increment bid
+	 * @param startingPrice      - the starting price
+	 * @param qr                 - the item's QR code
+	 */
+	public Item(String name, String description
+			, int minIncrement, int startingPrice, Donor donor,
+			long qr) {
+		this(name, description, minIncrement, startingPrice, donor, qr, null);
+	}
 	
 	/**
-	 * Default constructor if image, or donor is optional.
+	 * Default constructor if donor is optional.
 	 * 
 	 * @param name               - Name of item
 	 * @param description        - Item's description
@@ -33,6 +48,21 @@ public class Item implements Comparable<Item> {
 	 */
 	public Item(String name, String description
 			, int minIncrement, int startingPrice,
+			long qr, ImageIcon image) {
+		this(name, description, minIncrement, startingPrice, null, qr, image);
+	}
+	
+	/**
+	 * Default constructor if both image and donor is optional.
+	 * 
+	 * @param name               - Name of item
+	 * @param description        - Item's description
+	 * @param minIncrement       - minimum increment bid
+	 * @param startingPrice      - the starting price
+	 * @param qr                 - the item's QR code
+	 */
+	public Item(String name, String description
+			, int minIncrement, int startingPrice, 
 			long qr) {
 		this(name, description, minIncrement, startingPrice, null, qr, null);
 	}

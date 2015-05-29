@@ -4,6 +4,7 @@ import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -22,8 +23,9 @@ import Model.Auction;
  * 
  * @author Long Nguyen
  * @version 5/22/2015
+ * @param <E>
  */
-public class MainFrame extends JFrame {
+public class MainFrame<E> extends JFrame {
 	/**
 	 * the auction object
 	 */
@@ -73,6 +75,9 @@ public class MainFrame extends JFrame {
 	 * Text field's text's font
 	 */
 	protected static final Font FORM_TF_FONT = new Font("Tahoma", 0, 15);
+	
+
+	private StatsPanel<E> statsView = new StatsPanel<E>();
 
 	public MainFrame() {
 		setTitle("HighBid");
@@ -102,7 +107,11 @@ public class MainFrame extends JFrame {
 		final CreatePanel create = new CreatePanel();
 		final HomeScreen home = new HomeScreen();
 		final OptionsPanel option = new OptionsPanel();
-		final StatsHomePanel stats = new StatsHomePanel();
+		final StatsHomePanel stats = new StatsHomePanel(this);
+		final RegisterScreen reg = new RegisterScreen();
+		final RegisterEditScreen edit = new RegisterEditScreen();
+		final RegisterChooser regChoose = new RegisterChooser(edit);
+		final RegistrationPortal regHome = new RegistrationPortal(regChoose);
 		
 		// Setting up CardLayout
 		CONTAINER.setLayout(CLAYOUT);
@@ -111,9 +120,22 @@ public class MainFrame extends JFrame {
 		CONTAINER.add(home, "HomeScreen");
 		CONTAINER.add(option, "OptionsPanel");
 		CONTAINER.add(stats, "StatsHomePanel");
+		CONTAINER.add(statsView, "StatsView");
+		CONTAINER.add(regHome, "RegPortal");
+		CONTAINER.add(reg, "BidderReg");
+		CONTAINER.add(edit, "BidderEdit");
+		CONTAINER.add(regChoose, "BidderChooser");
 		
 		CLAYOUT.show(CONTAINER, "StartScreen");
 		this.add(CONTAINER);
+	}
+	
+	public void setUpStatsView(ArrayList<E> list) {
+		CONTAINER.remove(statsView);
+		statsView = new StatsPanel<E>();
+		CONTAINER.add(statsView, "StatsView");
+		statsView.createList(list);
+		
 	}
 
 }
