@@ -123,6 +123,9 @@ public class MainFrame<E> extends JFrame {
 	}
 	
 	public void setUpStatsView(ArrayList<E> list) {
+		CONTAINER.remove(statsView);
+		statsView = new StatsPanel<E>();
+		CONTAINER.add(statsView, "StatsView");
 		statsView.createList(list);
 		
 	}
