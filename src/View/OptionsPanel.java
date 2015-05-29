@@ -105,6 +105,8 @@ public class OptionsPanel extends JPanel implements ActionListener{
 	
 	private JButton _upload;
 	
+	private ImageIcon _image;
+	
 	
 	public OptionsPanel() {
 		setSize(MainFrame.WIDTH, MainFrame.HEIGHT);
@@ -312,10 +314,10 @@ public class OptionsPanel extends JPanel implements ActionListener{
 		_itemBtn.addActionListener(this);
 		_itemPanel.add(_itemBtn, gc);
 		
-		_itemPanel.setBounds(10,110,900,600);
+		_itemPanel.setBounds(10,110,900,550);
 		
 		_IInfo = new JLabel();
-		_IInfo.setBounds(350,700,400,60);
+		_IInfo.setBounds(350,650,400,65);
 		_IInfo.setForeground(Color.RED);
 		_IInfo.setFont(_smallFont);
 		
@@ -414,7 +416,6 @@ public class OptionsPanel extends JPanel implements ActionListener{
 				_IInfo.setText("Wrong input format!");
 			}
 		}
-		ImageIcon image = null;
 		
 		JButton src = (JButton) e.getSource();
 		if(src == _addDonorBtn) {
@@ -445,20 +446,23 @@ public class OptionsPanel extends JPanel implements ActionListener{
 					Donor donor = new Donor(first, last, email, address, phone);
 					if(donor != null && !checkDonor(donor)) {
 						MainFrame._auction.addDonor(donor);
-						_combo.addItem(first + " " + last);
+						_combo.addItem(first + " " + last + " - " + email);
 						clearText(donorTF);
 						_infoLabel.setText(first + " " + last + " has been added.");
 					} else {
-						_infoLabel.setText("Donor already added.");
+						_infoLabel.setText("Donor already exists.");
 					}
 				} catch (Exception err) {
 					System.out.println(err);
 				}
 			}
 		} else if (src == _upload) {
-			if(uploadImage() != null) {
-				image = new ImageIcon(uploadImage());
+			BufferedImage img = uploadImage();
+			if(img != null) {
+				_image = new ImageIcon(img);
 				_IInfo.setText("Image uploaded");
+			} else {
+				_IInfo.setText("Couldn't upload the image.");
 			}
 		} else if (src == _itemBtn) {
 			if(checkEmpty(itemTF)) {
@@ -467,15 +471,15 @@ public class OptionsPanel extends JPanel implements ActionListener{
 				Item item = null;
 				try {
 					if(_combo.getSelectedItem().equals("")) {
-						item = new Item(itemName, itemDescription, minIncrement, startPrice, qr, image);
-//					} else if (image == null) {
-//						item = new Item(itemName, itemDescription, minIncrement, startPrice, getDonor(), qr);
-//					} else if (image == null && _combo.getSelectedItem().equals("")){
-//						item = new Item(itemName, itemDescription, minIncrement, startPrice, qr);
+						item = new Item(itemName, itemDescription, minIncrement, startPrice, qr, _image);
+					} else if (_image == null) {
+						item = new Item(itemName, itemDescription, minIncrement, startPrice, getDonor(), qr);
+					} else if (_image == null && _combo.getSelectedItem().equals("")){
+						item = new Item(itemName, itemDescription, minIncrement, startPrice, qr);
 					} else {
-						item = new Item(itemName, itemDescription, minIncrement, startPrice, getDonor(), qr, image);
+						item = new Item(itemName, itemDescription, minIncrement, startPrice, getDonor(), qr, _image);
 					}
-					if(item != null && minIncrement > 0) {
+					if(item != null && minIncrement > 0 && !checkItem(item)) {
 						MainFrame._auction.addItem(item);
 						if(getDonor() != null) {
 							getDonor().add(item);
@@ -485,6 +489,8 @@ public class OptionsPanel extends JPanel implements ActionListener{
 					    	_IInfo.setText(itemName + " has been added.");
 					    }	
 						clearText(itemTF);
+					} else {
+						_IInfo.setText("Item already exists.");
 					}
 				} catch(Exception err) {
 					err.printStackTrace();
@@ -493,9 +499,18 @@ public class OptionsPanel extends JPanel implements ActionListener{
 		}
 	}
 	
+	private boolean checkItem(Item item) {
+		for(Item i : MainFrame._auction.getItems()) {
+			if (i.getQr() == item.getQr()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	private Donor getDonor() {
 		for(Donor donor: MainFrame._auction.getDonors()) {
-			String donorName = donor.getFirstName() + " " + donor.getLastName();
+			String donorName = donor.getFirstName() + " " + donor.getLastName() + " - " + donor.getEmail();
 			if(_combo.getSelectedItem().toString().equals(donorName)) {
 				return donor;
 			}
@@ -552,8 +567,8 @@ public class OptionsPanel extends JPanel implements ActionListener{
 
 	private boolean checkDonor(Donor donor) {
 		for(Donor d: MainFrame._auction.getDonors()) {
-			String donorToAdd = donor.getFirstName() + donor.getLastName();
-			String donorInList = d.getFirstName() + d.getLastName();
+			String donorToAdd = donor.getFirstName() + donor.getLastName() + donor.getEmail();
+			String donorInList = d.getFirstName() + d.getLastName() + d.getEmail();
 			if(donorToAdd.equals(donorInList)) {
 				return true;
 			}
