@@ -72,11 +72,11 @@ public class RegistrationPortal extends JPanel implements ActionListener {
 	 * Add the component to the panel.
 	 */
 	private void addComponents() {
-		this.add(_label);
-		this.add(_registerBtn);
-		this.add(_editBtn);
-		this.add(_removeBtn);
-		this.add(_backBtn);
+		add(_label);
+		add(_registerBtn);
+		add(_editBtn);
+		add(_removeBtn);
+		add(_backBtn);
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -84,7 +84,7 @@ public class RegistrationPortal extends JPanel implements ActionListener {
 		if (src == _registerBtn) {
 			MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "BidderReg");
 		} else if (src == _editBtn) {
-			// MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "editBidr");
+			MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "BidderEdit");
 		} else if (src == _removeBtn) {
 			// MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "removeBidr");
 		} else {

@@ -190,7 +190,8 @@ public class RegisterScreen extends JPanel implements ActionListener  {
 			String nname = _nNameF.getText();
 			String phone = _phoneF.getText();
 			
-			Bidder aBidder = new Bidder(fname, lname, email, address, nname, phone);
+			Bidder aBidder = new Bidder(fname, lname, email, address, nname, phone,
+					MainFrame._auction.assignID());
 			
 			MainFrame._auction.addBidder(aBidder);
 		}
