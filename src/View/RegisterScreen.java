@@ -32,10 +32,10 @@ public class RegisterScreen extends JPanel implements ActionListener  {
 	private JLabel _label;
 	
 	/** back button */
-	private JButton _backBtn;
+	protected JButton _backBtn;
 	
 	/** create button */
-	private JButton _createBtn;
+	protected JButton _createBtn;
 	
 	/** Form panel (using GridBagLayout) */
 	private JPanel _gbag;

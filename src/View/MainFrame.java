@@ -110,6 +110,7 @@ public class MainFrame<E> extends JFrame {
 		final StatsHomePanel stats = new StatsHomePanel(this);
 		final RegistrationPortal regHome = new RegistrationPortal();
 		final RegisterScreen reg = new RegisterScreen();
+		final RegisterEditScreen edit = new RegisterEditScreen();
 		
 		// Setting up CardLayout
 		CONTAINER.setLayout(CLAYOUT);
@@ -121,6 +122,7 @@ public class MainFrame<E> extends JFrame {
 		CONTAINER.add(statsView, "StatsView");
 		CONTAINER.add(regHome, "RegPortal");
 		CONTAINER.add(reg, "BidderReg");
+		CONTAINER.add(edit, "BidderEdit");
 		
 		CLAYOUT.show(CONTAINER, "StartScreen");
 		this.add(CONTAINER);
