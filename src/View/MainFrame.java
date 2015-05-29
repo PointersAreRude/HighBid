@@ -102,6 +102,7 @@ public class MainFrame extends JFrame {
 		final CreatePanel create = new CreatePanel();
 		final HomeScreen home = new HomeScreen();
 		final OptionsPanel option = new OptionsPanel();
+		final StatsHomePanel stats = new StatsHomePanel();
 		
 		// Setting up CardLayout
 		CONTAINER.setLayout(CLAYOUT);
@@ -109,6 +110,7 @@ public class MainFrame extends JFrame {
 		CONTAINER.add(create,"CreatePanel");
 		CONTAINER.add(home, "HomeScreen");
 		CONTAINER.add(option, "OptionsPanel");
+		CONTAINER.add(stats, "StatsHomePanel");
 		
 		CLAYOUT.show(CONTAINER, "StartScreen");
 		this.add(CONTAINER);

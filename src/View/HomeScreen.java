@@ -109,7 +109,7 @@ public class HomeScreen extends JPanel implements ActionListener {
 		}
 		else {
 			// TODO: add the viewAcution panel
-
+			MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "StatsHomePanel");
 		}
 	}
 	

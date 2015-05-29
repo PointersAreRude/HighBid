@@ -135,15 +135,16 @@ public class StatsHomePanel extends JPanel implements ActionListener {
 		}
 		else{
 			//TODO: back button
+			MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "HomeScreen");
 		}
 	}
 	
-	public static void main(String[] args){
-		JFrame frame = new JFrame();
-		StatsHomePanel te = new StatsHomePanel();
-		frame.add(te);
-		frame.setSize(MainFrame.WIDTH, MainFrame.HEIGHT);
-		frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
-		frame.setVisible(true);
-	}
+//	public static void main(String[] args){
+//		JFrame frame = new JFrame();
+//		StatsHomePanel te = new StatsHomePanel();
+//		frame.add(te);
+//		frame.setSize(MainFrame.WIDTH, MainFrame.HEIGHT);
+//		frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
+//		frame.setVisible(true);
+//	}
 }
