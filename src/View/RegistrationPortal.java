@@ -21,14 +21,17 @@ public class RegistrationPortal extends JPanel implements ActionListener {
 	private static final int btnX = 150;
 	private static final int btnY = 85;
 
+	private RegisterChooser _chooser;
+	
 	private JLabel _label;
 	private JButton _registerBtn;
 	private JButton _editBtn;
 	private JButton _removeBtn;
 	private JButton _backBtn;
 
-	public RegistrationPortal() {
+	public RegistrationPortal(RegisterChooser theChooser) {
 		setSize(MainFrame.WIDTH, MainFrame.HEIGHT);
+		_chooser = theChooser;
 		setLayout(null);
 		setComponents();
 		addComponents();
@@ -44,22 +47,16 @@ public class RegistrationPortal extends JPanel implements ActionListener {
 		_label.setForeground(Color.BLUE);
 
 		_registerBtn = new JButton("Add");
-		_registerBtn.setLocation((MainFrame.WIDTH / 2) - btnX * 2, 400);
+		_registerBtn.setLocation((MainFrame.WIDTH / 3), 400);
 		_registerBtn.setSize(btnX, btnY);
 		_registerBtn.setFont(MainFrame.BUTTON_FONT);
 		_registerBtn.addActionListener(this);
 
-		_editBtn = new JButton("<html>Edit<br>Add ID</html>");
-		_editBtn.setLocation((MainFrame.WIDTH / 2), 400);
+		_editBtn = new JButton("<html>Edit / Remove</html>");
+		_editBtn.setLocation((MainFrame.WIDTH / 3) * 2, 400);
 		_editBtn.setSize(btnX, btnY);
 		_editBtn.setFont(MainFrame.BUTTON_FONT);
 		_editBtn.addActionListener(this);
-
-		_removeBtn = new JButton("<html>Remove</html>");
-		_removeBtn.setLocation((MainFrame.WIDTH / 2) + btnX * 2, 400);
-		_removeBtn.setSize(btnX, btnY);
-		_removeBtn.setFont(MainFrame.BUTTON_FONT);
-		_removeBtn.addActionListener(this);
 
 		_backBtn = new JButton("Back");
 		_backBtn.setLocation((MainFrame.WIDTH / 2) - 550, 620);
@@ -75,7 +72,7 @@ public class RegistrationPortal extends JPanel implements ActionListener {
 		add(_label);
 		add(_registerBtn);
 		add(_editBtn);
-		add(_removeBtn);
+//		add(_removeBtn);
 		add(_backBtn);
 	}
 
@@ -84,9 +81,10 @@ public class RegistrationPortal extends JPanel implements ActionListener {
 		if (src == _registerBtn) {
 			MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "BidderReg");
 		} else if (src == _editBtn) {
-			MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "BidderEdit");
-		} else if (src == _removeBtn) {
-			// MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "removeBidr");
+			_chooser.createList();;
+			MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "BidderChooser");
+//		} else if (src == _removeBtn) {
+//			// MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "removeBidr");
 		} else {
 			MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "HomeScreen");
 		}

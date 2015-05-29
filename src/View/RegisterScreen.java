@@ -98,7 +98,7 @@ public class RegisterScreen extends JPanel implements ActionListener  {
 	
 	private void setupForm(){
 		_gbag = new JPanel(new GridBagLayout());
-		_gbag.setBorder(BorderFactory.createTitledBorder("Registration Fields"));
+		_gbag.setBorder(BorderFactory.createTitledBorder("<html>Registration Fields</html>"));
 		_gbag.setBounds(300, 120, 580, 500);
 		GridBagConstraints gc = new GridBagConstraints();
 		gc.gridx = 0;
@@ -190,9 +190,10 @@ public class RegisterScreen extends JPanel implements ActionListener  {
 			String nname = _nNameF.getText();
 			String phone = _phoneF.getText();
 			
-			Bidder aBidder = new Bidder(fname, lname, email, address, nname, phone,
-					MainFrame._auction.assignID());
+//			Bidder aBidder = new Bidder(fname, lname, email, address, nname, phone,
+//					MainFrame._auction.assignID());
 			
+			Bidder aBidder = new Bidder(fname, lname, email, address, nname, phone);
 			MainFrame._auction.addBidder(aBidder);
 		}
 			//alawys flushes text and returns to prev screen
