@@ -57,7 +57,9 @@ public class HomeScreen extends JPanel implements ActionListener {
 	 */
 	private JFileChooser fc = new JFileChooser();
 	
-
+	/**
+	 * constractor for the homescreen
+	 */
 	public HomeScreen() {
 		setSize(MainFrame.WIDTH, MainFrame.HEIGHT);
 		setLayout(null);
@@ -152,16 +154,16 @@ public class HomeScreen extends JPanel implements ActionListener {
 			MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "StatsHomePanel");
 		}
 		else{
-			
+			//TODO: implement the save button
 		}
 	}
 	
-	public static void main(String[] args){
-		JFrame frame = new JFrame();
-		HomeScreen te = new HomeScreen();
-		frame.add(te);
-		frame.setSize(MainFrame.WIDTH, MainFrame.HEIGHT);
-		frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
-		frame.setVisible(true);
-	}
+//	public static void main(String[] args){
+//		JFrame frame = new JFrame();
+//		HomeScreen te = new HomeScreen();
+//		frame.add(te);
+//		frame.setSize(MainFrame.WIDTH, MainFrame.HEIGHT);
+//		frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
+//		frame.setVisible(true);
+//	}
 }
