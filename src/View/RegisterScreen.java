@@ -226,10 +226,9 @@ public class RegisterScreen extends JPanel implements ActionListener  {
 				String nname = _nNameF.getText();
 				String phone = _phoneF.getText();
 				
-	//			Bidder aBidder = new Bidder(fname, lname, email, address, nname, phone,
-	//					MainFrame._auction.assignID());
+				Bidder aBidder = new Bidder(fname, lname, email, address, nname, phone,
+						MainFrame._auction.assignID());
 				
-				Bidder aBidder = new Bidder(fname, lname, email, address, nname, phone);
 				MainFrame._auction.addBidder(aBidder);
 				flushFields();
 				MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "RegPortal");
