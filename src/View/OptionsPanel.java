@@ -12,18 +12,24 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.border.Border;
+import javax.swing.table.DefaultTableModel;
 
 import Model.Donor;
 import Model.Item;
@@ -43,27 +49,26 @@ public class OptionsPanel extends JPanel implements ActionListener{
 	
 	private Color _color = Color.WHITE;
 	
-	private Font _smallFont  = new Font("Tahoma", 0, 28);
+	private Color _labelColor = Color.RED;
+	
+	private Font _smallFont  = new Font("Tahoma", 0, 20);
 	
 	private Dimension _smallDimension  = new Dimension(MainFrame.WIDTH / 7, 100);
 	
 	private JPanel _leftPanel;
 	
-	private JPanel _removePanel;
-	
 	private JPanel _mainContainer;
 	
 	private CardLayout _clayout;
 	
-	private JButton _addDonorBtn;
-	
-	private JButton _addItemBtn;
-	
-	private JButton _removeBtn;
-	
 	private JButton _backBtn;
 	
-	/*************** donor panel's components *******************/
+	/*************** add panel's component *********************/
+	private JTabbedPane _addPanel;
+	
+	private JButton _addBtn;
+	
+	/*************** add donor panel's components **************/
 	private JPanel _donorPanel;
 	
 	private JPanel _DContainer;
@@ -82,7 +87,7 @@ public class OptionsPanel extends JPanel implements ActionListener{
 	
 	private JButton _donorBtn;
 	
-	/*************** item panel's components *******************/
+	/*************** add item panel's components ***************/
 	private JPanel _itemPanel;
 	
 	private JPanel _IContainer;
@@ -101,30 +106,110 @@ public class OptionsPanel extends JPanel implements ActionListener{
 	
 	private JComboBox<String> _combo;
 	
+	private DefaultComboBoxModel<String> _comboModel;
+	
 	private JLabel _IInfo;
 	
 	private JButton _upload;
 	
 	private ImageIcon _image;
 	
+	/************* remove panel's components ******************/
+	private JTabbedPane _removePanel;
+	
+	private JButton _removeBtn;
+	
+	/************ remove donor panel's components ************/	
+	private JPanel _removeDonorPanel;
+	
+	private JTable _donorTable;
+	
+	private DefaultTableModel _model;
+	
+	private JButton _removeDonorBtn;
+	
+	private JLabel _removeDonorWarning;
+	
+	/************ remove item panel's components *************/
+	private JPanel _removeItemPanel;
+	
 	
 	public OptionsPanel() {
 		setSize(MainFrame.WIDTH, MainFrame.HEIGHT);
 		setLayout(new BorderLayout());
 		setLeftPanel();
-		setItemPanel();
-		setDonorPanel();
 		setRemovePanel();
+		setAddPanel();
 		addComponents();
 	}
 
 	private void setRemovePanel() {
-		_removePanel = new JPanel();
-		_removePanel.setBackground(Color.RED);
+		_removePanel = new JTabbedPane();
+		setRemoveDonorPanel();
+		setRemoveItemPanel();
+		_removePanel.add("Remove Donor", _removeDonorPanel);
+		_removePanel.add("Remove Item", _removeItemPanel);
+		
+	}
+	
+	private void setRemoveDonorPanel() {
+		_removeItemPanel = new JPanel();
+		
+	}
+	
+	private void setRemoveItemPanel() {
+		_removeDonorPanel = new JPanel(null);	
+		_model = new DefaultTableModel() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+			
+			public boolean isCellEditable(int rowIndex, int mColIndex) {
+				return false;
+			}			
+		};
+		String[] colNames = {"First Name", "Last Name", "Email", "Address", "Phone"};
+		for(int i = 0; i < colNames.length; i++) {
+			_model.addColumn(colNames[i]);
+		}
+		_donorTable = new JTable(_model);
+		_donorTable.setFillsViewportHeight(true);
+		
+		JScrollPane scrollPane = new JScrollPane(_donorTable);
+		scrollPane.setBounds(120, 100, 800, 500);
+		
+		_removeDonorBtn = new JButton("Remove");
+	    //_removeDonorBtn.setPreferredSize(new Dimension(150,60));
+		_removeDonorBtn.setFont(_smallFont);
+		_removeDonorBtn.setBounds(770, 630, 150, 50);
+		_removeDonorBtn.addActionListener(this);
+		
+		JLabel info = new JLabel("Select a donor from the table below, and click remove.");
+		info.setBounds(120,30,800,50);
+		info.setFont(_smallFont);
+		
+		_removeDonorWarning = new JLabel();
+		_removeDonorWarning.setFont(_smallFont);
+		_removeDonorWarning.setForeground(_labelColor);
+		_removeDonorWarning.setBounds(120,630,700,50);
+		
+		_removeDonorPanel.add(scrollPane);
+		_removeDonorPanel.add(_removeDonorBtn);
+		_removeDonorPanel.add(info);
+		_removeDonorPanel.add(_removeDonorWarning);
 		
 	}
 
-	private void setDonorPanel() {
+	private void setAddPanel() {
+		_addPanel = new JTabbedPane();
+		setAddDonorPanel();
+		setAddItemPanel();
+		_addPanel.add("Add Donor", _DContainer);
+		_addPanel.add("Add Item", _IContainer);
+	}
+
+	private void setAddDonorPanel() {
 		_DContainer = new JPanel();
 		_DContainer.setLayout(null);
 		JLabel donorLabel = new JLabel("Donor Form");
@@ -204,8 +289,8 @@ public class OptionsPanel extends JPanel implements ActionListener{
 		_donorPanel.setBounds(250,120,500,500);
 		
 		_infoLabel = new JLabel();
-		_infoLabel.setBounds(350,600,400,100);
-		_infoLabel.setForeground(Color.RED);
+		_infoLabel.setBounds(350,600,800,100);
+		_infoLabel.setForeground(_labelColor);
 		_infoLabel.setFont(_smallFont);
 		
 		_DContainer.add(donorLabel);
@@ -214,7 +299,7 @@ public class OptionsPanel extends JPanel implements ActionListener{
 		
 	}
 
-	private void setItemPanel() {
+	private void setAddItemPanel() {
 		
 		JLabel itemLabel = new JLabel("Item Form");
 		itemLabel.setFont(new Font("Tahoma", 0, 50));
@@ -267,8 +352,10 @@ public class OptionsPanel extends JPanel implements ActionListener{
 		gc.gridy = 0;
 		gc.gridx = 1;
 		
+		_comboModel = new DefaultComboBoxModel<String>();
 		_combo = new JComboBox<String>();
-		_combo.addItem("");
+		_combo.setModel(_comboModel);
+		_comboModel.insertElementAt("", 0);
 		_combo.setPrototypeDisplayValue("    this controls combobox's width    ");
 		_itemPanel.add(_combo,gc);
 		
@@ -317,8 +404,8 @@ public class OptionsPanel extends JPanel implements ActionListener{
 		_itemPanel.setBounds(10,110,900,550);
 		
 		_IInfo = new JLabel();
-		_IInfo.setBounds(350,650,400,65);
-		_IInfo.setForeground(Color.RED);
+		_IInfo.setBounds(220,650,800,65);
+		_IInfo.setForeground(_labelColor);
 		_IInfo.setFont(_smallFont);
 		
 		_IContainer.add(_itemPanel);
@@ -338,20 +425,14 @@ public class OptionsPanel extends JPanel implements ActionListener{
 		_leftPanel.setBorder(border);
 		_leftPanel.setSize(MainFrame.WIDTH / 8, MainFrame.HEIGHT);
 		
-		_addDonorBtn = new JButton("Add Donor");
-		_addDonorBtn.setPreferredSize(_smallDimension);
-		_addDonorBtn.setFont(_smallFont);
-		_addDonorBtn.setFocusPainted(false);
-		_addDonorBtn.setBackground(_color);
-		_addDonorBtn.addActionListener(this);
-		
-		_addItemBtn = new JButton("Add Item");
-		_addItemBtn.setPreferredSize(_smallDimension);
-		_addItemBtn.setFont(_smallFont);
-		_addItemBtn.setFocusPainted(false);
-		_addItemBtn.addActionListener(this);
-		
-		_removeBtn = new JButton("Delete");
+		_addBtn = new JButton("Add");
+		_addBtn.setPreferredSize(_smallDimension);
+		_addBtn.setFont(_smallFont);
+		_addBtn.setFocusPainted(false);
+		_addBtn.setBackground(_color);
+		_addBtn.addActionListener(this);
+
+		_removeBtn = new JButton("Remove");
 		_removeBtn.setPreferredSize(_smallDimension);
 		_removeBtn.setFont(_smallFont);
 		_removeBtn.setFocusPainted(false);
@@ -362,9 +443,7 @@ public class OptionsPanel extends JPanel implements ActionListener{
 		_backBtn.setFont(_smallFont);;
 		_backBtn.addActionListener(this);
 		
-		_leftPanel.add(_addDonorBtn, gc);
-		gc.gridy++;
-		_leftPanel.add(_addItemBtn, gc);
+		_leftPanel.add(_addBtn, gc);
 		gc.gridy++;
 		_leftPanel.add(_removeBtn, gc);
 		gc.gridy++;
@@ -379,8 +458,7 @@ public class OptionsPanel extends JPanel implements ActionListener{
 		_clayout = new CardLayout();
 		_mainContainer = new JPanel();
 		_mainContainer.setLayout(_clayout);
-		_mainContainer.add(_IContainer, "AddItem");
-		_mainContainer.add(_DContainer, "AddDonor");
+		_mainContainer.add(_addPanel, "Add");
 		_mainContainer.add(_removePanel, "Remove");
 		_mainContainer.add(home, "Home");
 		_clayout.show(_mainContainer, "AddDonor");
@@ -418,35 +496,37 @@ public class OptionsPanel extends JPanel implements ActionListener{
 		}
 		
 		JButton src = (JButton) e.getSource();
-		if(src == _addDonorBtn) {
-			_clayout.show(_mainContainer, "AddDonor");
-			setBackGround(_addDonorBtn);
+		if(src == _addBtn) {
+			_clayout.show(_mainContainer, "Add");
+			setBackGround(_addBtn);
 			clearText(itemTF);
-		} else if (src == _addItemBtn) {
-			_clayout.show(_mainContainer, "AddItem");
-			setBackGround(_addItemBtn);
-			clearText(donorTF);
-			_infoLabel.setText("");
+			_IInfo.setText("");
+			_removeDonorWarning.setText("");
 		} else if (src == _removeBtn) {
 			_clayout.show(_mainContainer, "Remove");
 			setBackGround(_removeBtn);
 			clearText(itemTF);
 			clearText(donorTF);
+			_IInfo.setText("");
 			_infoLabel.setText("");
 		} else if (src == _backBtn){
 			MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "HomeScreen");
 			clearText(donorTF);
 			clearText(itemTF);
 			_infoLabel.setText("");
+			_IInfo.setText("");
+			_removeDonorWarning.setText("");
 		} else if (src == _donorBtn) {
 			if(checkEmpty(donorTF)) {
 				_infoLabel.setText("Please enter all required fields.");
 			} else {
 				try {
 					Donor donor = new Donor(first, last, email, address, phone);
+					DefaultTableModel model = (DefaultTableModel) _donorTable.getModel();
+					model.addRow(new Object[]{first, last, email, address, phone});
 					if(donor != null && !checkDonor(donor)) {
 						MainFrame._auction.addDonor(donor);
-						_combo.addItem(first + " " + last + " - " + email);
+						_comboModel.addElement(first + " " + last + " - " + email);
 						clearText(donorTF);
 						_infoLabel.setText(first + " " + last + " has been added.");
 					} else {
@@ -496,6 +576,18 @@ public class OptionsPanel extends JPanel implements ActionListener{
 					err.printStackTrace();
 				}
 			}
+		} else if (src == _removeDonorBtn) {
+			int index = _donorTable.getSelectedRow();
+			if(index == -1) {
+				_removeDonorWarning.setText("Please select a donor first.");
+			} else {
+				Donor donor = MainFrame._auction.getDonors().get(index);
+				int comboIndex = getDonorIndex(donor)+1;
+				MainFrame._auction.deleteDonor(donor);
+				_comboModel.removeElementAt(comboIndex);
+				_model.removeRow(index);
+				_removeDonorWarning.setText(donor.getFirstName() + " " +donor.getLastName() + " has been removed.");
+			}
 		}
 	}
 	
@@ -506,6 +598,16 @@ public class OptionsPanel extends JPanel implements ActionListener{
 			}
 		}
 		return false;
+	}
+	
+	private int getDonorIndex(Donor donor) {
+		final List<Donor> list = MainFrame._auction.getDonors();
+		for(Donor d : list) {
+			if(d.equals(donor)) {
+				return list.indexOf(donor);
+			}
+		}
+		return -1;
 	}
 
 	private Donor getDonor() {
@@ -544,18 +646,12 @@ public class OptionsPanel extends JPanel implements ActionListener{
 	}
 	
 	private void setBackGround(JButton btn) {
-		if(btn == _addItemBtn) {
-			_addItemBtn.setBackground(_color);
-			_addDonorBtn.setBackground(UIManager.getColor("Button.background"));
-			_removeBtn.setBackground(UIManager.getColor("Button.background"));
-		} else if (btn == _addDonorBtn) {
-			_addDonorBtn.setBackground(_color);
-			_addItemBtn.setBackground(UIManager.getColor("Button.background"));
+		if (btn == _addBtn) {
+			_addBtn.setBackground(_color);
 			_removeBtn.setBackground(UIManager.getColor("Button.background"));
 		} else if (btn == _removeBtn){
 			_removeBtn.setBackground(_color);
-			_addDonorBtn.setBackground(UIManager.getColor("Button.background"));
-			_addItemBtn.setBackground(UIManager.getColor("Button.background"));
+			_addBtn.setBackground(UIManager.getColor("Button.background"));
 		}
 	}
 
