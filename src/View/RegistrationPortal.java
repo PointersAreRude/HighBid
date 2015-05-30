@@ -26,7 +26,6 @@ public class RegistrationPortal extends JPanel implements ActionListener {
 	private JLabel _label;
 	private JButton _registerBtn;
 	private JButton _editBtn;
-	private JButton _removeBtn;
 	private JButton _backBtn;
 
 	public RegistrationPortal(RegisterChooser theChooser) {

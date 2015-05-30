@@ -14,6 +14,7 @@ import Model.Bidder;
  * @author Robbie Nichols
  * @version 5/29/2015
  */
+@SuppressWarnings("serial")
 public class RegisterEditScreen extends RegisterScreen {
 
 	/** The bidder to edit.*/

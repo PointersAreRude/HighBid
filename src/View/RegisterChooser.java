@@ -3,16 +3,12 @@ package View;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -21,7 +17,6 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.ListCellRenderer;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -103,22 +98,21 @@ public class RegisterChooser extends JPanel implements ActionListener {
 		update();
 	}
 	
-	
-	
 	public void setComponents(){
 		JLabel title = new JLabel("Bidder Edit");
 		title.setFont(new Font("Tahoma", 0, 70));
 		title.setForeground(Color.BLUE);
+		title.setAlignmentX(Component.CENTER_ALIGNMENT);
 		add(title);
 		
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		
+
 		JPanel listPane = new JPanel();
 		listPane.setLayout(new BoxLayout(listPane, BoxLayout.PAGE_AXIS));
 		
 		//list
 		if (!_isEmpty) {
-				_label.setText("Select a Bidder:");
+			_label.setText("Select a Bidder:");
 		} else {
 			_label.setText("No Bidders Available");
 		}
@@ -130,14 +124,14 @@ public class RegisterChooser extends JPanel implements ActionListener {
 			_list = new JList<Bidder>();
 		}
 
+		_label.setFont(MainFrame.FORM_LABEL_FONT);
 		listPane.add(_label, BorderLayout.NORTH);
 		_list.setCellRenderer(new MyCellRenderer());
+		_list.setLayoutOrientation(JList.VERTICAL_WRAP);
 		_scroller = new JScrollPane(_list);
 		_scroller.setPreferredSize(new Dimension(MainFrame.WIDTH -200, MainFrame.HEIGHT - 400));
 		listPane.add(_scroller);		
 		_list.addListSelectionListener(new MyListSelectionListener(_list));
-		
-
 		
 		//buttons
 		JPanel btnPane = new JPanel();
@@ -230,12 +224,13 @@ public class RegisterChooser extends JPanel implements ActionListener {
 		}
 	}
 
-	@SuppressWarnings("serial")
 	private class MyCellRenderer extends JLabel implements ListCellRenderer<Bidder> {
 
-		public Component getListCellRendererComponent(JList<? extends Bidder> list, Bidder value, int index, 
-														boolean isSelected, boolean cellHasFocus) {
-			String toDisplay = value.getFirstName() + " " + value.getLastName() + ":" + value.getid();
+		//make list have multiple rows?
+		public Component getListCellRendererComponent(JList<? extends Bidder> list, 
+				Bidder value, int index, boolean isSelected, boolean cellHasFocus) {
+			
+			String toDisplay = value.getFirstName() + " " + value.getLastName() + " : " + value.getid();
 			
 			setText(toDisplay);
 			if (isSelected) {
