@@ -76,7 +76,7 @@ public class RegisterScreen extends JPanel implements ActionListener  {
 	}
 	
 	private void setComponents(){
-		_label = new JLabel("Bidder Registration Form");
+		_label = new JLabel("<html>Registration Form</html>");
 		_label.setFont(new Font("Tahoma", 0, 50));
 		_label.setBounds((int)(MainFrame.WIDTH / 2.7), 20,300,100);
 		_label.setForeground(Color.BLUE);

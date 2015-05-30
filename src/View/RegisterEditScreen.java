@@ -19,6 +19,7 @@ public class RegisterEditScreen extends RegisterScreen {
 	
 	public void setBidder(Bidder theBidder){
 		_bidder = theBidder;		
+		setForm();
 	}
 	
 	private void detectChanges(){
@@ -71,7 +72,7 @@ public class RegisterEditScreen extends RegisterScreen {
 			_addressF.setText("");
 			_nNameF.setText("");
 			_phoneF.setText("");
-			MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "RegPortal");
+			MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "BidderChooser");
 
 	}
 	
