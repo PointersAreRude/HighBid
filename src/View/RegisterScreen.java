@@ -84,19 +84,23 @@ public class RegisterScreen extends JPanel implements ActionListener  {
 		_label.setBounds((int)(MainFrame.WIDTH / 2.7), 20,300,100);
 		_label.setForeground(Color.BLUE);
 		
-		// Set back button
 		_backBtn = new JButton("Back");
 		_backBtn.setBounds(20, MainFrame.HEIGHT - 100, 175, 60);
 		_backBtn.setFont(MainFrame.BUTTON_FONT);
 		_backBtn.addActionListener(this);
 		
-		// Set create button
 		_createBtn = new JButton("Finish");
 		_createBtn.setBounds(MainFrame.WIDTH - 200, MainFrame.HEIGHT - 100, 175, 60);
 		_createBtn.setFont(MainFrame.BUTTON_FONT);
 		_createBtn.addActionListener(this);
 		
 		setupForm();
+		
+		JLabel reqd = new JLabel("* required fields");
+		reqd.setFont(MainFrame.FORM_LABEL_FONT);
+		reqd.setBounds((int)(MainFrame.WIDTH / 2.7), MainFrame.HEIGHT - 200,300,100);
+
+		add(reqd);
 	}
 	
 	private void setupForm(){
@@ -108,74 +112,29 @@ public class RegisterScreen extends JPanel implements ActionListener  {
 		gc.gridy = 0;
 		gc.anchor = GridBagConstraints.LINE_END;
 		
-		JLabel fNameL = new JLabel("First name: ");
-		fNameL.setFont(MainFrame.FORM_LABEL_FONT);
-		_gbag.add(fNameL, gc);
-		
-		gc.gridy++;
-		JLabel lNameL = new JLabel("Last name: ");
-		lNameL.setFont(MainFrame.FORM_LABEL_FONT);
-		_gbag.add(lNameL, gc);
-		
-		gc.gridy++;
-		JLabel emailL = new JLabel("email: ");
-		emailL.setFont(MainFrame.FORM_LABEL_FONT);
-		_gbag.add(emailL, gc);
-		
-		gc.gridy++;
-		JLabel addressL = new JLabel("Address: ");
-		addressL.setFont(MainFrame.FORM_LABEL_FONT);
-		_gbag.add(addressL, gc);
-		
-		gc.gridy++;
-		JLabel nNameL = new JLabel("Nick name: ");
-		nNameL.setFont(MainFrame.FORM_LABEL_FONT);
-		_gbag.add(nNameL, gc);
-		
-		gc.gridy++;
-		JLabel phoneL = new JLabel("Phone number: ");
-		phoneL.setFont(MainFrame.FORM_LABEL_FONT);
-		_gbag.add(phoneL, gc);
-		
+		//labels
+		String[] fields = {"First name:* ", "Last name:* ", "Email:* ", "Address:* ", "Nick name:  ", "Phone number:* "};
+		for(int i = 0; i < 6; i++){
+			JLabel tmp = new JLabel(fields[i]);
+			tmp.setFont(MainFrame.FORM_LABEL_FONT);
+			_gbag.add(tmp, gc);
+			gc.gridy++;
+		}
+			
 		gc.weighty = 1;
-				
 		gc.gridy = 0;
 		gc.gridx = 1;
-		_fNameF = new JTextField(FWIDTH);
-		_fNameF.setPreferredSize(MainFrame.TF_DIMENSION);
-		_fNameF.setFont(MainFrame.FORM_TF_FONT);
-		_gbag.add(_fNameF, gc);
 		
-		gc.gridy++;
-		_lNameF = new JTextField(FWIDTH);
-		_lNameF.setPreferredSize(MainFrame.TF_DIMENSION);
-		_lNameF.setFont(MainFrame.FORM_TF_FONT);
-		_gbag.add(_lNameF, gc);
-		
-		gc.gridy++;
-		_emailF = new JTextField(FWIDTH);
-		_emailF.setPreferredSize(MainFrame.TF_DIMENSION);
-		_emailF.setFont(MainFrame.FORM_TF_FONT);
-		_gbag.add(_emailF, gc);
-		
-		gc.gridy++;
-		_addressF = new JTextField(FWIDTH);
-		_addressF.setPreferredSize(MainFrame.TF_DIMENSION);
-		_addressF.setFont(MainFrame.FORM_TF_FONT);
-		_gbag.add(_addressF, gc);
-		
-		gc.gridy++;
-		_nNameF = new JTextField(FWIDTH);
-		_nNameF.setPreferredSize(MainFrame.TF_DIMENSION);
-		_nNameF.setFont(MainFrame.FORM_TF_FONT);
-		_gbag.add(_nNameF, gc);
-		
-		gc.gridy++;
-		_phoneF = new JTextField(FWIDTH);
-		_phoneF.setPreferredSize(MainFrame.TF_DIMENSION);
-		_phoneF.setFont(MainFrame.FORM_TF_FONT);
-		_gbag.add(_phoneF, gc);
-		
+		//textfields
+		JTextField[] fieldBoxes = {_fNameF, _lNameF, _emailF, _addressF, _nNameF, _phoneF};
+		for(int i = 0; i < 6; i++){
+			fieldBoxes[i] = new JTextField(FWIDTH);
+			fieldBoxes[i].setPreferredSize(MainFrame.TF_DIMENSION);
+			fieldBoxes[i].setFont(MainFrame.FORM_TF_FONT);
+			_gbag.add(fieldBoxes[i], gc);
+			gc.gridy++;
+
+		}
 	}
 
 	/**
@@ -219,15 +178,9 @@ public class RegisterScreen extends JPanel implements ActionListener  {
 		JButton src = (JButton) e.getSource();
 		if (src == _createBtn) {
 			if(fieldsNotEmpty()){
-				String fname = _fNameF.getText();
-				String lname = _lNameF.getText();
-				String email = _emailF.getText();
-				String address = _addressF.getText();
-				String nname = _nNameF.getText();
-				String phone = _phoneF.getText();
-				
-				Bidder aBidder = new Bidder(fname, lname, email, address, nname, phone,
-						MainFrame._auction.assignID());
+				Bidder aBidder = new Bidder(_fNameF.getText(), _lNameF.getText(),
+						_emailF.getText(),_addressF.getText(), _nNameF.getText(),
+						_phoneF.getText(),	MainFrame._auction.assignID());
 				
 				MainFrame._auction.addBidder(aBidder);
 				flushFields();

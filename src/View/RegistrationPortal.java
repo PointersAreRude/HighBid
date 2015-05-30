@@ -18,8 +18,6 @@ import javax.swing.JPanel;
 public class RegistrationPortal extends JPanel implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
-	private static final int btnX = 150;
-	private static final int btnY = 85;
 
 	private RegisterChooser _chooser;
 	
@@ -40,28 +38,27 @@ public class RegistrationPortal extends JPanel implements ActionListener {
 	 * Setting for each component in this panel.
 	 */
 	private void setComponents() {
+		
 		_label = new JLabel("Bidder Registration");
 		_label.setFont(new Font("Tahoma", 0, 70));
 		_label.setBounds((int) ((MainFrame.WIDTH / 2) - 250), 200, 700, 100);
 		_label.setForeground(Color.BLUE);
 
 		_registerBtn = new JButton("Add");
-		_registerBtn.setLocation((MainFrame.WIDTH / 3), 400);
-		_registerBtn.setSize(btnX, btnY);
+		_registerBtn.setBounds(MainFrame.WIDTH / 2 - 175, MainFrame.HEIGHT / 2 -50 , 175, 80);
 		_registerBtn.setFont(MainFrame.BUTTON_FONT);
 		_registerBtn.addActionListener(this);
-
+		
 		_editBtn = new JButton("<html>Edit / Remove</html>");
-		_editBtn.setLocation((MainFrame.WIDTH / 3) * 2, 400);
-		_editBtn.setSize(btnX, btnY);
+		_editBtn.setBounds(MainFrame.WIDTH / 2 + 100, MainFrame.HEIGHT / 2 -50 , 175, 80);
 		_editBtn.setFont(MainFrame.BUTTON_FONT);
 		_editBtn.addActionListener(this);
-
+		
 		_backBtn = new JButton("Back");
-		_backBtn.setLocation((MainFrame.WIDTH / 2) - 550, 620);
-		_backBtn.setSize(btnX, btnY);
+		_backBtn.setBounds(20, MainFrame.HEIGHT - 100, 175, 60);
 		_backBtn.setFont(MainFrame.BUTTON_FONT);
 		_backBtn.addActionListener(this);
+
 	}
 
 	/**
