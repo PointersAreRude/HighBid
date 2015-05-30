@@ -28,35 +28,54 @@ import javax.swing.event.ListSelectionListener;
 
 import Model.Bidder;
 
+/**
+ * Displays a list of Bidders to edit or delete.
+ * 
+ * @author Robbie Nichols, Mark Ditianquin (borrowed his list scroller)
+ * @version 5/29/2015
+ */
+
 @SuppressWarnings("serial")
 public class RegisterChooser extends JPanel implements ActionListener {
 	
+	/** Button width*/
 	private static int btnX = 150;
 	
+	/** Button height */
 	private static int btnY = 85;
 	
+	/** Reference to the edit screen. Used for passing the selected Bidder. */
 	private RegisterEditScreen _editScrn;
 	
-//copied from Mark
+	/** The scrollable list display. */
 	private JScrollPane _scroller;
 	
+	/** The list of Bidders. */
 	private JList<Bidder> _list;
 	
+	/** The array of Bidders to pass to the list*/
 	private Bidder[] _array;
 	
+	/** The currently selected Bidder. */
 	private Bidder _selection;
 	
+	/** Sub title: states if the list is empty or to select a Bidder. */
 	private JLabel _label;
 	
+	/** Indicates if the list is empty (ie no Bidders in the Auction). */
 	private boolean _isEmpty;
 	
+	/** The back button. */
 	private JButton _backBtn;
 	
+	/** The edit Bidder button. */
 	private JButton _editBtn;
 	
+	/** The remove Bidder button. */
 	private JButton _removeBtn;
 	
 	
+//copied from Mark
 	public RegisterChooser(RegisterEditScreen theEditScrn){
 		setSize(MainFrame.WIDTH, MainFrame.HEIGHT);
 		setLayout(null);
@@ -64,7 +83,6 @@ public class RegisterChooser extends JPanel implements ActionListener {
 		_selection = null;
 		_label = new JLabel();
 		_isEmpty = true;
-//		createList();
 		setComponents();
 	}
 	
@@ -152,12 +170,18 @@ public class RegisterChooser extends JPanel implements ActionListener {
 		this.add(btnPane, BorderLayout.PAGE_END);
 	}
 	
+	/**
+	 * Updates the list.
+	 */
 	private void update(){
 		if (_array != null) {
 			_list.setListData(_array);
 		} else {
 			_list = new JList<Bidder>();
 		}
+		
+		if( _array.length < 1)
+			_isEmpty = true;
 		
 		if (!_isEmpty) {
 			_label.setText("Select a Bidder:");
@@ -195,8 +219,11 @@ public class RegisterChooser extends JPanel implements ActionListener {
 			
 		} else if (src == _removeBtn) {
 			if(_selection != null){
+				int choice = JOptionPane.showConfirmDialog(null, "Are you sure you wish to delete this bidder?", "Warning", JOptionPane.OK_CANCEL_OPTION);
+				if (choice == JOptionPane.OK_OPTION) {
 				MainFrame._auction.deleteBidder(_selection);
 				createList();
+				}
 			} else {
 				JOptionPane.showMessageDialog(this, "Please select a Bidder.");
 			}

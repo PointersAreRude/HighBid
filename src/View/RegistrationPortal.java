@@ -72,7 +72,6 @@ public class RegistrationPortal extends JPanel implements ActionListener {
 		add(_label);
 		add(_registerBtn);
 		add(_editBtn);
-//		add(_removeBtn);
 		add(_backBtn);
 	}
 
@@ -83,8 +82,6 @@ public class RegistrationPortal extends JPanel implements ActionListener {
 		} else if (src == _editBtn) {
 			_chooser.createList();;
 			MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "BidderChooser");
-//		} else if (src == _removeBtn) {
-//			// MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "removeBidr");
 		} else {
 			MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "HomeScreen");
 		}

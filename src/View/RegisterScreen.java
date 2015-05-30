@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -23,11 +24,14 @@ import Model.Bidder;
  * to the global _auction field in MainFrame.
  * 
  * @author Robbie Nichols
- * @version 5/26/2015
+ * @version 5/29/2015
  */
 
 public class RegisterScreen extends JPanel implements ActionListener  {
+	
+	/** Text field width */
 	 private static int FWIDTH = 20;
+	 
 	/** label for register panel's form */
 	private JLabel _label;
 	
@@ -72,7 +76,6 @@ public class RegisterScreen extends JPanel implements ActionListener  {
 		add(_backBtn);
 		add(_gbag);
 		add(_createBtn);
-
 	}
 	
 	private void setComponents(){
@@ -175,35 +178,72 @@ public class RegisterScreen extends JPanel implements ActionListener  {
 		
 	}
 
+	/**
+	 * Returns true if required fields are not empty.
+	 * 
+	 * @return true if required fields not empty.
+	 */
+	protected boolean fieldsNotEmpty(){
+		if(_fNameF.getText().equals(""))
+			return false;
+				
+		if(_lNameF.getText().equals(""))
+			return false;
+		
+		if(_emailF.getText().equals(""))
+			return false;
+			
+		if(_addressF.getText().equals(""))
+			return false;
+			
+		if(_phoneF.getText().equals(""))
+			return false;
+		
+		return true;
+	}
+	
+	
+	/**
+	 * Flushes data from text fields.
+	 */
+	protected void flushFields(){
+		_fNameF.setText("");
+		_lNameF.setText("");
+		_emailF.setText("");
+		_addressF.setText("");
+		_nNameF.setText("");
+		_phoneF.setText("");
+	}
 	
 	public void actionPerformed(ActionEvent e) {
-		//from Long's code
-	
-		
-		//currently does NOT have confirmation screens
 		JButton src = (JButton) e.getSource();
 		if (src == _createBtn) {
-			String fname = _fNameF.getText();
-			String lname = _lNameF.getText();
-			String email = _emailF.getText();
-			String address = _addressF.getText();
-			String nname = _nNameF.getText();
-			String phone = _phoneF.getText();
-			
-//			Bidder aBidder = new Bidder(fname, lname, email, address, nname, phone,
-//					MainFrame._auction.assignID());
-			
-			Bidder aBidder = new Bidder(fname, lname, email, address, nname, phone);
-			MainFrame._auction.addBidder(aBidder);
+			if(fieldsNotEmpty()){
+				String fname = _fNameF.getText();
+				String lname = _lNameF.getText();
+				String email = _emailF.getText();
+				String address = _addressF.getText();
+				String nname = _nNameF.getText();
+				String phone = _phoneF.getText();
+				
+	//			Bidder aBidder = new Bidder(fname, lname, email, address, nname, phone,
+	//					MainFrame._auction.assignID());
+				
+				Bidder aBidder = new Bidder(fname, lname, email, address, nname, phone);
+				MainFrame._auction.addBidder(aBidder);
+				flushFields();
+				MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "RegPortal");
+			} else {
+				JOptionPane.showMessageDialog(this, "Please enter the required fields.");
+				
+			}
+		} else if (src ==_backBtn){
+			int choice = JOptionPane.showConfirmDialog(null, "Your information in this form "
+					+ "will not be saved.  Continue back?", "Warning", JOptionPane.OK_CANCEL_OPTION);
+			if (choice == JOptionPane.OK_OPTION) {
+				MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "RegPortal");
+				flushFields();
+			}
 		}
-			//alawys flushes text and returns to prev screen
-			_fNameF.setText("");
-			_lNameF.setText("");
-			_emailF.setText("");
-			_addressF.setText("");
-			_nNameF.setText("");
-			_phoneF.setText("");
-			MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "RegPortal");
-
 	}
 }

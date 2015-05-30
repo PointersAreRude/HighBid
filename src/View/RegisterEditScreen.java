@@ -4,11 +4,19 @@ package View;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
 import Model.Bidder;
 
+/**
+ * Bidder editing form. Inherited from RegisterScreen.
+ * 
+ * @author Robbie Nichols
+ * @version 5/29/2015
+ */
 public class RegisterEditScreen extends RegisterScreen {
 
+	/** The bidder to edit.*/
 	private Bidder _bidder;
 	
 	
@@ -17,13 +25,23 @@ public class RegisterEditScreen extends RegisterScreen {
 		_bidder = null;
 	}
 	
+	/**
+	 * Sets the Bidder to edit.
+	 * 
+	 * @param theBidder the Bidder to edit.
+	 */
 	public void setBidder(Bidder theBidder){
 		_bidder = theBidder;		
 		setForm();
 	}
 	
+	
+	/**
+	 * Detects and sets the Bidder's fields to new values
+	 * so long as they are not empty. Nickname excluded.
+	 */
 	private void detectChanges(){
-		if(_bidder != null){
+		if(_bidder != null && fieldsNotEmpty()){
 			if(!_fNameF.getText().equals(_bidder.getLastName()))
 				_bidder.setFirstName(_fNameF.getText());
 					
@@ -57,23 +75,23 @@ public class RegisterEditScreen extends RegisterScreen {
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		//from Long's code
-	
-	
-		//currently does NOT have confirmation screens
 		JButton src = (JButton) e.getSource();
 		if (src == _createBtn) {
 			detectChanges();
+			if(!fieldsNotEmpty())
+				JOptionPane.showMessageDialog(this, "Please enter the required fields.");
+			else {
+				flushFields();
+				MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "BidderChooser");
+			}
+		} else { //exiting screen
+			//this dialog is verbatim from Abbie's code
+			int choice = JOptionPane.showConfirmDialog(null, "Your information in this form "
+					+ "will not be saved.  Continue back?", "Warning", JOptionPane.OK_CANCEL_OPTION);
+			if (choice == JOptionPane.OK_OPTION) {
+				flushFields();
+				MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "BidderChooser");
+			}
 		}
-			//alawys flushes text and returns to prev screen
-			_fNameF.setText("");
-			_lNameF.setText("");
-			_emailF.setText("");
-			_addressF.setText("");
-			_nNameF.setText("");
-			_phoneF.setText("");
-			MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "BidderChooser");
-
 	}
-	
 }
