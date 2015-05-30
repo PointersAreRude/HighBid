@@ -5,11 +5,14 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
+import java.sql.Savepoint;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -39,7 +42,15 @@ public class HomeScreen extends JPanel implements ActionListener {
 	 */
 	private JButton _registrationBtn;
 	
+	/**
+	 * view Acution info
+	 */
 	private JButton _viewAuctionInfo;
+	
+	/**
+	 * save button
+	 */
+	private JButton _saveBtn;
 	
 	/**
 	 * File chooser
@@ -86,6 +97,33 @@ public class HomeScreen extends JPanel implements ActionListener {
 		_viewAuctionInfo.setFont(MainFrame.BUTTON_FONT);
 		//_viewAuctionInfo.setContentAreaFilled(false);
 		_viewAuctionInfo.addActionListener(this);
+		
+		//set save button
+		_saveBtn = new JButton("Save..");
+		//_saveBtn.setBounds((int)(MainFrame.WIDTH / 2) - 150, 470, 350, 60);
+		_saveBtn.setLocation(80, 650);
+		_saveBtn.setSize(200, 50);
+		_saveBtn.setFont(MainFrame.BUTTON_FONT);
+		//_viewAuctionInfo.setContentAreaFilled(false);
+		_saveBtn.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(final ActionEvent theEvent)
+            {
+                final int result = fc.showSaveDialog(HomeScreen.this);
+                if (result == JFileChooser.APPROVE_OPTION)
+                {
+//                    try
+//                    {
+//                       //myImage.save(myChooser.getSelectedFile());
+//                    }
+//                    catch (final IOException ex)
+//                    {
+//                        JOptionPane.showMessageDialog(null, 
+//                                                      "File can't be save " + fc.getSelectedFile());
+//                    }
+                }
+            }
+        });
 	}
 
 	/**
@@ -96,6 +134,7 @@ public class HomeScreen extends JPanel implements ActionListener {
 		this.add(_ItemsAndDonorOptionBtn);
 		this.add(_registrationBtn);
 		this.add(_viewAuctionInfo);
+		this.add(_saveBtn);
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -108,18 +147,21 @@ public class HomeScreen extends JPanel implements ActionListener {
 			MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "RegPortal");
 			//TODO: add the registration panel
 		}
-		else {
+		else if(src == _viewAuctionInfo){
 			// TODO: add the viewAcution panel
 			MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "StatsHomePanel");
 		}
+		else{
+			
+		}
 	}
 	
-//	public static void main(String[] args){
-//		JFrame frame = new JFrame();
-//		HomeScreen te = new HomeScreen();
-//		frame.add(te);
-//		frame.setSize(MainFrame.WIDTH, MainFrame.HEIGHT);
-//		
-//		frame.setVisible(true);
-//	}
+	public static void main(String[] args){
+		JFrame frame = new JFrame();
+		HomeScreen te = new HomeScreen();
+		frame.add(te);
+		frame.setSize(MainFrame.WIDTH, MainFrame.HEIGHT);
+		frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
+	}
 }
