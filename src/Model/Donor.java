@@ -72,4 +72,14 @@ public class Donor extends Person {
     	return toReturn;
     }
     
+    public boolean equals(Object o) {
+
+    	Donor donor = (Donor) o;
+    	return this.getFirstName().equals(donor.getFirstName()) 
+    			&& this.getPhone().equals(donor.getPhone())
+    			&& this.getEmail().equals(donor.getEmail())
+    			&& this.getAddress().equals(donor.getAddress())
+    			&& this.getLastName().equals(donor.getLastName());
+    }
+    
 }
