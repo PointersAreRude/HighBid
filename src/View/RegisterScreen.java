@@ -125,16 +125,40 @@ public class RegisterScreen extends JPanel implements ActionListener  {
 		gc.gridy = 0;
 		gc.gridx = 1;
 		
-		//textfields
-		JTextField[] fieldBoxes = {_fNameF, _lNameF, _emailF, _addressF, _nNameF, _phoneF};
-		for(int i = 0; i < 6; i++){
-			fieldBoxes[i] = new JTextField(FWIDTH);
-			fieldBoxes[i].setPreferredSize(MainFrame.TF_DIMENSION);
-			fieldBoxes[i].setFont(MainFrame.FORM_TF_FONT);
-			_gbag.add(fieldBoxes[i], gc);
-			gc.gridy++;
-
-		}
+		_fNameF = new JTextField(FWIDTH);
+		_fNameF.setPreferredSize(MainFrame.TF_DIMENSION);
+		_fNameF.setFont(MainFrame.FORM_TF_FONT);
+		_gbag.add(_fNameF, gc);
+		
+		gc.gridy++;
+		_lNameF = new JTextField(FWIDTH);
+		_lNameF.setPreferredSize(MainFrame.TF_DIMENSION);
+		_lNameF.setFont(MainFrame.FORM_TF_FONT);
+		_gbag.add(_lNameF, gc);
+		
+		gc.gridy++;
+		_emailF = new JTextField(FWIDTH);
+		_emailF.setPreferredSize(MainFrame.TF_DIMENSION);
+		_emailF.setFont(MainFrame.FORM_TF_FONT);
+		_gbag.add(_emailF, gc);
+		
+		gc.gridy++;
+		_addressF = new JTextField(FWIDTH);
+		_addressF.setPreferredSize(MainFrame.TF_DIMENSION);
+		_addressF.setFont(MainFrame.FORM_TF_FONT);
+		_gbag.add(_addressF, gc);
+		
+		gc.gridy++;
+		_nNameF = new JTextField(FWIDTH);
+		_nNameF.setPreferredSize(MainFrame.TF_DIMENSION);
+		_nNameF.setFont(MainFrame.FORM_TF_FONT);
+		_gbag.add(_nNameF, gc);
+		
+		gc.gridy++;
+		_phoneF = new JTextField(FWIDTH);
+		_phoneF.setPreferredSize(MainFrame.TF_DIMENSION);
+		_phoneF.setFont(MainFrame.FORM_TF_FONT);
+		_gbag.add(_phoneF, gc);
 	}
 
 	/**

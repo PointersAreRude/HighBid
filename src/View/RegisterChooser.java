@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -18,6 +19,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListCellRenderer;
+import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -54,9 +56,6 @@ public class RegisterChooser extends JPanel implements ActionListener {
 	/** The currently selected Bidder. */
 	private Bidder _selection;
 	
-	/** Sub title: states if the list is empty or to select a Bidder. */
-	private JLabel _label;
-	
 	/** Indicates if the list is empty (ie no Bidders in the Auction). */
 	private boolean _isEmpty;
 	
@@ -69,14 +68,11 @@ public class RegisterChooser extends JPanel implements ActionListener {
 	/** The remove Bidder button. */
 	private JButton _removeBtn;
 	
-	
-//copied from Mark
 	public RegisterChooser(RegisterEditScreen theEditScrn){
 		setSize(MainFrame.WIDTH, MainFrame.HEIGHT);
 		setLayout(null);
 		_editScrn = theEditScrn;
 		_selection = null;
-		_label = new JLabel();
 		_isEmpty = true;
 		setComponents();
 	}
@@ -107,31 +103,27 @@ public class RegisterChooser extends JPanel implements ActionListener {
 		
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-		JPanel listPane = new JPanel();
-		listPane.setLayout(new BoxLayout(listPane, BoxLayout.PAGE_AXIS));
-		
 		//list
-		if (!_isEmpty) {
-			_label.setText("Select a Bidder:");
-		} else {
-			_label.setText("No Bidders Available");
-		}
-		
-
 		if (_array != null) {
 			_list = new JList<Bidder>(_array);
 		} else {
 			_list = new JList<Bidder>();
 		}
 
-		_label.setFont(MainFrame.FORM_LABEL_FONT);
-		listPane.add(_label, BorderLayout.NORTH);
 		_list.setCellRenderer(new MyCellRenderer());
-		_list.setLayoutOrientation(JList.VERTICAL_WRAP);
+		_list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+		_list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+		_list.setVisibleRowCount(-1);
 		_scroller = new JScrollPane(_list);
-		_scroller.setPreferredSize(new Dimension(MainFrame.WIDTH -200, MainFrame.HEIGHT - 400));
-		listPane.add(_scroller);		
+		if (!_isEmpty) {
+			_scroller.setBorder(BorderFactory.createTitledBorder("Select a Bidder"));
+		} else {
+			_scroller.setBorder(BorderFactory.createTitledBorder("No Bidders Available"));
+		}
+		
 		_list.addListSelectionListener(new MyListSelectionListener(_list));
+		_scroller.setPreferredSize(new Dimension(450, 110));
+		add(_scroller, BorderLayout.CENTER);
 		
 		//buttons
 		JPanel btnPane = new JPanel();
@@ -160,7 +152,6 @@ public class RegisterChooser extends JPanel implements ActionListener {
 		btnPane.add(_removeBtn);
 		btnPane.add(Box.createRigidArea(new Dimension(100, 0)));
 
-		this.add(listPane, BorderLayout.CENTER);
 		this.add(btnPane, BorderLayout.PAGE_END);
 	}
 	
@@ -178,9 +169,9 @@ public class RegisterChooser extends JPanel implements ActionListener {
 			_isEmpty = true;
 		
 		if (!_isEmpty) {
-			_label.setText("Select a Bidder:");
+			_scroller.setBorder(BorderFactory.createTitledBorder("Select a Bidder"));
 		} else {
-			_label.setText("No Bidders Available");
+			_scroller.setBorder(BorderFactory.createTitledBorder("No Bidders Available"));
 		}
 		
 		this.repaint();
@@ -225,8 +216,7 @@ public class RegisterChooser extends JPanel implements ActionListener {
 	}
 
 	private class MyCellRenderer extends JLabel implements ListCellRenderer<Bidder> {
-
-		//make list have multiple rows?
+		
 		public Component getListCellRendererComponent(JList<? extends Bidder> list, 
 				Bidder value, int index, boolean isSelected, boolean cellHasFocus) {
 			
