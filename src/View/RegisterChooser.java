@@ -1,17 +1,15 @@
 package View;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -28,7 +26,7 @@ import Model.Bidder;
 /**
  * Displays a list of Bidders to edit or delete.
  * 
- * @author Robbie Nichols, Mark Ditianquin (borrowed his list scroller)
+ * @author Robbie Nichols, Abigail Smith (borrowed her list scroller)
  * @version 5/29/2015
  */
 
@@ -95,13 +93,14 @@ public class RegisterChooser extends JPanel implements ActionListener {
 	}
 	
 	public void setComponents(){
-		JLabel title = new JLabel("Bidder Edit");
+		JLabel title = new JLabel("<html>Bidder Edit</html>");
 		title.setFont(new Font("Tahoma", 0, 70));
 		title.setForeground(Color.BLUE);
 		title.setAlignmentX(Component.CENTER_ALIGNMENT);
+		title.setBounds((int)(MainFrame.WIDTH / 2.7), 20,400,100);
 		add(title);
 		
-		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		this.setLayout(null);
 
 		//list
 		if (_array != null) {
@@ -109,10 +108,10 @@ public class RegisterChooser extends JPanel implements ActionListener {
 		} else {
 			_list = new JList<Bidder>();
 		}
-
+		
 		_list.setCellRenderer(new MyCellRenderer());
 		_list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-		_list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+		_list.setLayoutOrientation(JList.VERTICAL_WRAP);
 		_list.setVisibleRowCount(-1);
 		_scroller = new JScrollPane(_list);
 		if (!_isEmpty) {
@@ -120,39 +119,33 @@ public class RegisterChooser extends JPanel implements ActionListener {
 		} else {
 			_scroller.setBorder(BorderFactory.createTitledBorder("No Bidders Available"));
 		}
-		
 		_list.addListSelectionListener(new MyListSelectionListener(_list));
-		_scroller.setPreferredSize(new Dimension(450, 110));
-		add(_scroller, BorderLayout.CENTER);
+		_scroller.setPreferredSize(new Dimension(900,600));
+		JPanel pane = new JPanel(new GridBagLayout());
+		pane.setBounds(20, 100, MainFrame.WIDTH - 40, 600);
+		pane.add(_scroller);
+		add(pane);
 		
 		//buttons
-		JPanel btnPane = new JPanel();
-		btnPane.setLayout(new BoxLayout(btnPane, BoxLayout.LINE_AXIS));
-		
 		_backBtn = new JButton("Back");
-		_backBtn.setSize(btnX, btnY);
+		_backBtn.setBounds(20, MainFrame.HEIGHT - 100, 175, 60);
 		_backBtn.setFont(MainFrame.BUTTON_FONT);
 		_backBtn.addActionListener(this);
-		
-		_editBtn = new JButton("Edit");
-		_editBtn.setSize(btnX, btnY);
-		_editBtn.setFont(MainFrame.BUTTON_FONT);
-		_editBtn.addActionListener(this);
+		add(_backBtn);
 		
 		_removeBtn = new JButton("<html>Remove</html>");
 		_removeBtn.setSize(btnX, btnY);
 		_removeBtn.setFont(MainFrame.BUTTON_FONT);
 		_removeBtn.addActionListener(this);
-		
- 		btnPane.add(Box.createHorizontalGlue());
-		btnPane.add(_backBtn);
-		btnPane.add(Box.createRigidArea(new Dimension(MainFrame.WIDTH - 500, 0)));
-		btnPane.add(_editBtn);
-		btnPane.add(Box.createRigidArea(new Dimension(100, 0)));
-		btnPane.add(_removeBtn);
-		btnPane.add(Box.createRigidArea(new Dimension(100, 0)));
+		_removeBtn.setBounds(MainFrame.WIDTH - 400, MainFrame.HEIGHT - 100, 175, 60);
+		add(_removeBtn);
 
-		this.add(btnPane, BorderLayout.PAGE_END);
+		_editBtn = new JButton("Edit");
+		_editBtn.setSize(btnX, btnY);
+		_editBtn.setFont(MainFrame.BUTTON_FONT);
+		_editBtn.addActionListener(this);
+		_editBtn.setBounds(MainFrame.WIDTH - 200, MainFrame.HEIGHT - 100, 175, 60);
+		add(_editBtn);
 	}
 	
 	/**

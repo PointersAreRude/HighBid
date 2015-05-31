@@ -63,7 +63,9 @@ public class RegisterEditScreen extends RegisterScreen {
 		}
 	}
 	
-	
+	/**
+	 * Sets the text fields to the current data of _bidder.
+	 */
 	private void setForm(){
 		if(_bidder != null){
 		_fNameF.setText(_bidder.getFirstName());
