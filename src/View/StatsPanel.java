@@ -46,6 +46,10 @@ public class StatsPanel<E> extends JPanel implements ActionListener {
 	
 	private E[] myArray;
 	
+	private static GridBagLayout myBag;
+	
+	private static GridBagConstraints myC;
+	
 	@SuppressWarnings("unchecked")
 	public StatsPanel() {
 
@@ -71,16 +75,16 @@ public class StatsPanel<E> extends JPanel implements ActionListener {
 	}
 	
 	public void setUp() {
-		GridBagLayout bag = new GridBagLayout();
-		GridBagConstraints c = new GridBagConstraints();
+		myBag = new GridBagLayout();
+		myC = new GridBagConstraints();
 		
-		setLayout(bag);
+		setLayout(myBag);
 		
-		c.fill = GridBagConstraints.BOTH;
-		c.weightx = 1.0;
-		c.weighty = 0.1;
-		c.gridheight = 1;
-		c.gridwidth = 5;
+		myC.fill = GridBagConstraints.BOTH;
+		myC.weightx = 1.0;
+		myC.weighty = 0.1;
+		myC.gridheight = 1;
+		myC.gridwidth = 5;
 		
 		myLabel = new JLabel();
 		if (myArray != null) {
@@ -96,22 +100,22 @@ public class StatsPanel<E> extends JPanel implements ActionListener {
 		}
 		
 		myLabel.setFont(MainFrame.FORM_LABEL_FONT);
-		bag.setConstraints(myLabel, c);
+		myBag.setConstraints(myLabel, myC);
 		add(myLabel);
 		
 		//add(Box.createRigidArea(new Dimension(myLabel.getWidth(), myLabel.getHeight())));
 		
-		c.gridwidth = GridBagConstraints.REMAINDER;
-		c.weighty = 0.0;
+		myC.gridwidth = GridBagConstraints.REMAINDER;
+		myC.weighty = 0.0;
 		myBack = new JButton("Back");
 		myBack.addActionListener(this);
 		myBack.setFont(MainFrame.FORM_TF_FONT);
-		bag.setConstraints(myBack, c);
+		myBag.setConstraints(myBack, myC);
 		add(myBack);
 		
-		c.gridheight = 50;
-		c.weighty = 2.0;
-		c.gridwidth = 5;
+		myC.gridheight = 50;
+		myC.weighty = 2.0;
+		myC.gridwidth = 5;
 		if (myArray != null) {
 			myList = new JList<E>(myArray);
 		} else {
@@ -119,10 +123,10 @@ public class StatsPanel<E> extends JPanel implements ActionListener {
 		}
 		myList.setCellRenderer(new MyCellRenderer());
 		myScroller = new JScrollPane(myList);
-		bag.setConstraints(myScroller, c);
+		myBag.setConstraints(myScroller, myC);
 		add(myScroller);
 		
-		c.gridwidth = GridBagConstraints.REMAINDER;
+		myC.gridwidth = GridBagConstraints.REMAINDER;
 		//c.gridx = 10;
 		myText = new JTextArea();
 		myText.setEditable(false);
@@ -130,7 +134,7 @@ public class StatsPanel<E> extends JPanel implements ActionListener {
 		myText.setWrapStyleWord(true);
 		myText.setFont(MainFrame.FORM_TF_FONT);
 		myText.setText("Please select an option from the list.");
-		bag.setConstraints(myText, c);
+		myBag.setConstraints(myText, myC);
 		add(myText);
 		setSize(1200, 800);
 		
@@ -172,6 +176,10 @@ public class StatsPanel<E> extends JPanel implements ActionListener {
 					Bidder bddr = bidders.get(i);
 					text += "\n        " + (i + 1) + ". " + bddr.getFirstName() + " " + bddr.getLastName() + " : " + bddr.getid();
 				}
+				
+				
+				JLabel imageLabel = new JLabel(item.getImage());
+				myBag.setConstraints(imageLabel, myC);
 				
 			} else if (selected instanceof Person) {
 				Person person = (Person) selected;

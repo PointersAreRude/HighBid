@@ -407,7 +407,6 @@ public class Auction {
 						}
 					}
 				}
-				
 				myBidders.add(bidder);
 			}
 		}
@@ -421,3 +420,4 @@ public class Auction {
 		}
 	}
 }
+
