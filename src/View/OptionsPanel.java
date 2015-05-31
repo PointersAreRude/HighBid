@@ -87,6 +87,8 @@ public class OptionsPanel extends JPanel implements ActionListener{
 	
 	private JButton _donorBtn;
 	
+	private JTextField[] _donorTF  = {_firstTF, _lastTF, _emailTF, _addressTF, _phoneTF};
+	
 	/*************** add item panel's components ***************/
 	private JPanel _itemPanel;
 	
@@ -113,6 +115,8 @@ public class OptionsPanel extends JPanel implements ActionListener{
 	private JButton _upload;
 	
 	private ImageIcon _image;
+	
+	private JTextField[] _itemTF = {_itemNameTF, _ItemDescriptionTF, _startPriceTF, _minIncrementTF, _qrTF};
 	
 	/************* remove panel's components ******************/
 	private JTabbedPane _removePanel;
@@ -268,60 +272,26 @@ public class OptionsPanel extends JPanel implements ActionListener{
 		gc.gridy = 0;
 		gc.anchor = GridBagConstraints.LINE_END;
 		
-		JLabel first = new JLabel("First name: ");
-		first.setFont(MainFrame.FORM_LABEL_FONT);
-		_donorPanel.add(first, gc);
+		String[] labelName = {"First Name: ", "Last Name: "
+				, "Email: ", "Address: ", "Phone: "};
 		
-		gc.gridy++;
-		JLabel last = new JLabel("Last name: ");
-		last.setFont(MainFrame.FORM_LABEL_FONT);
-		_donorPanel.add(last, gc);
-		
-		gc.gridy++;
-		JLabel email = new JLabel("Email: ");
-		email.setFont(MainFrame.FORM_LABEL_FONT);
-		_donorPanel.add(email, gc);
+		for(int i = 0; i < labelName.length; i++) {
+			JLabel temp = new JLabel(labelName[i]);
+			temp.setFont(MainFrame.FORM_LABEL_FONT);
+			_donorPanel.add(temp, gc);
+			gc.gridy++;
+		}
 
-		gc.gridy++;
-		JLabel address = new JLabel("Address: ");
-		address.setFont(MainFrame.FORM_LABEL_FONT);
-		_donorPanel.add(address, gc);
-		
-		gc.gridy++;
-		JLabel phone = new JLabel("Phone: ");
-		phone.setFont(MainFrame.FORM_LABEL_FONT);
-		_donorPanel.add(phone, gc);
-				
 		gc.gridy = 0;
 		gc.gridx = 1;
-		_firstTF = new JTextField(20);
-		_firstTF.setPreferredSize(MainFrame.TF_DIMENSION);
-		_firstTF.setFont(MainFrame.FORM_TF_FONT);
-		_donorPanel.add(_firstTF, gc);
 		
-		gc.gridy++;
-		_lastTF = new JTextField(20);
-		_lastTF.setPreferredSize(MainFrame.TF_DIMENSION);
-		_lastTF.setFont(MainFrame.FORM_TF_FONT);
-		_donorPanel.add(_lastTF, gc);
-		
-		gc.gridy++;
-		_emailTF = new JTextField(20);
-		_emailTF.setPreferredSize(MainFrame.TF_DIMENSION);
-		_emailTF.setFont(MainFrame.FORM_TF_FONT);
-		_donorPanel.add(_emailTF, gc);
-		
-		gc.gridy++;
-		_addressTF = new JTextField(20);
-		_addressTF.setPreferredSize(MainFrame.TF_DIMENSION);
-		_addressTF.setFont(MainFrame.FORM_TF_FONT);
-		_donorPanel.add(_addressTF, gc);
-		
-		gc.gridy++;
-		_phoneTF = new JTextField(20);
-		_phoneTF.setPreferredSize(MainFrame.TF_DIMENSION);
-		_phoneTF.setFont(MainFrame.FORM_TF_FONT);
-		_donorPanel.add(_phoneTF, gc);
+		for(int i = 0; i < _donorTF.length; i++) {
+			_donorTF[i] = new JTextField(20);
+			_donorTF[i].setPreferredSize(MainFrame.TF_DIMENSION);
+			_donorTF[i].setFont(MainFrame.FORM_TF_FONT);
+			_donorPanel.add(_donorTF[i], gc);
+			gc.gridy++;
+		}
 		
 		gc.gridy++;
 		_donorBtn = new JButton("Add");
@@ -359,39 +329,16 @@ public class OptionsPanel extends JPanel implements ActionListener{
 		gc.gridy = 0;
 		gc.anchor = GridBagConstraints.LINE_END;
 		
-		JLabel donor = new JLabel("Choose a donor (Optional)");
-		donor.setFont(MainFrame.FORM_LABEL_FONT);
-		_itemPanel.add(donor, gc);
+		String[] labelName = {"Choose a donor (Optional)", "Item Name: "
+				, "Description: ", "Minimum Increment: "
+				, "Starting Price: ", "Item's QR: ", "Upload Image (Optional)"};
 		
-		gc.gridy++;
-		JLabel name = new JLabel("Item name: ");
-		name.setFont(MainFrame.FORM_LABEL_FONT);
-		_itemPanel.add(name, gc);
-		
-		gc.gridy++;
-		JLabel des = new JLabel("Description: ");
-		des.setFont(MainFrame.FORM_LABEL_FONT);
-		_itemPanel.add(des, gc);
-		
-		gc.gridy++;
-		JLabel minIncrement = new JLabel("Minimum increment: ");
-		minIncrement.setFont(MainFrame.FORM_LABEL_FONT);
-		_itemPanel.add(minIncrement, gc);
-
-		gc.gridy++;
-		JLabel startingPrice = new JLabel("Starting price: ");
-		startingPrice.setFont(MainFrame.FORM_LABEL_FONT);
-		_itemPanel.add(startingPrice, gc);
-		
-		gc.gridy++;
-		JLabel qr = new JLabel("Item's QR: ");
-		qr.setFont(MainFrame.FORM_LABEL_FONT);
-		_itemPanel.add(qr, gc);
-		
-		gc.gridy++;
-		JLabel upload = new JLabel("Upload Image (Optional)");
-		upload.setFont(MainFrame.FORM_LABEL_FONT);
-		_itemPanel.add(upload, gc);
+		for(int i = 0; i < labelName.length; i++) {
+			JLabel temp = new JLabel(labelName[i]);
+			temp.setFont(MainFrame.FORM_LABEL_FONT);
+			_itemPanel.add(temp, gc);
+			gc.gridy++;
+		}
 				
 		gc.gridy = 0;
 		gc.gridx = 1;
@@ -404,36 +351,15 @@ public class OptionsPanel extends JPanel implements ActionListener{
 		_itemPanel.add(_combo,gc);
 		
 		gc.gridy++;
-		_itemNameTF = new JTextField(20);
-		_itemNameTF.setPreferredSize(MainFrame.TF_DIMENSION);
-		_itemNameTF.setFont(MainFrame.FORM_TF_FONT);
-		_itemPanel.add(_itemNameTF, gc);
 		
-		gc.gridy++;
-		_ItemDescriptionTF = new JTextField(20);
-		_ItemDescriptionTF.setPreferredSize(MainFrame.TF_DIMENSION);
-		_ItemDescriptionTF.setFont(MainFrame.FORM_TF_FONT);
-		_itemPanel.add(_ItemDescriptionTF, gc);
-		
-		gc.gridy++;
-		_minIncrementTF = new JTextField(20);
-		_minIncrementTF.setPreferredSize(MainFrame.TF_DIMENSION);
-		_minIncrementTF.setFont(MainFrame.FORM_TF_FONT);
-		_itemPanel.add(_minIncrementTF, gc);
-		
-		gc.gridy++;
-		_startPriceTF = new JTextField(20);
-		_startPriceTF.setPreferredSize(MainFrame.TF_DIMENSION);
-		_startPriceTF.setFont(MainFrame.FORM_TF_FONT);
-		_itemPanel.add(_startPriceTF, gc);
-		
-		gc.gridy++;
-		_qrTF = new JTextField(20);
-		_qrTF.setPreferredSize(MainFrame.TF_DIMENSION);
-		_qrTF.setFont(MainFrame.FORM_TF_FONT);
-		_itemPanel.add(_qrTF, gc);
-		
-		gc.gridy++;
+		for(int i = 0; i < _itemTF.length; i++) {
+			_itemTF[i] = new JTextField(20);
+			_itemTF[i].setPreferredSize(MainFrame.TF_DIMENSION);
+			_itemTF[i].setFont(MainFrame.FORM_TF_FONT);
+			_itemPanel.add(_itemTF[i], gc);
+			gc.gridy++;
+		}
+
 		_upload = new JButton("Upload Image");
 		_upload.addActionListener(this);
 		_itemPanel.add(_upload, gc);
@@ -513,35 +439,32 @@ public class OptionsPanel extends JPanel implements ActionListener{
 
 	public void actionPerformed(ActionEvent e) {
 		
-		JTextField[] donorTF = {_firstTF, _lastTF, _emailTF, _addressTF, _phoneTF};
-		JTextField[] itemTF = {_itemNameTF, _ItemDescriptionTF, _startPriceTF, _minIncrementTF, _qrTF};
-		
 		JButton src = (JButton) e.getSource();
 		if(src == _addBtn) {
 			_clayout.show(_mainContainer, "Add");
 			setBackGround(_addBtn);
-			clearText(itemTF);
+			clearText(_itemTF);
 			_IInfo.setText("");
 			_removeDonorWarning.setText("");
 		} else if (src == _removeBtn) {
 			_clayout.show(_mainContainer, "Remove");
 			setBackGround(_removeBtn);
-			clearText(itemTF);
-			clearText(donorTF);
+			clearText(_itemTF);
+			clearText(_donorTF);
 			_IInfo.setText("");
 			_infoLabel.setText("");
 		} else if (src == _backBtn){
 			MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "HomeScreen");
-			clearText(donorTF);
-			clearText(itemTF);
+			clearText(_donorTF);
+			clearText(_itemTF);
 			_infoLabel.setText("");
 			_IInfo.setText("");
 			_removeDonorWarning.setText("");
 		} else if (src == _donorBtn) {
-			if(checkEmpty(donorTF)) {
+			if(checkEmpty(_donorTF)) {
 				_infoLabel.setText("Please enter all required fields.");
 			} else {
-				addDonorAction(donorTF);
+				addDonorAction(_donorTF);
 			}
 		} else if (src == _upload) {
 			BufferedImage img = uploadImage();
@@ -552,10 +475,10 @@ public class OptionsPanel extends JPanel implements ActionListener{
 				_IInfo.setText("Couldn't upload the image.");
 			}
 		} else if (src == _itemBtn) {
-			if(checkEmpty(itemTF)) {
+			if(checkEmpty(_itemTF)) {
 				_IInfo.setText("Please enter all required fields.");
 			} else {
-				addItemAction(itemTF);
+				addItemAction(_itemTF);
 			}
 		} else if (src == _removeDonorBtn) {
 			removeDonorAction();
