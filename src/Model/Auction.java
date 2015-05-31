@@ -322,6 +322,11 @@ public class Auction {
 		reader.close();
 	}
 	
+	/**
+	 * A helper method that reads through a list of items in a csv file and creates objects out of them.
+	 * 
+	 * @param reader a Scanner to read through the file.
+	 */
 	private void parseItems(Scanner reader) {
 		if (reader.hasNext()) {
 			String line = reader.next(); //grab the next line, will either be a "+" or a "#" line
@@ -342,6 +347,11 @@ public class Auction {
 		}
 	}
 	
+	/**
+	 * A helper method that reads through a list of Donors in a csv file and creates objects out of them.
+	 * 
+	 * @param reader a Scanner to read through the file.
+	 */
 	private void parseDonors(Scanner reader) {
 		if (reader.hasNext()) {
 			String line = reader.next();
@@ -373,6 +383,11 @@ public class Auction {
 		}
 	}
 	
+	/**
+	 * A helper method that reads through a list of Bidders in a csv file and creates objects out of them.
+	 * 
+	 * @param reader a Scanner to read through the file.
+	 */
 	private void parseBidders(Scanner reader) {
 		if (reader.hasNext()) {
 			String line = reader.next();
@@ -412,6 +427,12 @@ public class Auction {
 		}
 	}
 	
+	/**
+	 * A main method to simulate  bids being placed inside this Auction.
+	 * 
+	 * @param args
+	 * @throws IOException
+	 */
 	public static void main (String[] args) throws IOException {
 		Auction a = new Auction();
 		a.importFile("");

@@ -1,22 +1,14 @@
 package View;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.TreeSet;
 
-import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -32,29 +24,68 @@ import Model.Donor;
 import Model.Item;
 import Model.Person;
 
+/**
+ * StatsPanel class, displays a list of objects that is sent in, and enables the user to click on the objects and see 
+ * the information about each.
+ * 
+ * @author Abigail Smith
+ * @version 5/30/15
+ */
 public class StatsPanel<E> extends JPanel implements ActionListener {
 
+	/**
+	 * JScrollPane to scroll through lists of objects.
+	 */
 	private JScrollPane myScroller;
 	
+	/**
+	 * JList to represent a list of objects.
+	 */
 	private JList<E> myList;
 	
+	/**
+	 * JTextArea to display information on selected objects.
+	 */
 	private JTextArea myText;
 	
+	/**
+	 * JLabel to say what kind of objects are being displayed.
+	 */
 	private JLabel myLabel;
 	
+	/**
+	 * JButton to go back to previous page.
+	 */
 	private JButton myBack;
 	
+	/**
+	 * An array to hold a list of objects.
+	 */
 	private E[] myArray;
 	
+	/**
+	 * GrigBagLayout to place all the components of this panel.
+	 */
 	private static GridBagLayout myBag;
 	
+	/**
+	 * GridBadConstraints to go along with GridBagLayout.
+	 */
 	private static GridBagConstraints myC;
 	
+	/**
+	 * Constructor for StatsPanel.
+	 */
 	@SuppressWarnings("unchecked")
 	public StatsPanel() {
 
 	}
 	
+	/**
+	 * Instantiates myArray to hold the objects of the list passed in as a parameter.
+	 * 
+	 * @param list ArrayList<E> that holds a list of objects (E may become Item, Bidder, or Donor).
+	 */
 	public void createList(ArrayList<E> list) {
 
 		if (!list.isEmpty() && list.get(0) instanceof Item) {
@@ -73,8 +104,22 @@ public class StatsPanel<E> extends JPanel implements ActionListener {
 		
 		setUp();
 	}
+
+	/**
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
+	public void actionPerformed(ActionEvent event) {
+		JButton source = (JButton) event.getSource();
+		
+		if (source == myBack) {
+			MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "StatsHomePanel");
+		}
+	}
 	
-	public void setUp() {
+	/**
+	 * Sets up the panel.
+	 */
+	private void setUp() {
 		myBag = new GridBagLayout();
 		myC = new GridBagConstraints();
 		
@@ -141,17 +186,38 @@ public class StatsPanel<E> extends JPanel implements ActionListener {
 		myList.addListSelectionListener(new MyListSelectionListener(myText, myList));
 	}
 	
+	/**
+	 * A listener class that handles the event of an object in the list being selected.
+	 * 
+	 * @author Abigail
+	 * @version 5/30/2015
+	 */
 	private class MyListSelectionListener implements ListSelectionListener {
 		
+		/**
+		 * JTextArea a text field to be modified.
+		 */
 		private JTextArea myText;
 		
+		/**
+		 * JList a list that holds the list of objects.
+		 */
 		private JList<E> myList;
 		
+		/**
+		 * Constructor for this class.
+		 * 
+		 * @param aText a text field to be modified.
+		 * @param aList a list that holds the list of objects.
+		 */
 		public MyListSelectionListener (JTextArea aText, JList<E> aList) {
 			myText = aText;
 			myList = aList;
 		}
 		
+		/**
+		 * @see javax.swing.event.ListSelectionListener#valueChanged(javax.swing.event.ListSelectionEvent)
+		 */
 		public void valueChanged(ListSelectionEvent event) {
 			E selected = (E) myList.getSelectedValue();
 			
@@ -215,17 +281,18 @@ public class StatsPanel<E> extends JPanel implements ActionListener {
 		}
 		
 	}
-
-	public void actionPerformed(ActionEvent event) {
-		JButton source = (JButton) event.getSource();
-		
-		if (source == myBack) {
-			MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "StatsHomePanel");
-		}
-	}
 	
+	/**
+	 * Renders the cells inside the main class's JList, defines how the cells in the list will look like.
+	 * 
+	 * @author Abigail
+	 * @version 5/30/2015
+	 */
 	private class MyCellRenderer extends JLabel implements ListCellRenderer<E> {
 
+		/**
+		 * @see javax.swing.ListCellRenderer#getListCellRendererComponent(javax.swing.JList, java.lang.Object, int, boolean, boolean)
+		 */
 		public Component getListCellRendererComponent(JList<? extends E> list, E value, int index, 
 														boolean isSelected, boolean cellHasFocus) {
 			String toDisplay = "";
