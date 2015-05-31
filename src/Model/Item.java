@@ -217,4 +217,36 @@ public class Item implements Comparable<Item> {
 		return this._itemName.compareTo(o._itemName);
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((_description == null) ? 0 : _description.hashCode());
+		result = prime * result
+				+ ((_itemName == null) ? 0 : _itemName.hashCode());
+		result = prime * result + _minIncrement;
+		result = prime * result + (int) (_qr ^ (_qr >>> 32));
+		result = prime * result + _startingPrice;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		boolean isEquals = false;
+		Item other = (Item) obj;
+		if(obj instanceof Item && obj != null) {
+			isEquals = this._description.equals(other._description)
+					&& this._itemName.equals(other._itemName)
+					&& this._minIncrement == other._minIncrement
+					&& this._startingPrice == other._startingPrice
+					&& this._qr == other._qr;
+		}
+		return isEquals;
+	}
+
+	
+	
+	
+
 }

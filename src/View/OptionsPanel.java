@@ -47,11 +47,11 @@ public class OptionsPanel extends JPanel implements ActionListener{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private Color _color = Color.WHITE;
+	private Color _btnColor = Color.WHITE;
 	
 	private Color _labelColor = Color.RED;
 	
-	private Font _smallFont  = new Font("Tahoma", 0, 20);
+	private Font _smallFont  = new Font("Tahoma", 0, 23);
 	
 	private Dimension _smallDimension  = new Dimension(MainFrame.WIDTH / 7, 100);
 	
@@ -124,7 +124,7 @@ public class OptionsPanel extends JPanel implements ActionListener{
 	
 	private JTable _donorTable;
 	
-	private DefaultTableModel _model;
+	private DefaultTableModel _donorModel;
 	
 	private JButton _removeDonorBtn;
 	
@@ -132,6 +132,14 @@ public class OptionsPanel extends JPanel implements ActionListener{
 	
 	/************ remove item panel's components *************/
 	private JPanel _removeItemPanel;
+	
+	private JTable _itemTable;
+	
+	private DefaultTableModel _itemModel;
+	
+	private JButton _removeItemBtn;
+	
+	private JLabel _removeItemWarning;
 	
 	
 	public OptionsPanel() {
@@ -153,13 +161,50 @@ public class OptionsPanel extends JPanel implements ActionListener{
 	}
 	
 	private void setRemoveDonorPanel() {
-		_removeItemPanel = new JPanel();
+		_removeItemPanel = new JPanel(null);
+		_itemModel = new DefaultTableModel() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+			
+			public boolean isCellEditable(int rowIndex, int mColIndex) {
+				return false;
+			}			
+		};
+		String[] colNames = {"Item Name", "Item QR", "Starting Price", "Minimum Increment"};
+		for(int i = 0; i < colNames.length; i++) {
+			_itemModel.addColumn(colNames[i]);
+		}
+		_itemTable = new JTable(_itemModel);
+		_itemTable.setFillsViewportHeight(true);
 		
+		JScrollPane scrollPane = new JScrollPane(_itemTable);
+		scrollPane.setBounds(120, 100, 800, 500);
+		
+		_removeItemBtn = new JButton("Remove");
+		_removeItemBtn.setFont(_smallFont);
+		_removeItemBtn.setBounds(770, 630, 150, 50);
+		_removeItemBtn.addActionListener(this);
+		
+		JLabel info = new JLabel("Select a Item from the table below, and click remove.");
+		info.setBounds(120,30,800,50);
+		info.setFont(_smallFont);
+		
+		_removeItemWarning = new JLabel();
+		_removeItemWarning.setFont(_smallFont);
+		_removeItemWarning.setForeground(_labelColor);
+		_removeItemWarning.setBounds(120,630,700,50);
+		
+		_removeItemPanel.add(scrollPane);
+		_removeItemPanel.add(_removeItemBtn);
+		_removeItemPanel.add(info);
+		_removeItemPanel.add(_removeItemWarning);
 	}
 	
 	private void setRemoveItemPanel() {
 		_removeDonorPanel = new JPanel(null);	
-		_model = new DefaultTableModel() {
+		_donorModel = new DefaultTableModel() {
 			/**
 			 * 
 			 */
@@ -171,16 +216,15 @@ public class OptionsPanel extends JPanel implements ActionListener{
 		};
 		String[] colNames = {"First Name", "Last Name", "Email", "Address", "Phone"};
 		for(int i = 0; i < colNames.length; i++) {
-			_model.addColumn(colNames[i]);
+			_donorModel.addColumn(colNames[i]);
 		}
-		_donorTable = new JTable(_model);
+		_donorTable = new JTable(_donorModel);
 		_donorTable.setFillsViewportHeight(true);
 		
 		JScrollPane scrollPane = new JScrollPane(_donorTable);
 		scrollPane.setBounds(120, 100, 800, 500);
 		
 		_removeDonorBtn = new JButton("Remove");
-	    //_removeDonorBtn.setPreferredSize(new Dimension(150,60));
 		_removeDonorBtn.setFont(_smallFont);
 		_removeDonorBtn.setBounds(770, 630, 150, 50);
 		_removeDonorBtn.addActionListener(this);
@@ -355,7 +399,7 @@ public class OptionsPanel extends JPanel implements ActionListener{
 		_comboModel = new DefaultComboBoxModel<String>();
 		_combo = new JComboBox<String>();
 		_combo.setModel(_comboModel);
-		_comboModel.insertElementAt("", 0);
+		_comboModel.addElement("");
 		_combo.setPrototypeDisplayValue("    this controls combobox's width    ");
 		_itemPanel.add(_combo,gc);
 		
@@ -429,7 +473,7 @@ public class OptionsPanel extends JPanel implements ActionListener{
 		_addBtn.setPreferredSize(_smallDimension);
 		_addBtn.setFont(_smallFont);
 		_addBtn.setFocusPainted(false);
-		_addBtn.setBackground(_color);
+		_addBtn.setBackground(_btnColor);
 		_addBtn.addActionListener(this);
 
 		_removeBtn = new JButton("Remove");
@@ -472,29 +516,6 @@ public class OptionsPanel extends JPanel implements ActionListener{
 		JTextField[] donorTF = {_firstTF, _lastTF, _emailTF, _addressTF, _phoneTF};
 		JTextField[] itemTF = {_itemNameTF, _ItemDescriptionTF, _startPriceTF, _minIncrementTF, _qrTF};
 		
-		String first = _firstTF.getText();
-		String last = _lastTF.getText();
-		String email = _emailTF.getText();
-		String address = _addressTF.getText();
-		String phone = _phoneTF.getText();
-		
-		String itemName = _itemNameTF.getText();
-		String itemDescription = _ItemDescriptionTF.getText();
-		int startPrice = 0;
-		int minIncrement = 0;
-		long qr = 0;
-		// parse doesn't work if the string is empty so I gotta check it here
-		// the strings are empty by default so it will give an error if not checked.
-		if(!checkEmpty(itemTF)) {
-			try {
-				startPrice = Integer.parseInt(_startPriceTF.getText());
-				minIncrement = Integer.parseInt(_minIncrementTF.getText());
-				qr = Long.parseLong(_qrTF.getText());
-			} catch (Exception ex) {
-				_IInfo.setText("Wrong input format!");
-			}
-		}
-		
 		JButton src = (JButton) e.getSource();
 		if(src == _addBtn) {
 			_clayout.show(_mainContainer, "Add");
@@ -520,21 +541,7 @@ public class OptionsPanel extends JPanel implements ActionListener{
 			if(checkEmpty(donorTF)) {
 				_infoLabel.setText("Please enter all required fields.");
 			} else {
-				try {
-					Donor donor = new Donor(first, last, email, address, phone);
-					DefaultTableModel model = (DefaultTableModel) _donorTable.getModel();
-					model.addRow(new Object[]{first, last, email, address, phone});
-					if(donor != null && !checkDonor(donor)) {
-						MainFrame._auction.addDonor(donor);
-						_comboModel.addElement(first + " " + last + " - " + email);
-						clearText(donorTF);
-						_infoLabel.setText(first + " " + last + " has been added.");
-					} else {
-						_infoLabel.setText("Donor already exists.");
-					}
-				} catch (Exception err) {
-					System.out.println(err);
-				}
+				addDonorAction(donorTF);
 			}
 		} else if (src == _upload) {
 			BufferedImage img = uploadImage();
@@ -548,49 +555,145 @@ public class OptionsPanel extends JPanel implements ActionListener{
 			if(checkEmpty(itemTF)) {
 				_IInfo.setText("Please enter all required fields.");
 			} else {
-				Item item = null;
-				try {
-					if(_combo.getSelectedItem().equals("")) {
-						item = new Item(itemName, itemDescription, minIncrement, startPrice, qr, _image);
-					} else if (_image == null) {
-						item = new Item(itemName, itemDescription, minIncrement, startPrice, getDonor(), qr);
-					} else if (_image == null && _combo.getSelectedItem().equals("")){
-						item = new Item(itemName, itemDescription, minIncrement, startPrice, qr);
-					} else {
-						item = new Item(itemName, itemDescription, minIncrement, startPrice, getDonor(), qr, _image);
-					}
-					if(item != null && minIncrement > 0 && !checkItem(item)) {
-						MainFrame._auction.addItem(item);
-						if(getDonor() != null) {
-							getDonor().add(item);
-							_IInfo.setText(itemName + " has been added for " + getDonor().getFirstName() 
-									+ " " + getDonor().getLastName() + ".");
-					    } else {
-					    	_IInfo.setText(itemName + " has been added.");
-					    }	
-						clearText(itemTF);
-					} else {
-						_IInfo.setText("Item already exists.");
-					}
-				} catch(Exception err) {
-					err.printStackTrace();
-				}
+				addItemAction(itemTF);
 			}
 		} else if (src == _removeDonorBtn) {
-			int index = _donorTable.getSelectedRow();
-			if(index == -1) {
-				_removeDonorWarning.setText("Please select a donor first.");
-			} else {
-				Donor donor = MainFrame._auction.getDonors().get(index);
-				int comboIndex = getDonorIndex(donor)+1;
-				MainFrame._auction.deleteDonor(donor);
-				_comboModel.removeElementAt(comboIndex);
-				_model.removeRow(index);
-				_removeDonorWarning.setText(donor.getFirstName() + " " +donor.getLastName() + " has been removed.");
-			}
+			removeDonorAction();
+		} else if (src == _removeItemBtn) {
+			removeItemAction();
 		}
 	}
 	
+	private void removeItemAction() {
+		int index = _itemTable.getSelectedRow();
+		if(index == -1) {
+			_removeItemWarning.setText("Please select an item first.");
+		} else {
+			Item item = MainFrame._auction.getItems().get(index);
+			MainFrame._auction.deleteItem(item);
+			_itemModel.removeRow(index);
+			for(Donor d : MainFrame._auction.getDonors()) {
+				for (Item i : d.getItemList()) {
+					if (i.equals(item)) {
+						d.delete(item);
+					}
+				}
+			}
+			_removeItemWarning.setText(item.getName() + "has been removed.");
+		}
+	}
+
+	/**
+	 * Removing donor operation. This method is called
+	 * when remove button in remove donor tab is clicked.
+	 */
+	private void removeDonorAction() {
+		int index = _donorTable.getSelectedRow();
+		if(index == -1) {
+			_removeDonorWarning.setText("Please select a donor first.");
+		} else {
+			Donor donor = MainFrame._auction.getDonors().get(index);
+			int comboIndex = getDonorIndex(donor)+1;
+			MainFrame._auction.deleteDonor(donor);
+			_comboModel.removeElementAt(comboIndex);
+			_donorModel.removeRow(index);
+			_removeDonorWarning.setText(donor.getFirstName() + " " +donor.getLastName() + " has been removed.");
+		}
+	}
+	
+	/**
+	 * Adding donor operation.  This method is called
+	 * when add button in add donor tab is clicked.
+	 * 
+	 * @param donorTF An array of JTextField in add donor tab
+	 */
+	private void addDonorAction(JTextField[] donorTF) {
+		String first = _firstTF.getText();
+		String last = _lastTF.getText();
+		String email = _emailTF.getText();
+		String address = _addressTF.getText();
+		String phone = _phoneTF.getText();
+		
+		try {
+			Donor donor = new Donor(first, last, email, address, phone);
+			DefaultTableModel model = (DefaultTableModel) _donorTable.getModel();
+			model.addRow(new Object[]{first, last, email, address, phone});
+			if(donor != null && !checkDonor(donor)) {
+				MainFrame._auction.addDonor(donor);
+				_comboModel.addElement(first + " " + last + " - " + email);
+				clearText(donorTF);
+				_infoLabel.setText(first + " " + last + " has been added.");
+			} else {
+				_infoLabel.setText("Donor already exists.");
+			}
+		} catch (Exception err) {
+			err.printStackTrace();
+		}
+	}
+
+	/**
+	 * Adding item operation. This method is called
+	 * when add button in add item tab is clicked.
+	 * 
+	 * @param itemTF An array of JTextField in add item tab
+	 */
+	private void addItemAction(JTextField[] itemTF) {
+		
+		String itemName = _itemNameTF.getText();
+		String itemDescription = _ItemDescriptionTF.getText();
+		int startPrice = 0;
+		int minIncrement = 0;
+		long qr = 0;
+		// parse doesn't work if the string is empty so I gotta check it here
+		// the strings are empty by default so it will give an error if not checked.
+		if(!checkEmpty(itemTF)) {
+			try {
+				startPrice = Integer.parseInt(_startPriceTF.getText());
+				minIncrement = Integer.parseInt(_minIncrementTF.getText());
+				qr = Long.parseLong(_qrTF.getText());
+			} catch (Exception ex) {
+				_IInfo.setText("Wrong input format!");
+			}
+		}
+		
+		Item item = null;
+		try {
+			if(_combo.getSelectedItem().equals("")) {
+				item = new Item(itemName, itemDescription, minIncrement, startPrice, qr, _image);
+			} else if (_image == null) {
+				item = new Item(itemName, itemDescription, minIncrement, startPrice, getDonor(), qr);
+			} else if (_image == null && _combo.getSelectedItem().equals("")){
+				item = new Item(itemName, itemDescription, minIncrement, startPrice, qr);
+			} else {
+				item = new Item(itemName, itemDescription, minIncrement, startPrice, getDonor(), qr, _image);
+			}
+			if(item != null && minIncrement > 0 && !checkItem(item)) {
+				MainFrame._auction.addItem(item);
+				if(getDonor() != null) {
+					getDonor().add(item);
+					_IInfo.setText(itemName + " has been added for " + getDonor().getFirstName() 
+							+ " " + getDonor().getLastName() + ".");
+			    } else {
+			    	_IInfo.setText(itemName + " has been added.");
+			    }	
+				clearText(itemTF);
+			} else {
+				_IInfo.setText("Item already exists.");
+			}
+			DefaultTableModel model = (DefaultTableModel) _itemTable.getModel();
+			model.addRow(new Object[]{itemName, qr, "$" + startPrice, "$" + minIncrement});
+		} catch(Exception err) {
+			err.printStackTrace();
+		}
+	}
+
+	/**
+	 * Check if an item already exists
+	 * based on item's qr code.
+	 * 
+	 * @param item - item object
+	 * @return true if item already exists, false otherwise.
+	 */
 	private boolean checkItem(Item item) {
 		for(Item i : MainFrame._auction.getItems()) {
 			if (i.getQr() == item.getQr()) {
@@ -600,6 +703,13 @@ public class OptionsPanel extends JPanel implements ActionListener{
 		return false;
 	}
 	
+	/**
+	 * Get the current index of a 
+	 * certain donor in the list.
+	 * 
+	 * @param donor a donor object
+	 * @return the index of the donor
+	 */
 	private int getDonorIndex(Donor donor) {
 		final List<Donor> list = MainFrame._auction.getDonors();
 		for(Donor d : list) {
@@ -610,6 +720,11 @@ public class OptionsPanel extends JPanel implements ActionListener{
 		return -1;
 	}
 
+	/**
+	 * Get the donor from auction's donor list.
+	 * 
+	 * @return a donor object
+	 */
 	private Donor getDonor() {
 		for(Donor donor: MainFrame._auction.getDonors()) {
 			String donorName = donor.getFirstName() + " " + donor.getLastName() + " - " + donor.getEmail();
@@ -620,6 +735,11 @@ public class OptionsPanel extends JPanel implements ActionListener{
 		return null;
 	}
 
+	/**
+	 * Get an image from filechooser.
+	 * 
+	 * @return buffered image
+	 */
 	private BufferedImage uploadImage() {
 		JFileChooser fc = new JFileChooser();
 		int returnVal = fc.showOpenDialog(OptionsPanel.this);
@@ -636,6 +756,12 @@ public class OptionsPanel extends JPanel implements ActionListener{
 		return null;
 	}
 
+	/**
+	 * Check if one, two, or all the text fields are empty
+	 * 
+	 * @param tf An array of text fields to be checked
+	 * @return true if there's a field that is empty, false otherwise.
+	 */
 	private boolean checkEmpty(JTextField[] tf) {
 		for(int i = 0; i < tf.length; i++) {
 			if(tf[i].getText().equals("")) {
@@ -645,22 +771,39 @@ public class OptionsPanel extends JPanel implements ActionListener{
 		return false;
 	}
 	
+	/**
+	 * Set the background of the sidebar's buttons
+	 * So user know which panel they are on.
+	 * 
+	 * @param btn A button object
+	 */
 	private void setBackGround(JButton btn) {
 		if (btn == _addBtn) {
-			_addBtn.setBackground(_color);
+			_addBtn.setBackground(_btnColor);
 			_removeBtn.setBackground(UIManager.getColor("Button.background"));
 		} else if (btn == _removeBtn){
-			_removeBtn.setBackground(_color);
+			_removeBtn.setBackground(_btnColor);
 			_addBtn.setBackground(UIManager.getColor("Button.background"));
 		}
 	}
 
+	/**
+	 * Clear all the text from text fields.
+	 * 
+	 * @param arr An array of text fields
+	 */
 	private void clearText(JTextField[] arr) {
 		for(int i = 0; i < arr.length; i++) {
 			arr[i].setText("");
 		}
 	}
 
+	/**
+	 * Check if the donor already exists in the auction's donor list.
+	 * 
+	 * @param donor A donor to be checked
+	 * @return true if already exists, false otherwise.
+	 */
 	private boolean checkDonor(Donor donor) {
 		for(Donor d: MainFrame._auction.getDonors()) {
 			String donorToAdd = donor.getFirstName() + donor.getLastName() + donor.getEmail();
