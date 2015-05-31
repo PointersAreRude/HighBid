@@ -9,18 +9,47 @@ import Model.Bidder;
 import Model.Donor;
 import Model.Item;
 
+/**
+ * StatsPanel class, a TEMPORARY class to display and test the StatsPanel, not connected to the main HighBid software.
+ * 
+ * @author Abigail Smith
+ * @version 5/30/15
+ */
 public class StatsFrameTemp<E> extends JFrame {
 
+	/**
+	 * The width of this frame.
+	 */
 	private final int WIDTH = 1200;
 	
+	/**
+	 * The height of this frame.
+	 */
 	private final int HEIGHT = 800;
 	
-	StatsPanel<E> myPanel;
+	/**
+	 * a StatsPanel to be contained in this frame.
+	 */
+	private StatsPanel<E> myPanel;
 	
-	ArrayList<E> myItemList;
-	ArrayList<E> myBidderList;
-	ArrayList<E> myDonorList;
+	/**
+	 * A list of items.
+	 */
+	private ArrayList<E> myItemList;
 	
+	/**
+	 * A list of bidders.
+	 */
+	private ArrayList<E> myBidderList;
+	
+	/**
+	 * A list of donors.
+	 */
+	private ArrayList<E> myDonorList;
+	
+	/**
+	 * StatsFrameTemp constructor.
+	 */
 	public StatsFrameTemp() {
 		setTitle("Stats");
 		setSize(WIDTH, HEIGHT);
@@ -36,6 +65,9 @@ public class StatsFrameTemp<E> extends JFrame {
 		
 	}
 	
+	/**
+	 * A helper method that creates Item, Bidder, and Donor objects and places them in their appropriate list.
+	 */
 	@SuppressWarnings("unchecked")
 	private void createLists() {
 		myItemList = (ArrayList<E>) new ArrayList<Item>();
