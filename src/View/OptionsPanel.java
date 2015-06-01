@@ -12,6 +12,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.ConcurrentModificationException;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -87,7 +89,6 @@ public class OptionsPanel extends JPanel implements ActionListener{
 	
 	private JButton _donorBtn;
 	
-	private JTextField[] _donorTF  = {_firstTF, _lastTF, _emailTF, _addressTF, _phoneTF};
 	
 	/*************** add item panel's components ***************/
 	private JPanel _itemPanel;
@@ -115,8 +116,7 @@ public class OptionsPanel extends JPanel implements ActionListener{
 	private JButton _upload;
 	
 	private ImageIcon _image;
-	
-	private JTextField[] _itemTF = {_itemNameTF, _ItemDescriptionTF, _startPriceTF, _minIncrementTF, _qrTF};
+
 	
 	/************* remove panel's components ******************/
 	private JTabbedPane _removePanel;
@@ -285,13 +285,34 @@ public class OptionsPanel extends JPanel implements ActionListener{
 		gc.gridy = 0;
 		gc.gridx = 1;
 		
-		for(int i = 0; i < _donorTF.length; i++) {
-			_donorTF[i] = new JTextField(20);
-			_donorTF[i].setPreferredSize(MainFrame.TF_DIMENSION);
-			_donorTF[i].setFont(MainFrame.FORM_TF_FONT);
-			_donorPanel.add(_donorTF[i], gc);
-			gc.gridy++;
-		}
+		_firstTF = new JTextField(20);
+		_firstTF.setPreferredSize(MainFrame.TF_DIMENSION);
+		_firstTF.setFont(MainFrame.FORM_TF_FONT);
+		_donorPanel.add(_firstTF, gc);
+		
+		gc.gridy++;
+		_lastTF = new JTextField(20);
+		_lastTF.setPreferredSize(MainFrame.TF_DIMENSION);
+		_lastTF.setFont(MainFrame.FORM_TF_FONT);
+		_donorPanel.add(_lastTF, gc);
+		
+		gc.gridy++;
+		_emailTF = new JTextField(20);
+		_emailTF.setPreferredSize(MainFrame.TF_DIMENSION);
+		_emailTF.setFont(MainFrame.FORM_TF_FONT);
+		_donorPanel.add(_emailTF, gc);
+		
+		gc.gridy++;
+		_addressTF = new JTextField(20);
+		_addressTF.setPreferredSize(MainFrame.TF_DIMENSION);
+		_addressTF.setFont(MainFrame.FORM_TF_FONT);
+		_donorPanel.add(_addressTF, gc);
+		
+		gc.gridy++;
+		_phoneTF = new JTextField(20);
+		_phoneTF.setPreferredSize(MainFrame.TF_DIMENSION);
+		_phoneTF.setFont(MainFrame.FORM_TF_FONT);
+		_donorPanel.add(_phoneTF, gc);
 		
 		gc.gridy++;
 		_donorBtn = new JButton("Add");
@@ -349,17 +370,38 @@ public class OptionsPanel extends JPanel implements ActionListener{
 		_comboModel.addElement("");
 		_combo.setPrototypeDisplayValue("    this controls combobox's width    ");
 		_itemPanel.add(_combo,gc);
+
+		gc.gridy++;
+		_itemNameTF = new JTextField(20);
+		_itemNameTF.setPreferredSize(MainFrame.TF_DIMENSION);
+		_itemNameTF.setFont(MainFrame.FORM_TF_FONT);
+		_itemPanel.add(_itemNameTF, gc);
 		
 		gc.gridy++;
+		_ItemDescriptionTF = new JTextField(20);
+		_ItemDescriptionTF.setPreferredSize(MainFrame.TF_DIMENSION);
+		_ItemDescriptionTF.setFont(MainFrame.FORM_TF_FONT);
+		_itemPanel.add(_ItemDescriptionTF, gc);
 		
-		for(int i = 0; i < _itemTF.length; i++) {
-			_itemTF[i] = new JTextField(20);
-			_itemTF[i].setPreferredSize(MainFrame.TF_DIMENSION);
-			_itemTF[i].setFont(MainFrame.FORM_TF_FONT);
-			_itemPanel.add(_itemTF[i], gc);
-			gc.gridy++;
-		}
+		gc.gridy++;
+		_minIncrementTF = new JTextField(20);
+		_minIncrementTF.setPreferredSize(MainFrame.TF_DIMENSION);
+		_minIncrementTF.setFont(MainFrame.FORM_TF_FONT);
+		_itemPanel.add(_minIncrementTF, gc);
+		
+		gc.gridy++;
+		_startPriceTF = new JTextField(20);
+		_startPriceTF.setPreferredSize(MainFrame.TF_DIMENSION);
+		_startPriceTF.setFont(MainFrame.FORM_TF_FONT);
+		_itemPanel.add(_startPriceTF, gc);
+		
+		gc.gridy++;
+		_qrTF = new JTextField(20);
+		_qrTF.setPreferredSize(MainFrame.TF_DIMENSION);
+		_qrTF.setFont(MainFrame.FORM_TF_FONT);
+		_itemPanel.add(_qrTF, gc);
 
+		gc.gridy++;
 		_upload = new JButton("Upload Image");
 		_upload.addActionListener(this);
 		_itemPanel.add(_upload, gc);
@@ -439,32 +481,35 @@ public class OptionsPanel extends JPanel implements ActionListener{
 
 	public void actionPerformed(ActionEvent e) {
 		
+		JTextField[] donorTF = {_firstTF, _lastTF, _emailTF, _addressTF, _phoneTF};
+		JTextField[] itemTF = {_itemNameTF, _ItemDescriptionTF, _startPriceTF, _minIncrementTF, _qrTF};
+		
 		JButton src = (JButton) e.getSource();
 		if(src == _addBtn) {
 			_clayout.show(_mainContainer, "Add");
 			setBackGround(_addBtn);
-			clearText(_itemTF);
+			clearText(itemTF);
 			_IInfo.setText("");
 			_removeDonorWarning.setText("");
 		} else if (src == _removeBtn) {
 			_clayout.show(_mainContainer, "Remove");
 			setBackGround(_removeBtn);
-			clearText(_itemTF);
-			clearText(_donorTF);
+			clearText(itemTF);
+			clearText(donorTF);
 			_IInfo.setText("");
 			_infoLabel.setText("");
 		} else if (src == _backBtn){
 			MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "HomeScreen");
-			clearText(_donorTF);
-			clearText(_itemTF);
+			clearText(donorTF);
+			clearText(itemTF);
 			_infoLabel.setText("");
 			_IInfo.setText("");
 			_removeDonorWarning.setText("");
 		} else if (src == _donorBtn) {
-			if(checkEmpty(_donorTF)) {
+			if(checkEmpty(donorTF)) {
 				_infoLabel.setText("Please enter all required fields.");
 			} else {
-				addDonorAction(_donorTF);
+				addDonorAction(donorTF);
 			}
 		} else if (src == _upload) {
 			BufferedImage img = uploadImage();
@@ -475,10 +520,10 @@ public class OptionsPanel extends JPanel implements ActionListener{
 				_IInfo.setText("Couldn't upload the image.");
 			}
 		} else if (src == _itemBtn) {
-			if(checkEmpty(_itemTF)) {
+			if(checkEmpty(itemTF)) {
 				_IInfo.setText("Please enter all required fields.");
 			} else {
-				addItemAction(_itemTF);
+				addItemAction(itemTF);
 			}
 		} else if (src == _removeDonorBtn) {
 			removeDonorAction();
@@ -487,7 +532,7 @@ public class OptionsPanel extends JPanel implements ActionListener{
 		}
 	}
 	
-	private void removeItemAction() {
+	private void removeItemAction() throws ConcurrentModificationException {
 		int index = _itemTable.getSelectedRow();
 		if(index == -1) {
 			_removeItemWarning.setText("Please select an item first.");
@@ -495,12 +540,16 @@ public class OptionsPanel extends JPanel implements ActionListener{
 			Item item = MainFrame._auction.getItems().get(index);
 			MainFrame._auction.deleteItem(item);
 			_itemModel.removeRow(index);
+			Iterator<Item> itr = null;
 			for(Donor d : MainFrame._auction.getDonors()) {
-				for (Item i : d.getItemList()) {
-					if (i.equals(item)) {
-						d.delete(item);
+				itr = d.getItemList().iterator();
+				while(itr.hasNext()) {
+					Item i = itr.next();
+					if(item.equals(i)) {
+						itr.remove();
 					}
 				}
+				
 			}
 			_removeItemWarning.setText(item.getName() + "has been removed.");
 		}
