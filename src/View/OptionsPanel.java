@@ -40,109 +40,241 @@ import Model.Item;
  * This panel is used to add or remove donor/item
  * 
  * @author Long Nguyen
- * @version 5/29/2015
+ * @version 6/1/2015
  */
 public class OptionsPanel extends JPanel implements ActionListener{
 
 	/**
-	 * 
+	 * gererated serial version uid
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	/**
+	 * Sidebar's button color
+	 */
 	private Color _btnColor = Color.WHITE;
 	
+	/**
+	 * Color for warning/info labels
+	 */
 	private Color _labelColor = Color.RED;
 	
+	/**
+	 * default font used in this panel
+	 */
 	private Font _smallFont  = new Font("Tahoma", 0, 23);
 	
+	/**
+	 * default dimension used in this panel
+	 */
 	private Dimension _smallDimension  = new Dimension(MainFrame.WIDTH / 7, 100);
 	
+	/**
+	 * Sidebar
+	 */
 	private JPanel _leftPanel;
 	
+	/**
+	 * container panel for CardLayout
+	 */
 	private JPanel _mainContainer;
 	
+	/**
+	 * Card layout
+	 */
 	private CardLayout _clayout;
 	
+	/**
+	 * Back button
+	 */
 	private JButton _backBtn;
 	
 	/*************** add panel's component *********************/
+	/**
+	 * Add tabbbed pane
+	 */
 	private JTabbedPane _addPanel;
 	
+	/**
+	 * Add button
+	 */
 	private JButton _addBtn;
 	
 	/*************** add donor panel's components **************/
+	/**
+	 * Add donor's panel
+	 */
 	private JPanel _donorPanel;
 	
+	/**
+	 * Add donor's container (null layout)
+	 */
 	private JPanel _DContainer;
 	
+	/**
+	 * first name text field
+	 */
 	private JTextField _firstTF;
 	
+	/**
+	 * Last name text field
+	 */
 	private JTextField _lastTF;
 	
+	/**
+	 * email text field
+	 */
 	private JTextField _emailTF;
 	
+	/**
+	 * address text field
+	 */
 	private JTextField _addressTF;
 	
+	/**
+	 * phone text field
+	 */
 	private JTextField _phoneTF;
 	
+	/**
+	 * Label to display warning/details to user
+	 */
 	private JLabel _infoLabel;
 	
+	/**
+	 * Add donor button
+	 */
 	private JButton _donorBtn;
 	
 	
 	/*************** add item panel's components ***************/
+	/**
+	 * add item's panel
+	 */
 	private JPanel _itemPanel;
 	
+	/**
+	 * add item's container (null layout)
+	 */
 	private JPanel _IContainer;
 	
+	/**
+	 * Item name text field
+	 */
 	private JTextField _itemNameTF;
 	
+	/**
+	 * item description text field
+	 */
 	private JTextField _ItemDescriptionTF;
 	
+	/**
+	 * Starting price text field
+	 */
 	private JTextField _startPriceTF;
 	
+	/**
+	 * Minimum increment text field
+	 */
 	private JTextField _minIncrementTF;
 	
+	/**
+	 * QR text field
+	 */
 	private JTextField _qrTF;
 	
+	/**
+	 * Add item button
+	 */
 	private JButton _itemBtn; 
 	
+	/**
+	 * A combo box for donors
+	 */
 	private JComboBox<String> _combo;
 	
+	/**
+	 * Combo box's model
+	 */
 	private DefaultComboBoxModel<String> _comboModel;
 	
+	/**
+	 * Jlabel to display warning/info to users.
+	 */
 	private JLabel _IInfo;
 	
+	/**
+	 * Upload button
+	 */
 	private JButton _upload;
 	
+	/**
+	 * image for item
+	 */
 	private ImageIcon _image;
 
 	
 	/************* remove panel's components ******************/
+	/**
+	 * Remove tabbed pane
+	 */
 	private JTabbedPane _removePanel;
 	
+	/**
+	 * Remove button
+	 */
 	private JButton _removeBtn;
 	
 	/************ remove donor panel's components ************/	
+	/**
+	 * Remove donor's panel
+	 */
 	private JPanel _removeDonorPanel;
 	
+	/**
+	 * Table to hold donors' data
+	 */
 	private JTable _donorTable;
 	
+	/**
+	 * Donor table's model
+	 */
 	private DefaultTableModel _donorModel;
 	
+	/**
+	 * remove donor button
+	 */
 	private JButton _removeDonorBtn;
 	
+	/**
+	 * Jlabel to display warning/info to users.
+	 */
 	private JLabel _removeDonorWarning;
 	
 	/************ remove item panel's components *************/
+	/**
+	 * Remove item's panel
+	 */
 	private JPanel _removeItemPanel;
 	
+	/**
+	 * Table to hold items' data
+	 */
 	private JTable _itemTable;
 	
+	/**
+	 * Item table's model
+	 */
 	private DefaultTableModel _itemModel;
 	
+	/**
+	 * Remove item button
+	 */
 	private JButton _removeItemBtn;
 	
+	/**
+	 * JLabel to display warning/info to users
+	 */
 	private JLabel _removeItemWarning;
 	
 	
@@ -155,6 +287,9 @@ public class OptionsPanel extends JPanel implements ActionListener{
 		addComponents();
 	}
 
+	/**
+	 * Set up remove tab for removing item/donor
+	 */
 	private void setRemovePanel() {
 		_removePanel = new JTabbedPane();
 		setRemoveDonorPanel();
@@ -164,6 +299,9 @@ public class OptionsPanel extends JPanel implements ActionListener{
 		
 	}
 	
+	/**
+	 * Set up remove donor tab
+	 */
 	private void setRemoveDonorPanel() {
 		_removeItemPanel = new JPanel(null);
 		_itemModel = new DefaultTableModel() {
@@ -191,7 +329,7 @@ public class OptionsPanel extends JPanel implements ActionListener{
 		_removeItemBtn.setBounds(770, 630, 150, 50);
 		_removeItemBtn.addActionListener(this);
 		
-		JLabel info = new JLabel("Select a Item from the table below, and click remove.");
+		JLabel info = new JLabel("Select an item from the table below, and click remove.");
 		info.setBounds(120,30,800,50);
 		info.setFont(_smallFont);
 		
@@ -206,6 +344,9 @@ public class OptionsPanel extends JPanel implements ActionListener{
 		_removeItemPanel.add(_removeItemWarning);
 	}
 	
+	/**
+	 * Set up remove item tab
+	 */
 	private void setRemoveItemPanel() {
 		_removeDonorPanel = new JPanel(null);	
 		_donorModel = new DefaultTableModel() {
@@ -249,6 +390,9 @@ public class OptionsPanel extends JPanel implements ActionListener{
 		
 	}
 
+	/**
+	 * Setting up add tab for adding donor/item
+	 */
 	private void setAddPanel() {
 		_addPanel = new JTabbedPane();
 		setAddDonorPanel();
@@ -257,6 +401,9 @@ public class OptionsPanel extends JPanel implements ActionListener{
 		_addPanel.add("Add Item", _IContainer);
 	}
 
+	/**
+	 * Set up add donor tab's form
+	 */
 	private void setAddDonorPanel() {
 		_DContainer = new JPanel();
 		_DContainer.setLayout(null);
@@ -334,6 +481,9 @@ public class OptionsPanel extends JPanel implements ActionListener{
 		
 	}
 
+	/**
+	 * Set up add item tab's form
+	 */
 	private void setAddItemPanel() {
 		
 		JLabel itemLabel = new JLabel("Item Form");
@@ -424,9 +574,11 @@ public class OptionsPanel extends JPanel implements ActionListener{
 		_IContainer.add(itemLabel);
 		_IContainer.add(_IInfo);
 		
-		
 	}
 
+	/**
+	 * Set up the right sidebar
+	 */
 	private void setLeftPanel() {
 		Border border = BorderFactory.createLineBorder(Color.black);
 		GridBagConstraints gc = new GridBagConstraints();
@@ -464,6 +616,11 @@ public class OptionsPanel extends JPanel implements ActionListener{
       
 	}
 
+	/**
+	 * Add components to card layout container
+	 * then add that cardlayout and other components
+	 * to the main panel
+	 */
 	private void addComponents() {
 		HomeScreen home = new HomeScreen();
 		
@@ -491,6 +648,7 @@ public class OptionsPanel extends JPanel implements ActionListener{
 			clearText(itemTF);
 			_IInfo.setText("");
 			_removeDonorWarning.setText("");
+			_removeItemWarning.setText("");
 		} else if (src == _removeBtn) {
 			_clayout.show(_mainContainer, "Remove");
 			setBackGround(_removeBtn);
@@ -505,6 +663,7 @@ public class OptionsPanel extends JPanel implements ActionListener{
 			_infoLabel.setText("");
 			_IInfo.setText("");
 			_removeDonorWarning.setText("");
+			_removeItemWarning.setText("");
 		} else if (src == _donorBtn) {
 			if(checkEmpty(donorTF)) {
 				_infoLabel.setText("Please enter all required fields.");
@@ -532,6 +691,12 @@ public class OptionsPanel extends JPanel implements ActionListener{
 		}
 	}
 	
+	/**
+	 * Removing item operation. This method is called
+	 * when remove button in remove item tab is clicked.
+	 * 
+	 * @throws ConcurrentModificationException
+	 */
 	private void removeItemAction() throws ConcurrentModificationException {
 		int index = _itemTable.getSelectedRow();
 		if(index == -1) {
