@@ -163,6 +163,19 @@ public class Auction {
 	 * @param anItem an Item to be deleted.
 	 */
 	public void deleteItem(Item anItem) {
+		boolean breakLoop = false;
+		for (Donor donor : myDonors) {
+			for (Item item : donor.getItemList()) {
+				if (item == anItem) {
+					donor.delete(item);
+					breakLoop = true;
+					break;
+				}
+			}
+			if (breakLoop) {
+				break;
+			}
+		}
 		myItems.remove(anItem);
 	}
 	
