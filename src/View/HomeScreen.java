@@ -147,7 +147,6 @@ public class HomeScreen extends JPanel implements ActionListener {
 		} 
 		else if(src == _registrationBtn){
 			MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "BidderChooser");
-			//TODO: add the registration panel
 		}
 		else if(src == _viewAuctionInfo){
 			// TODO: add the viewAcution panel

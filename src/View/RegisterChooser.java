@@ -136,7 +136,7 @@ public class RegisterChooser extends JPanel implements ActionListener {
 		_backBtn.addActionListener(this);
 		add(_backBtn);
 		
-		_addBtn = new JButton("<html>Remove</html>");
+		_addBtn = new JButton("<html>Add</html>");
 		_addBtn.setSize(btnX, btnY);
 		_addBtn.setFont(MainFrame.BUTTON_FONT);
 		_addBtn.addActionListener(this);
@@ -195,8 +195,10 @@ public class RegisterChooser extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		JButton src = (JButton) e.getSource();
 		if (src == _backBtn) {
-			MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "RegPortal");
+			MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "HomeScreen");
 			
+		} else if (src == _addBtn) {
+			MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "BidderReg");
 		} else if (src == _editBtn) {
 			if(_selection != null){
 				_editScrn.setBidder(_selection);
