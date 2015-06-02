@@ -1,5 +1,6 @@
 package View;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -9,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.TreeSet;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -52,6 +54,8 @@ public class StatsPanel<E> extends JPanel implements ActionListener {
 	 * JLabel to say what kind of objects are being displayed.
 	 */
 	private JLabel myLabel;
+	
+	private JLabel myItemImage;
 	
 	/**
 	 * JButton to go back to previous page.
@@ -129,7 +133,7 @@ public class StatsPanel<E> extends JPanel implements ActionListener {
 		myC.weightx = 1.0;
 		myC.weighty = 0.1;
 		myC.gridheight = 1;
-		myC.gridwidth = 5;
+		myC.gridwidth = 10;
 		
 		myLabel = new JLabel();
 		if (myArray != null) {
@@ -150,15 +154,16 @@ public class StatsPanel<E> extends JPanel implements ActionListener {
 		
 		//add(Box.createRigidArea(new Dimension(myLabel.getWidth(), myLabel.getHeight())));
 		
+		//myC.gridx = 1;
 		myC.gridwidth = GridBagConstraints.REMAINDER;
-		myC.weighty = 0.0;
+		//myC.weighty = 0.0;
 		myBack = new JButton("Back");
 		myBack.addActionListener(this);
 		myBack.setFont(MainFrame.FORM_TF_FONT);
 		myBag.setConstraints(myBack, myC);
 		add(myBack);
 		
-		myC.gridheight = 50;
+		//myC.gridheight = 50;
 		myC.weighty = 2.0;
 		myC.gridwidth = 5;
 		if (myArray != null) {
@@ -182,6 +187,16 @@ public class StatsPanel<E> extends JPanel implements ActionListener {
 		myBag.setConstraints(myText, myC);
 		add(myText);
 		setSize(1200, 800);
+		
+		if (myArray != null && myArray[0] instanceof Item) {
+			myItemImage = new JLabel("Image");
+			myItemImage.setFont(MainFrame.FORM_LABEL_FONT);
+			//myC.gridx = 0;
+			//myC.weighty = 0.0;
+			myC.gridheight = 1;
+			//myBag.setConstraints(myItemImage, myC);
+			add(myItemImage);
+		}
 		
 		myList.addListSelectionListener(new MyListSelectionListener(myText, myList));
 	}
@@ -243,9 +258,14 @@ public class StatsPanel<E> extends JPanel implements ActionListener {
 					text += "\n        " + (i + 1) + ". " + bddr.getFirstName() + " " + bddr.getLastName() + " : " + bddr.getid();
 				}
 				
-				
-				JLabel imageLabel = new JLabel(item.getImage());
-				myBag.setConstraints(imageLabel, myC);
+				ImageIcon icon = item.getImage();
+				if (icon != null) {
+					myItemImage.setText("");
+					myItemImage.setIcon(icon);
+				} else {
+					myItemImage.setIcon(null);
+					myItemImage.setText("No image available for this item");
+				}
 				
 			} else if (selected instanceof Person) {
 				Person person = (Person) selected;
