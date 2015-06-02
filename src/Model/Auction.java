@@ -58,7 +58,7 @@ public class Auction {
 	/**
 	 * The file path to save all the Auction stats to.
 	 */
-	private String myFileName;
+	//private String myFileName;
 	
 	private int BidderID;
 	
@@ -85,7 +85,7 @@ public class Auction {
 		myItems = new ArrayList<Item>();
 		myBidders = new ArrayList<Bidder>();
 		
-		String fileName = "output/" + myFacilitator + ":" + myDate + ".csv";
+		///String fileName = "output/" + myFacilitator + ":" + myDate + ".csv";
 	}
 	
 	/**
@@ -215,8 +215,8 @@ public class Auction {
 	 * currently the file is saved in a folder under this project called "tempOutput".
 	 * @throws IOException 
 	 */
-	public void exportFile() throws IOException {
-		PrintWriter writeFile = new PrintWriter(new FileWriter(myFileName, true));
+	public void exportFile(String fileName) throws IOException {
+		PrintWriter writeFile = new PrintWriter(new FileWriter(fileName, true));
 		writeFile.println("#,Auction Info");
 		writeFile.println("+," + myFacilitator + "," + myDate + "," + myStartTime + "," + myEndTime);
 		
