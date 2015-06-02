@@ -187,8 +187,6 @@ public class Auction {
 			}
 		}
 		
-		
-		
 		for (Item anItem : myItems) {
 			if (anItem.getQr() == anItemQR) {
 				itemBidOn = anItem;
@@ -296,18 +294,18 @@ public class Auction {
 		Scanner reader = new Scanner (Paths.get(filePath));
 		String line;
 		String[] input;
-		if (reader.hasNext()) {
-			line = reader.next(); //eat the "#Auction Info" line
+		if (reader.hasNextLine()) {
+			line = reader.nextLine(); //eat the "#Auction Info" line
 			if (reader.hasNext()) {
-				line = reader.next(); //grab the line with Auction info
+				line = reader.nextLine(); //grab the line with Auction info
 				input = line.split(",");
 				myFacilitator = input[1];
 				myDate = input[2];
 				myStartTime = input[3];
 				myEndTime = input[4];
 				
-				if (reader.hasNext()) {
-					line = reader.next(); //eat the "#Items" line
+				if (reader.hasNextLine()) {
+					line = reader.nextLine(); //eat the "#Items" line
 					
 					parseItems(reader);
 					//have parseInts return a list of lists that gives proper bidding history, then after
