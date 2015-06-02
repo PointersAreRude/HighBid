@@ -6,6 +6,10 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -233,6 +237,21 @@ public class CreatePanel extends JPanel implements ActionListener {
 				_warningLabel.setText("Please enter all required fields.");
 			} else {
 				MainFrame._auction = new Auction(date, startTime, endTime, facilitatorName);
+				
+				try {
+					File file = new File("output/AuctionFile.csv");
+					if (file.exists())  {
+						file.delete();
+						file = new File("output/AuctionFile.csv");
+					}
+					PrintWriter writeFile = new PrintWriter(new FileWriter(file, true));
+					writeFile.println("#,Auction Info");
+					writeFile.println("+," + facilitatorName + "," + date + "," + startTime + "," + endTime);
+					writeFile.close();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "HomeScreen");
 			}
 			

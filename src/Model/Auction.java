@@ -148,7 +148,13 @@ public class Auction {
 	 * @param aDonor a Donor to be deleted.
 	 */
 	public void deleteDonor(Donor aDonor) {
+		for (Item item : myItems) {
+			if (aDonor == item.getDonor()) {
+				item.setDonor(null);
+			}
+		}
 		myDonors.remove(aDonor);
+		
 	}
 	
 	/**
@@ -157,6 +163,19 @@ public class Auction {
 	 * @param anItem an Item to be deleted.
 	 */
 	public void deleteItem(Item anItem) {
+		boolean breakLoop = false;
+		for (Donor donor : myDonors) {
+			for (Item item : donor.getItemList()) {
+				if (item == anItem) {
+					donor.delete(item);
+					breakLoop = true;
+					break;
+				}
+			}
+			if (breakLoop) {
+				break;
+			}
+		}
 		myItems.remove(anItem);
 	}
 	
@@ -186,8 +205,6 @@ public class Auction {
 				break;
 			}
 		}
-		
-		
 		
 		for (Item anItem : myItems) {
 			if (anItem.getQr() == anItemQR) {
@@ -225,19 +242,6 @@ public class Auction {
 		for (Item item : myItems) {
 			
 			writeFile.println("+," + item.toString());
-			
-			/*writeFile.print("+," + item.getName() + "," + item.getDescription() + "," + item.getMinIncrement()
-					+ "," + item.getStartingPrice() + "," + item.getDonor().getName() + "," + item.getQr()
-					+ "," + item.getImage());
-			
-			//this needs to change to Map<Bidder, Integer>
-			Map<Item, Integer> itemMap = item.getBids();
-			Iterator<Entry<Item, Integer>> itr = itemMap.entrySet().iterator();
-			while (itr.hasNext()) {
-				Map.Entry<Item, Integer> entry = (Entry<Item, Integer>) itr.next();
-				//change "getQr()" to "getid()" when it changes to Bidder instead of Item
-				writeFile.print("," + entry.getKey()  + ":" + entry.getKey().getQr() + "," + entry.getValue());
-			}*/
 			writeFile.println();
 		}
 		
@@ -246,42 +250,13 @@ public class Auction {
 		for (Donor donor : myDonors) {
 			
 			writeFile.println("+," + donor.toString());
-			
-			/*writeFile.print("+," + donor.getName() + "," + donor.getPhone() + "," + donor.getEmail()
-					+ "," + donor.getAddress() + "," + donor.getImage());
-			
-			ArrayList<Item> itemsDonated = donor.getItems();
-			for (Item item : itemsDonated) {
-				writeFile.print("," + item.getName() + ":" + item.getQr());
-			}*/
 			writeFile.println();
 		}
 		
 		//write out Bidders
-		
-		
 		writeFile.println("#,Bidders");
 		for (Bidder bidder : myBidders) {
-			
 			writeFile.println("+," + bidder.toString());
-			
-			/*writeFile.println("+," + bidder.getName() + "," + bidder.getNickName() + "," + bidder.getid()
-					+ "," + bidder.getPhone() + "," + bidder.getEmail() + "," + bidder.getAddress());
-			
-			writeFile.print("-,");
-			ArrayList<Item> itemsWon = bidder.getItemsWon();
-			for (Item item : itemsWon) {
-				writeFile.print("," + item.getName() + ":" + item.getQr());
-			}
-			writeFile.println();
-			
-			writeFile.print("-,");
-			Map<Item, Integer> bidderMap = bidder.getBids();
-			Iterator<Entry<Item, Integer>> itr = bidderMap.entrySet().iterator();
-			while (itr.hasNext()) {
-				Map.Entry<Item, Integer> entry = (Entry<Item, Integer>) itr.next();
-				writeFile.print("," + entry.getKey() + ":" + entry.getKey().getQr() + "," + entry.getValue());
-			}*/
 			writeFile.println();
 		}
 		
@@ -296,18 +271,18 @@ public class Auction {
 		Scanner reader = new Scanner (Paths.get(filePath));
 		String line;
 		String[] input;
-		if (reader.hasNext()) {
-			line = reader.next(); //eat the "#Auction Info" line
+		if (reader.hasNextLine()) {
+			line = reader.nextLine(); //eat the "#Auction Info" line
 			if (reader.hasNext()) {
-				line = reader.next(); //grab the line with Auction info
+				line = reader.nextLine(); //grab the line with Auction info
 				input = line.split(",");
 				myFacilitator = input[1];
 				myDate = input[2];
 				myStartTime = input[3];
 				myEndTime = input[4];
 				
-				if (reader.hasNext()) {
-					line = reader.next(); //eat the "#Items" line
+				if (reader.hasNextLine()) {
+					line = reader.nextLine(); //eat the "#Items" line
 					
 					parseItems(reader);
 					//have parseInts return a list of lists that gives proper bidding history, then after
@@ -318,7 +293,6 @@ public class Auction {
 				}
 			}
 		}
-		
 		reader.close();
 	}
 	
