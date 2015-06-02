@@ -39,7 +39,7 @@ public class AuctionTest {
 	private final String startTime = "25:00";
 	private final String endTime = "25:70";
 	private final String facilitatorName = "Rich";
-	
+	private final int biddersDeviceID = 123;
 	
 	/**
 	 * setup everything first before creating runing test
@@ -49,7 +49,8 @@ public class AuctionTest {
 
 		donor = new Donor(personFirstName, personLastName, personEmail, personAddress, personPhoneNumber);
 		auction = new Auction(date, startTime, endTime, facilitatorName);
-		bidder = new Bidder(personFirstName, personLastName, personEmail, personAddress, nickName, personPhoneNumber);
+		bidder = new Bidder(personFirstName, personLastName, personEmail, personAddress, nickName, personPhoneNumber,
+				biddersDeviceID);
 
 		item = new Item(itemName, itemDesc, startPrice, increment, donor, id, null);
 		
@@ -58,7 +59,14 @@ public class AuctionTest {
 		auction.addDonor(donor);
 
 	}
-
+	
+	@Test
+	public void testPlaceBid(){
+		
+		auction.placeBid(biddersDeviceID, id);	
+		assertEquals(id, item.getQr());
+		
+	}
 	@Test
 	public void testGetItem() {
 		
@@ -95,11 +103,15 @@ public class AuctionTest {
 	
 	@Test
 	public void testDeleteItem(){
+		List<Item> list = new ArrayList<Item>();
 		
+		list = auction.getItems();
+		auction.deleteItem(item);
+		assertFalse("delete Item Falied", list.contains(item));
 	}
 	
 	@Test
-	public void testDeleBidder(){
+	public void testDeleteBidder(){
 		List<Bidder> list = new ArrayList<Bidder>();
 		
 		list = auction.getBidders();

@@ -114,15 +114,23 @@ public class HomeScreen extends JPanel implements ActionListener {
                 final int result = fc.showSaveDialog(HomeScreen.this);
                 if (result == JFileChooser.APPROVE_OPTION)
                 {
-//                    try
-//                    {
-//                       //myImage.save(myChooser.getSelectedFile());
-//                    }
-//                    catch (final IOException ex)
-//                    {
-//                        JOptionPane.showMessageDialog(null, 
-//                                                      "File can't be save " + fc.getSelectedFile());
-//                    }
+                	//fc.setCurrentDirectory(new java.io.File("."));
+                	fc.setDialogTitle("Save Auction");
+                	fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                	fc.setAcceptAllFileFilterUsed(false);
+                	
+                	String file = fc.getSelectedFile().toString();	
+                	
+                    try
+                    {
+                    	MainFrame._auction.exportFile(file);
+                		
+                    }
+                    catch (final IOException ex)
+                    {
+                        JOptionPane.showMessageDialog(null, 
+                                                      "File can't be save " + fc.getSelectedFile());
+                    }
                 }
             }
         });
@@ -157,12 +165,12 @@ public class HomeScreen extends JPanel implements ActionListener {
 		}
 	}
 	
-//	public static void main(String[] args){
-//		JFrame frame = new JFrame();
-//		HomeScreen te = new HomeScreen();
-//		frame.add(te);
-//		frame.setSize(MainFrame.WIDTH, MainFrame.HEIGHT);
-//		frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
-//		frame.setVisible(true);
-//	}
+/*	public static void main(String[] args){
+		JFrame frame = new JFrame();
+		HomeScreen te = new HomeScreen();
+		frame.add(te);
+		frame.setSize(MainFrame.WIDTH, MainFrame.HEIGHT);
+		frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
+	}*/
 }
