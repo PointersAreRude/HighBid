@@ -148,7 +148,13 @@ public class Auction {
 	 * @param aDonor a Donor to be deleted.
 	 */
 	public void deleteDonor(Donor aDonor) {
+		for (Item item : myItems) {
+			if (aDonor == item.getDonor()) {
+				item.setDonor(null);
+			}
+		}
 		myDonors.remove(aDonor);
+		
 	}
 	
 	/**
@@ -237,7 +243,6 @@ public class Auction {
 		//write out Bidders
 		writeFile.println("#,Bidders");
 		for (Bidder bidder : myBidders) {
-			
 			writeFile.println("+," + bidder.toString());
 			writeFile.println();
 		}
