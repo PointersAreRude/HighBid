@@ -208,7 +208,7 @@ public class RegisterScreen extends JPanel implements ActionListener  {
 				
 				MainFrame._auction.addBidder(aBidder);
 				flushFields();
-				MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "RegPortal");
+//				MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "RegPortal");
 			} else {
 				JOptionPane.showMessageDialog(this, "Please enter the required fields.");
 				
@@ -217,7 +217,7 @@ public class RegisterScreen extends JPanel implements ActionListener  {
 			int choice = JOptionPane.showConfirmDialog(null, "Your information in this form "
 					+ "will not be saved.  Continue back?", "Warning", JOptionPane.OK_CANCEL_OPTION);
 			if (choice == JOptionPane.OK_OPTION) {
-				MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "RegPortal");
+				MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "BidderChooser");
 				flushFields();
 			}
 		}

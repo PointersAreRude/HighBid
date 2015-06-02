@@ -57,6 +57,9 @@ public class RegisterChooser extends JPanel implements ActionListener {
 	/** Indicates if the list is empty (ie no Bidders in the Auction). */
 	private boolean _isEmpty;
 	
+	/** Add button */
+	private JButton _addBtn;
+	
 	/** The back button. */
 	private JButton _backBtn;
 	
@@ -132,6 +135,13 @@ public class RegisterChooser extends JPanel implements ActionListener {
 		_backBtn.setFont(MainFrame.BUTTON_FONT);
 		_backBtn.addActionListener(this);
 		add(_backBtn);
+		
+		_addBtn = new JButton("<html>Remove</html>");
+		_addBtn.setSize(btnX, btnY);
+		_addBtn.setFont(MainFrame.BUTTON_FONT);
+		_addBtn.addActionListener(this);
+		_addBtn.setBounds(MainFrame.WIDTH - 600, MainFrame.HEIGHT - 100, 175, 60);
+		add(_addBtn);
 		
 		_removeBtn = new JButton("<html>Remove</html>");
 		_removeBtn.setSize(btnX, btnY);
