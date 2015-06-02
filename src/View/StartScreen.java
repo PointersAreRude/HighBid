@@ -4,11 +4,15 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
+import Model.Auction;
 
 /**
  * Start screen JPanel
@@ -89,11 +93,23 @@ public class StartScreen extends JPanel implements ActionListener {
 //			if(returnVal == JFileChooser.APPROVE_OPTION ) {
 //				File file = fc.getSelectedFile();
 //			}
-			JOptionPane.showMessageDialog(null, "File has been loaded. Please click OK to continue...");
+			if (new File("output/AuctionFile.csv").exists()) {
+				try {
+					MainFrame._auction = new Auction();
+					MainFrame._auction.importFile("output/AuctionFile.csv");
+				} catch (IOException e1) {
+					System.out.println("Exception thrown");
+					e1.printStackTrace();
+				}
+				JOptionPane.showMessageDialog(null, "File has been loaded. Please click OK to continue...");
+				MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "HomeScreen");
+			} else {
+				JOptionPane.showMessageDialog(null, "There is no previous auction file, you will be returned to the previous screen.");
+				MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "StartScreen");
+			}
 			
 			// TODO: add import file functionality here
 			
-			MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "HomeScreen");
 		}
 	}
 }
