@@ -218,7 +218,6 @@ public class RegisterScreen extends JPanel implements ActionListener  {
 				
 				MainFrame._auction.addBidder(aBidder);
 				flushFields();
-//				MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "RegPortal");
 			} else {
 				JOptionPane.showMessageDialog(this, "Please enter the required fields.");
 				

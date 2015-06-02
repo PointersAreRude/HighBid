@@ -111,7 +111,6 @@ public class MainFrame<E> extends JFrame {
 		final RegisterEditScreen edit = new RegisterEditScreen();
 		final RegisterChooser regChoose = new RegisterChooser(edit);
 		final RegisterScreen reg = new RegisterScreen(regChoose);
-//		final RegistrationPortal regHome = new RegistrationPortal(regChoose);
 		
 		// Setting up CardLayout
 		CONTAINER.setLayout(CLAYOUT);
@@ -121,7 +120,6 @@ public class MainFrame<E> extends JFrame {
 		CONTAINER.add(option, "OptionsPanel");
 		CONTAINER.add(stats, "StatsHomePanel");
 		CONTAINER.add(statsView, "StatsView");
-//		CONTAINER.add(regHome, "RegPortal");
 		CONTAINER.add(reg, "BidderReg");
 		CONTAINER.add(edit, "BidderEdit");
 		CONTAINER.add(regChoose, "BidderChooser");
