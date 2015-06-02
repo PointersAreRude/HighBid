@@ -32,6 +32,8 @@ public class RegisterScreen extends JPanel implements ActionListener  {
 	/** Text field width */
 	 private static int FWIDTH = 20;
 	 
+	 private RegisterChooser _chooser;
+	 
 	/** label for register panel's form */
 	private JLabel _label;
 	
@@ -64,6 +66,14 @@ public class RegisterScreen extends JPanel implements ActionListener  {
 
 	private static final long serialVersionUID = 1L;
 
+	public RegisterScreen(RegisterChooser theChooser) {
+		setSize(MainFrame.WIDTH, MainFrame.HEIGHT);
+		_chooser = theChooser;
+		setLayout(null);
+		setComponents();
+		addComponents();
+	}
+	
 	public RegisterScreen() {
 		setSize(MainFrame.WIDTH, MainFrame.HEIGHT);
 		setLayout(null);
@@ -219,6 +229,7 @@ public class RegisterScreen extends JPanel implements ActionListener  {
 			if (choice == JOptionPane.OK_OPTION) {
 				MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "BidderChooser");
 				flushFields();
+				_chooser.update();
 			}
 		}
 	}

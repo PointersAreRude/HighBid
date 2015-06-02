@@ -108,9 +108,9 @@ public class MainFrame<E> extends JFrame {
 		final HomeScreen home = new HomeScreen();
 		final OptionsPanel option = new OptionsPanel();
 		final StatsHomePanel stats = new StatsHomePanel(this);
-		final RegisterScreen reg = new RegisterScreen();
 		final RegisterEditScreen edit = new RegisterEditScreen();
 		final RegisterChooser regChoose = new RegisterChooser(edit);
+		final RegisterScreen reg = new RegisterScreen(regChoose);
 //		final RegistrationPortal regHome = new RegistrationPortal(regChoose);
 		
 		// Setting up CardLayout

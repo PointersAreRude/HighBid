@@ -161,7 +161,7 @@ public class RegisterChooser extends JPanel implements ActionListener {
 	/**
 	 * Updates the list.
 	 */
-	private void update(){
+	protected void update(){
 		if (_array != null) {
 			_list.setListData(_array);
 		} else {
