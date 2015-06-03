@@ -763,6 +763,10 @@ public class OptionsPanel extends JPanel implements ActionListener{
 			} else {
 				_infoLabel.setText("Donor already exists.");
 			}
+			
+			String fileWriteTo = "+," + first + "," + last + "," + phone + "," + email + "," + address;
+			MainFrame._auction.writeToFile("Donors", fileWriteTo);
+
 		} catch (Exception err) {
 			err.printStackTrace();
 		}
