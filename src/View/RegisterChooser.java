@@ -91,6 +91,8 @@ public class RegisterChooser extends JPanel implements ActionListener {
 			for (int i = 0; i < size; i++){
 				_array[i] = theList.get(i);
 			}
+		} else {
+			_array = null;
 		}
 		update();
 	}
