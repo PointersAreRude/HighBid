@@ -32,6 +32,8 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.UIManager;
 import javax.swing.border.Border;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 
 import Model.Donor;
@@ -292,7 +294,7 @@ public class OptionsPanel extends JPanel implements ActionListener {
 		setAddPanel();
 		addComponents();
 		getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F, 0), "F key");
-        getActionMap().put("F key", keyAction);
+        //getActionMap().put("F key", keyAction);
 	}
 
 	/**
@@ -406,6 +408,8 @@ public class OptionsPanel extends JPanel implements ActionListener {
 		setAddItemPanel();
 		_addPanel.add("Add Donor", _DContainer);
 		_addPanel.add("Add Item", _IContainer);
+		
+		_addPanel.addChangeListener(new myChangeListener());
 	}
 
 	/**
@@ -863,13 +867,31 @@ public class OptionsPanel extends JPanel implements ActionListener {
 		}
 	}
 	
-	@SuppressWarnings("serial")
-	private Action keyAction = new AbstractAction() {
-        public void actionPerformed(ActionEvent a) {
-			if(_addPanel.getSelectedComponent() == _DContainer)
-				_helper.whichForm("Donor",donorTF);
-			else if (_addPanel.getSelectedComponent() == _IContainer)
-				_helper.whichForm("Item", itemTF);
-        }
-    };
+//	@SuppressWarnings("serial")
+//	private Action keyAction = new AbstractAction() {
+//        public void actionPerformed(ActionEvent a) {
+//			if(_addPanel.getSelectedComponent() == _DContainer) {
+//				_helper.whichForm("Donor",donorTF);
+//			} else if (_addPanel.getSelectedComponent() == _IContainer) {
+//				_helper.whichForm("Item", itemTF);
+//			}
+//        }
+//    };
+    
+    private class myChangeListener implements ChangeListener {
+    	
+    	public myChangeListener() {
+    	}
+    	
+		public void stateChanged(ChangeEvent e) {
+			JTabbedPane tabP = (JTabbedPane) e.getSource();
+			if (tabP.getSelectedIndex() == 0) {
+				tabP.setSelectedComponent(_DContainer);
+			} else if (tabP.getSelectedIndex() == 1) {
+				tabP.setSelectedComponent(_IContainer);
+			}
+			
+		}
+    	
+    }
 }
