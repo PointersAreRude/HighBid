@@ -239,14 +239,17 @@ public class CreatePanel extends JPanel implements ActionListener {
 				MainFrame._auction = new Auction(date, startTime, endTime, facilitatorName);
 				
 				try {
-					File file = new File("output/AuctionFile.csv");
+					File file = new File(MainFrame._auction.FILE_PATH);
 					if (file.exists())  {
 						file.delete();
-						file = new File("output/AuctionFile.csv");
+						file = new File(MainFrame._auction.FILE_PATH);
 					}
 					PrintWriter writeFile = new PrintWriter(new FileWriter(file, true));
 					writeFile.println("#,Auction Info");
 					writeFile.println("+," + facilitatorName + "," + date + "," + startTime + "," + endTime);
+					writeFile.println("#,Items");
+					writeFile.println("#,Donors");
+					writeFile.println("#,Bidders");
 					writeFile.close();
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
