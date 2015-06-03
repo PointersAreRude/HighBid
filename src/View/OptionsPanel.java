@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -671,7 +672,13 @@ public class OptionsPanel extends JPanel implements ActionListener{
 				addDonorAction(donorTF);
 			}
 		} else if (src == _upload) {
-			BufferedImage img = uploadImage();
+			
+			//change the Buffer Image to image
+			//Mark Ditianquin
+			//6/3/2015
+			Image img = uploadImage();
+			img = img.getScaledInstance(200, 200, Image.SCALE_DEFAULT);
+			
 			if(img != null) {
 				_image = new ImageIcon(img);
 				_IInfo.setText("Image uploaded");
@@ -872,17 +879,22 @@ public class OptionsPanel extends JPanel implements ActionListener{
 		return null;
 	}
 
+	/*
+	 * Change the BufferImage to be just Image so I can Automaticaly scale them
+	 * Mark Ditianquin
+	 * 6/3/15
+	 */
 	/**
 	 * Get an image from filechooser.
 	 * 
 	 * @return buffered image
 	 */
-	private BufferedImage uploadImage() {
+	private Image uploadImage() {
 		JFileChooser fc = new JFileChooser();
 		int returnVal = fc.showOpenDialog(OptionsPanel.this);
 		if(returnVal == JFileChooser.APPROVE_OPTION) {
 			File f = fc.getSelectedFile();
-			BufferedImage img = null;
+			Image img = null;
 			try {
 				img = ImageIO.read(f);
 			} catch (Exception ex) {
@@ -951,5 +963,4 @@ public class OptionsPanel extends JPanel implements ActionListener{
 		}
 		return false;
 	}
-
 }
