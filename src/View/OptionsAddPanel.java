@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
@@ -337,7 +338,12 @@ public class OptionsAddPanel extends OptionsContext {
 				addDonorAction(OptionsMain.donorTF);
 			}
 		} else if (src == _upload) {
-			BufferedImage img = OptionsMain._helper.uploadImage();
+			
+			//chage it to Image instead of bufferedImage
+			//Mark Ditianquin 6/3/15
+			Image img = OptionsMain._helper.uploadImage();
+			img = img.getScaledInstance(200, 200, Image.SCALE_DEFAULT);
+			
 			if(img != null) {
 				_image = new ImageIcon(img);
 				OptionsMain._IInfo.setText("Image uploaded");

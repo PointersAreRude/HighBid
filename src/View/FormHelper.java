@@ -1,5 +1,6 @@
 package View;
 
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.List;
@@ -92,18 +93,23 @@ public class FormHelper {
 		}
 		return null;
 	}
-
+	
+	/*
+	 * Chage the return type to Image so Image can be resize.
+	 * Mark Ditianquin
+	 * 6/3/2015
+	 */
 	/**
 	 * Get an image from filechooser.
 	 * 
 	 * @return buffered image
 	 */
-	BufferedImage uploadImage() {
+	Image uploadImage() {
 		JFileChooser fc = new JFileChooser();
 		int returnVal = fc.showOpenDialog(null);
 		if(returnVal == JFileChooser.APPROVE_OPTION) {
 			File f = fc.getSelectedFile();
-			BufferedImage img = null;
+			Image img = null;
 			try {
 				img = ImageIO.read(f);
 			} catch (Exception ex) {

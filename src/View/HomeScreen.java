@@ -98,7 +98,7 @@ public class HomeScreen extends JPanel implements ActionListener {
 		_viewAuctionInfo.addActionListener(this);
 		
 		//set save button
-		_saveBtn = new JButton("Save..");
+		_saveBtn = new JButton("Export..");
 		//_saveBtn.setBounds((int)(MainFrame.WIDTH / 2) - 150, 470, 350, 60);
 		_saveBtn.setLocation(80, 650);
 		_saveBtn.setSize(200, 50);
