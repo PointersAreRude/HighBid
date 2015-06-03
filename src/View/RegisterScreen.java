@@ -228,7 +228,7 @@ public class RegisterScreen extends JPanel implements ActionListener  {
 			if (choice == JOptionPane.OK_OPTION) {
 				MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "BidderChooser");
 				flushFields();
-				_chooser.update();
+				_chooser.createList();
 			}
 		}
 	}
