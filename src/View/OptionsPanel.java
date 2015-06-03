@@ -852,7 +852,7 @@ public class OptionsPanel extends JPanel implements ActionListener {
 	}
 	
 	/**
-	 * Set the background of the sidebar's buttons
+	 * Set the background of the sidebar's buttons 
 	 * So user know which panel they are on.
 	 * 
 	 * @param btn A button object
@@ -878,9 +878,16 @@ public class OptionsPanel extends JPanel implements ActionListener {
 //        }
 //    };
     
+    /**
+     * A class that listens for changes in the selected tab for our JTabbedPane.
+     * 
+     * @author Abigail
+     * @version 6/3/2015
+     */
     private class myChangeListener implements ChangeListener {
     	
     	public myChangeListener() {
+    		
     	}
     	
 		public void stateChanged(ChangeEvent e) {
