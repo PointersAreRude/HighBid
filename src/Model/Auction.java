@@ -259,7 +259,7 @@ public void writeToFile(String sentinal, String input) throws IOException {
 
 		Scanner scanner = new Scanner(Paths.get(FILE_PATH));
 		String line = scanner.nextLine();
-		writeBack += "\n" + line;
+		writeBack += line;
 		while (!line.contains(sentinal) && scanner.hasNextLine()) {
 			line = scanner.nextLine();
 			writeBack += "\n" + line;
@@ -388,13 +388,16 @@ public void writeToFile(String sentinal, String input) throws IOException {
 			String line = reader.next();
 			String[] input = line.split(",");
 			while (input[0].equals("+")) {
+				
+				System.out.println("Auction class, parseDonors method, line: " + line);
+				
 				String firstName = input[1];
 				String lastName = input[2];
-				String phone = input[4];
-				String email = input[5];
-				String address = input[6];
+				String phone = input[3];
+				String email = input[4];
+				String address = input[5];
 				Donor donor = new Donor(firstName, lastName, email, address, phone);
-				for (int i = 7; i < input.length; i++) {
+				for (int i = 6; i < input.length; i++) {
 					String[] input2 = input[i].split(":");
 					for (Item item : myItems) {
 						if (item.getName().equals(input2[0]) && item.getQr() == Long.parseLong(input[1])) {
