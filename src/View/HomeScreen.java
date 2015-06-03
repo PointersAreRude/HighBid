@@ -4,13 +4,10 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.IOException;
-import java.sql.Savepoint;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -151,7 +148,7 @@ public class HomeScreen extends JPanel implements ActionListener {
 		JButton src = (JButton) e.getSource();
 		if(src == _ItemsAndDonorOptionBtn) {
 			//TODO: add the Item panel
-			MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "OptionsPanel");
+			MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "OptionsMain");
 		} 
 		else if(src == _registrationBtn){
 			MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "BidderChooser");

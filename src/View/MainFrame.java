@@ -106,7 +106,7 @@ public class MainFrame<E> extends JFrame {
 		final StartScreen start = new StartScreen();
 		final CreatePanel create = new CreatePanel();
 		final HomeScreen home = new HomeScreen();
-		final OptionsPanel option = new OptionsPanel();
+		final OptionsMain options = new OptionsMain();
 		final StatsHomePanel stats = new StatsHomePanel(this);
 		final RegisterEditScreen edit = new RegisterEditScreen();
 		final RegisterChooser regChoose = new RegisterChooser(edit);
@@ -117,7 +117,7 @@ public class MainFrame<E> extends JFrame {
 		CONTAINER.add(start, "StartScreen");
 		CONTAINER.add(create,"CreatePanel");
 		CONTAINER.add(home, "HomeScreen");
-		CONTAINER.add(option, "OptionsPanel");
+		CONTAINER.add(options, "OptionsMain");
 		CONTAINER.add(stats, "StatsHomePanel");
 		CONTAINER.add(statsView, "StatsView");
 		CONTAINER.add(reg, "BidderReg");
