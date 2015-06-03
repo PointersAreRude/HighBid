@@ -1,5 +1,6 @@
 package Model;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -61,6 +62,8 @@ public class Auction {
 	//private String myFileName;
 	
 	private int BidderID;
+	
+	public static final String FILE_PATH = "output/AuctionFile.csv";
 	
 	public Auction() {
 		this(null, null, null, null);
@@ -225,6 +228,60 @@ public class Auction {
 		BidderID++;
 		return BidderID;
 	}
+	
+public void writeToFile(String sentinal, String input) throws IOException {
+		
+//		File file = new File("output/AuctionFile.csv");
+//		
+//		//System.out.println(file.length());
+//		
+//		RandomAccessFile writeTo = new RandomAccessFile(file, "rw");
+//		String line = writeTo.readLine();
+//		
+//		
+//		//System.out.println(line);
+//		
+//		while (!line.contains(sentinal) && writeTo.getFilePointer() < writeTo.length()) {
+//			line = writeTo.readLine();
+//		}
+//		
+//		System.out.println("FilePointer: " + writeTo.getFilePointer() + " file length: " + writeTo.length());
+//		
+//		//byte[] bites = input.getBytes();
+//		//writeTo.write(bites, (int) writeTo.getFilePointer(), bites.length-1);
+//		writeTo.writeBytes(input);
+//		
+//		writeTo.close();
+		
+		
+		
+		String writeBack = "";
+
+		Scanner scanner = new Scanner(Paths.get(FILE_PATH));
+		String line = scanner.nextLine();
+		writeBack += "\n" + line;
+		while (!line.contains(sentinal) && scanner.hasNextLine()) {
+			line = scanner.nextLine();
+			writeBack += "\n" + line;
+		}
+		writeBack += "\n" + input;
+		while (scanner.hasNextLine()) {
+			writeBack += "\n" + scanner.nextLine();
+		}
+		scanner.close();
+		
+		File writeTo = new File(FILE_PATH);
+		if (writeTo.exists()) {
+			writeTo.delete();
+			writeTo = new File(FILE_PATH);
+		}
+		
+		PrintWriter writeFile = new PrintWriter(new FileWriter(writeTo, true));
+		writeFile.println(writeBack);
+		
+		writeFile.close();
+	}
+
 	
 	/**
 	 * Creates a new file for this Auction, placing all it's info into a csv file titled with  
