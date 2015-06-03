@@ -369,14 +369,14 @@ public class OptionsAddPanel extends OptionsContext {
 		
 		try {
 			Donor donor = new Donor(first, last, email, address, phone);
-			// Add info to donor table
-			DefaultTableModel model = (DefaultTableModel) OptionsMain._donorTable.getModel();
-			model.addRow(new Object[]{first, last, email, address, phone});
 			if(donor != null && !OptionsMain._helper.checkDonor(donor)) {
 				// Add info to the list in auction
 				MainFrame._auction.addDonor(donor);
 				// Add info to the combo box in item panel
 				OptionsMain._comboModel.addElement(first + " " + last + " - " + email);
+				// Add info to donor table
+				DefaultTableModel model = (DefaultTableModel) OptionsMain._donorTable.getModel();
+				model.addRow(new Object[]{first, last, email, address, phone});
 				OptionsMain._helper.clearText(donorTF);
 				OptionsMain._infoLabel.setText(first + " " + last + " has been added.");
 			} else {
@@ -436,6 +436,9 @@ public class OptionsAddPanel extends OptionsContext {
 			if(item != null && minIncrement > 0 && !OptionsMain._helper.checkItem(item)) {
 				// Add to the list of item in auction class
 				MainFrame._auction.addItem(item);
+				// Add the item the the item table
+				DefaultTableModel model = (DefaultTableModel) OptionsMain._itemTable.getModel();
+				model.addRow(new Object[]{itemName, qr, "$" + startPrice, "$" + minIncrement});
 				if(donor != null) {
 					// Add the item to a particular donor
 					donor.add(item);
@@ -448,9 +451,6 @@ public class OptionsAddPanel extends OptionsContext {
 			} else {
 				OptionsMain._IInfo.setText("Item already exists.");
 			}
-			// Add the item the the item table
-			DefaultTableModel model = (DefaultTableModel) OptionsMain._itemTable.getModel();
-			model.addRow(new Object[]{itemName, qr, "$" + startPrice, "$" + minIncrement});
 		} catch(Exception err) {
 			err.printStackTrace();
 		}

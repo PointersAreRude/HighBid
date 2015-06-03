@@ -207,7 +207,6 @@ public class OptionsMain extends JPanel implements ActionListener {
 			_clayout.show(_mainContainer, "Add");
 			setBackGround(_addBtn);
 			_helper.clearText(itemTF);
-			_IInfo.setText("");
 			_removeDonorWarning.setText("");
 			_removeItemWarning.setText("");
 		} else if (src == _removeBtn) {
