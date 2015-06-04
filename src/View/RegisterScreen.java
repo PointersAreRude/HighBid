@@ -225,7 +225,7 @@ public class RegisterScreen extends JPanel implements ActionListener  {
 			}
 		} else if (src ==_backBtn){
 			int choice = JOptionPane.OK_OPTION;
-			if(!fieldsNotEmpty()){
+			if(fieldsNotEmpty()){
 				choice = JOptionPane.showConfirmDialog(null, "Your information in this form "
 					+ "will not be saved.  Continue back?", "Warning", JOptionPane.OK_CANCEL_OPTION);
 			}
