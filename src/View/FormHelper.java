@@ -1,7 +1,6 @@
 package View;
 
 import java.awt.Image;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.List;
 
@@ -13,6 +12,12 @@ import javax.swing.JTextField;
 import Model.Donor;
 import Model.Item;
 
+/**
+ * Helper for options GUI
+ * 
+ * @author Long Nguyen
+ * @version 6/4/2015
+ */
 public class FormHelper {
 
 	private JTextField[] _arr;

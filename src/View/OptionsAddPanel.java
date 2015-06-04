@@ -10,7 +10,6 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -28,7 +27,8 @@ import Model.Donor;
 import Model.Item;
 
 /**
- * Add JTabbedPane. This class contains components that are used
+ * Add JTabbedPane. This class contains components
+ * and methods that are used
  * to add an item or a donor.
  * 
  * @author Long Nguyen
@@ -335,7 +335,7 @@ public class OptionsAddPanel extends OptionsContext {
 			if(OptionsMain._helper.checkEmpty(OptionsMain.donorTF)) {
 				OptionsMain._infoLabel.setText("Please enter all required fields.");
 			} else {
-				addDonorAction(OptionsMain.donorTF);
+				addDonorAction();
 			}
 		} else if (src == _upload) {
 			
@@ -354,10 +354,9 @@ public class OptionsAddPanel extends OptionsContext {
 			if(OptionsMain._helper.checkEmpty(OptionsMain.itemTF)) {
 				OptionsMain._IInfo.setText("Please enter all required fields.");
 			} else {
-				addItemAction(OptionsMain.itemTF);
+				addItemAction();
 			}
-		}
-		
+		}		
 	}	
 	
 	/**
@@ -366,7 +365,7 @@ public class OptionsAddPanel extends OptionsContext {
 	 * 
 	 * @param donorTF An array of JTextField in add donor tab
 	 */
-	private void addDonorAction(JTextField[] donorTF) {
+	private void addDonorAction() {
 		String first = _firstTF.getText();
 		String last = _lastTF.getText();
 		String email = _emailTF.getText();
@@ -383,7 +382,7 @@ public class OptionsAddPanel extends OptionsContext {
 				// Add info to donor table
 				DefaultTableModel model = (DefaultTableModel) OptionsMain._donorTable.getModel();
 				model.addRow(new Object[]{first, last, email, address, phone});
-				OptionsMain._helper.clearText(donorTF);
+				OptionsMain._helper.clearText(OptionsMain.donorTF);
 				OptionsMain._infoLabel.setText(first + " " + last + " has been added.");
 			} else {
 				OptionsMain._infoLabel.setText("Donor already exists.");
@@ -403,7 +402,7 @@ public class OptionsAddPanel extends OptionsContext {
 	 * 
 	 * @param itemTF An array of JTextField in add item tab
 	 */
-	private void addItemAction(JTextField[] itemTF) {
+	private void addItemAction() {
 		
 		String itemName = _itemNameTF.getText();
 		String itemDescription = _ItemDescriptionTF.getText();
@@ -412,14 +411,12 @@ public class OptionsAddPanel extends OptionsContext {
 		long qr = 0;
 		// parse doesn't work if the string is empty so I gotta check it here
 		// the strings are empty by default so it will give an error if not checked.
-		if(!OptionsMain._helper.checkEmpty(itemTF)) {
-			try {
-				startPrice = Integer.parseInt(_startPriceTF.getText());
-				minIncrement = Integer.parseInt(_minIncrementTF.getText());
-				qr = Long.parseLong(_qrTF.getText());
-			} catch (Exception ex) {
-				OptionsMain._IInfo.setText("Wrong input format!");
-			}
+		try {
+			startPrice = Integer.parseInt(_startPriceTF.getText());
+			minIncrement = Integer.parseInt(_minIncrementTF.getText());
+			qr = Long.parseLong(_qrTF.getText());
+		} catch (Exception ex) {
+			OptionsMain._IInfo.setText("Wrong input format!");
 		}
 		
 		Item item = null;
@@ -439,7 +436,7 @@ public class OptionsAddPanel extends OptionsContext {
 						+ donor.getFirstName() + " " + donor.getLastName() + "," + qr;
 				//MainFrame._auction.editFile("Donors", donor.getFirstName() + "," + donor.getLastName(), 0, itemName, qr, "");
 				
-			// if no image is uploaded or no donor is selected	
+			// if no image is uploaded and no donor is selected	
 			} else if (_image == null && _combo.getSelectedItem().equals("")){
 				item = new Item(itemName, itemDescription, minIncrement, startPrice, qr);
 				writeToFile += itemName + "," + itemDescription + "," + minIncrement + "," + startPrice + ",no donor added," + qr;
@@ -468,7 +465,7 @@ public class OptionsAddPanel extends OptionsContext {
 			    } else {
 			    	OptionsMain._IInfo.setText(itemName + " has been added.");
 			    }	
-				OptionsMain._helper.clearText(itemTF);
+				OptionsMain._helper.clearText(OptionsMain.itemTF);
 			} else {
 				OptionsMain._IInfo.setText("Item already exists.");
 			}
