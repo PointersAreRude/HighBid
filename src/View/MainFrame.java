@@ -112,7 +112,7 @@ public class MainFrame<E> extends JFrame {
 		final StatsHomePanel stats = new StatsHomePanel(this);
 		final RegisterEditScreen edit = new RegisterEditScreen();
 		final RegisterChooser regChoose = new RegisterChooser(edit);
-		final RegisterScreen reg = new RegisterScreen(regChoose);
+		final RegisterScreen reg = new RegisterScreen();
 		
 		
 		class myCardListener implements ComponentListener{
