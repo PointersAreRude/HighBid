@@ -84,7 +84,7 @@ public class RegisterScreen extends JPanel implements ActionListener  {
 	
 	private void setComponents(){
 		_infoLabel = new JLabel();
-		_infoLabel.setBounds(350,MainFrame.HEIGHT - 100,300,100);
+		_infoLabel.setBounds((int)(MainFrame.WIDTH / 2.7) ,MainFrame.HEIGHT - 150,400,100);
 		_infoLabel.setForeground(Color.RED);
 		_infoLabel.setFont(new Font("Tahoma", 0, 23));
 		
@@ -218,14 +218,17 @@ public class RegisterScreen extends JPanel implements ActionListener  {
 						_emailF.getText(),_addressF.getText(), _nNameF.getText(),
 						_phoneF.getText(),	MainFrame._auction.assignID());
 				MainFrame._auction.addBidder(aBidder);
-				_infoLabel.setText(fName + " " + lName + " has been added.");
+				_infoLabel.setText("<html>"+ fName + " " + lName + " has been added.</html>");
 				flushFields();
 			} else {
-				_infoLabel.setText("Please enter the required fields.");
+				_infoLabel.setText("<html>Please enter the required fields.</html>");
 			}
 		} else if (src ==_backBtn){
-			int choice = JOptionPane.showConfirmDialog(null, "Your information in this form "
+			int choice = JOptionPane.OK_OPTION;
+			if(!fieldsNotEmpty()){
+				choice = JOptionPane.showConfirmDialog(null, "Your information in this form "
 					+ "will not be saved.  Continue back?", "Warning", JOptionPane.OK_CANCEL_OPTION);
+			}
 			if (choice == JOptionPane.OK_OPTION) {
 				MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "BidderChooser");
 				flushFields();
