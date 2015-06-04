@@ -63,10 +63,14 @@ public class Auction {
 	
 	private int BidderID;
 	
-	public static final String FILE_PATH = "output/AuctionFile.csv";
+	//public static final String FILE_PATH = "output/AuctionFile.csv";
+	private String myFilePath;
 	
-	public Auction() {
-		this(null, null, null, null);
+	/**
+	 * And empty constructor, used when opening up a previously saved file.
+	 */
+	public Auction(String aFilePath) {
+		this(null, null, null, null, aFilePath);
 	}
 	
 	/**
@@ -77,12 +81,13 @@ public class Auction {
 	 * @param anEndTime The Auction's closing time; must be of "hh:mm" format.
 	 * @param aFacilitator The Auction's facilitator.
 	 */
-	public Auction(String aDate, String aStartTime, String anEndTime, String aFacilitator) {
+	public Auction(String aDate, String aStartTime, String anEndTime, String aFacilitator, String aFilePath) {
 		myDate = aDate;
 		myStartTime = aStartTime;
 		myEndTime = anEndTime;
 		myFacilitator = aFacilitator;
 		BidderID = 0;
+		myFilePath = aFilePath;
 		
 		myDonors = new ArrayList<Donor>();
 		myItems = new ArrayList<Item>();
@@ -269,7 +274,7 @@ public void writeToFile(String sentinal, String input) throws IOException {
 		
 		String writeBack = "";
 
-		Scanner scanner = new Scanner(Paths.get(FILE_PATH));
+		Scanner scanner = new Scanner(Paths.get(myFilePath));
 		String line = scanner.nextLine();
 		writeBack += line;
 		while (!line.contains(sentinal) && scanner.hasNextLine()) {
@@ -282,10 +287,10 @@ public void writeToFile(String sentinal, String input) throws IOException {
 		}
 		scanner.close();
 		
-		File writeTo = new File(FILE_PATH);
+		File writeTo = new File(myFilePath);
 		if (writeTo.exists()) {
 			writeTo.delete();
-			writeTo = new File(FILE_PATH);
+			writeTo = new File(myFilePath);
 		}
 		
 		PrintWriter writeFile = new PrintWriter(new FileWriter(writeTo, true));
@@ -296,7 +301,7 @@ public void writeToFile(String sentinal, String input) throws IOException {
 
 	public void editFile(String sentinal, String nameToFind, int codeToFind, String nameToAdd, long codeToAdd, String itemBW) throws IOException {
 		String writeBack = "";
-		Scanner scanner = new Scanner(Paths.get(FILE_PATH));
+		Scanner scanner = new Scanner(Paths.get(myFilePath));
 		
 		String line = scanner.nextLine();
 		writeBack += line;
@@ -371,10 +376,10 @@ public void writeToFile(String sentinal, String input) throws IOException {
 			
 			scanner.close();
 			
-			File writeTo = new File(FILE_PATH);
+			File writeTo = new File(myFilePath);
 			if (writeTo.exists()) {
 				writeTo.delete();
-				writeTo = new File(FILE_PATH);
+				writeTo = new File(myFilePath);
 			}
 			
 			PrintWriter writeFile = new PrintWriter(new FileWriter(writeTo, true));
@@ -568,12 +573,12 @@ public void writeToFile(String sentinal, String input) throws IOException {
 	 * @param args
 	 * @throws IOException
 	 */
-	public static void main (String[] args) throws IOException {
-		Auction a = new Auction();
-		a.importFile("");
-		if (args.length == 2) {
-			a.placeBid(Integer.parseInt(args[0]), Long.parseLong(args[1]));
-		}
-	}
+//	public static void main (String[] args) throws IOException {
+//		Auction a = new Auction();
+//		a.importFile("");
+//		if (args.length == 2) {
+//			a.placeBid(Integer.parseInt(args[0]), Long.parseLong(args[1]));
+//		}
+//	}
 }
 

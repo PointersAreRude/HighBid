@@ -13,6 +13,7 @@ import java.io.PrintWriter;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -236,13 +237,20 @@ public class CreatePanel extends JPanel implements ActionListener {
 			if(empty) {
 				_warningLabel.setText("Please enter all required fields.");
 			} else {
-				MainFrame._auction = new Auction(date, startTime, endTime, facilitatorName);
+				JFileChooser chooser = new JFileChooser();
+				int result = chooser.showSaveDialog(this);
+				String saveTo = "";
+				if (result == JFileChooser.APPROVE_OPTION) {
+					saveTo = chooser.getSelectedFile().getPath();
+				}
+				
+				MainFrame._auction = new Auction(date, startTime, endTime, facilitatorName, saveTo);
 				
 				try {
-					File file = new File(MainFrame._auction.FILE_PATH);
+					File file = new File(saveTo);
 					if (file.exists())  {
 						file.delete();
-						file = new File(MainFrame._auction.FILE_PATH);
+						file = new File(saveTo);
 					}
 					PrintWriter writeFile = new PrintWriter(new FileWriter(file, true));
 					writeFile.println("#,Auction Info");

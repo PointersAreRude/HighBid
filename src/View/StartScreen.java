@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -93,9 +94,15 @@ public class StartScreen extends JPanel implements ActionListener {
 //			if(returnVal == JFileChooser.APPROVE_OPTION ) {
 //				File file = fc.getSelectedFile();
 //			}
-			if (new File("output/AuctionFile.csv").exists()) {
+			JFileChooser chooser = new JFileChooser();
+			int result = chooser.showOpenDialog(this);
+			String toOpen = "";
+			if (result == JFileChooser.APPROVE_OPTION) {
+				toOpen = chooser.getSelectedFile().getPath();
+			}
+			if (new File(toOpen).exists()) {
 				try {
-					MainFrame._auction = new Auction();
+					MainFrame._auction = new Auction(toOpen);
 					MainFrame._auction.importFile("output/AuctionFile.csv");
 				} catch (IOException e1) {
 					System.out.println("Exception thrown");
