@@ -135,7 +135,7 @@ private final int incr = 1;
 	@Test
 	public void testGetName() {
 		assertEquals("Name constant used in the constructor = name of the item", name, testItem.getName());
-		String newName = "Velveta";
+		String newName = "Velveeta";
 		testItem.setName(newName);
 		assertEquals("Item name equals new name after calling setName()", newName, testItem.getName());
 	}

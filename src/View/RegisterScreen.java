@@ -30,9 +30,7 @@ import Model.Bidder;
 public class RegisterScreen extends JPanel implements ActionListener  {
 	
 	/** Text field width */
-	 private static int FWIDTH = 20;
-	 
-	 private RegisterChooser _chooser;
+	private static int FWIDTH = 20;
 	 
 	/** label for register panel's form */
 	private JLabel _label;
@@ -69,14 +67,6 @@ public class RegisterScreen extends JPanel implements ActionListener  {
 
 	private static final long serialVersionUID = 1L;
 
-	public RegisterScreen(RegisterChooser theChooser) {
-		setSize(MainFrame.WIDTH, MainFrame.HEIGHT);
-		_chooser = theChooser;
-		setLayout(null);
-		setComponents();
-		addComponents();
-	}
-	
 	public RegisterScreen() {
 		setSize(MainFrame.WIDTH, MainFrame.HEIGHT);
 		setLayout(null);
@@ -85,6 +75,7 @@ public class RegisterScreen extends JPanel implements ActionListener  {
 	}
 	
 	private void addComponents(){
+		add(_infoLabel);  
 		add(_label);
 		add(_backBtn);
 		add(_gbag);
@@ -93,7 +84,7 @@ public class RegisterScreen extends JPanel implements ActionListener  {
 	
 	private void setComponents(){
 		_infoLabel = new JLabel();
-		_infoLabel.setBounds(350,MainFrame.HEIGHT - 100,800,100);
+		_infoLabel.setBounds(350,MainFrame.HEIGHT - 100,300,100);
 		_infoLabel.setForeground(Color.RED);
 		_infoLabel.setFont(new Font("Tahoma", 0, 23));
 		
@@ -228,11 +219,9 @@ public class RegisterScreen extends JPanel implements ActionListener  {
 						_phoneF.getText(),	MainFrame._auction.assignID());
 				MainFrame._auction.addBidder(aBidder);
 				_infoLabel.setText(fName + " " + lName + " has been added.");
-
 				flushFields();
 			} else {
-				JOptionPane.showMessageDialog(this, "Please enter the required fields.");
-				
+				_infoLabel.setText("Please enter the required fields.");
 			}
 		} else if (src ==_backBtn){
 			int choice = JOptionPane.showConfirmDialog(null, "Your information in this form "
@@ -240,7 +229,6 @@ public class RegisterScreen extends JPanel implements ActionListener  {
 			if (choice == JOptionPane.OK_OPTION) {
 				MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "BidderChooser");
 				flushFields();
-//				_chooser.createList();
 			}
 		}
 	}
