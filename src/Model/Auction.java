@@ -481,9 +481,12 @@ public void writeToFile(String sentinal, String input) throws IOException {
 				long qr = Long.parseLong(input[6]);
 				Item item = new Item(name, description, minInc, startingPrice, qr);
 				myItems.add(item);
+				
 				if (reader.hasNextLine()) {
 					line = reader.nextLine(); //grab the next line with Items info, or the "#Donors" line
 					input = line.split(",");
+				} else {
+					break;
 				}
 			}
 		}
@@ -522,6 +525,8 @@ public void writeToFile(String sentinal, String input) throws IOException {
 				if (reader.hasNextLine()) {
 					line = reader.nextLine(); //grab the next line with Donor info, or the "#Bidders" line
 					input = line.split(",");
+				} else {
+					break;
 				}
 			}
 		}
@@ -537,6 +542,9 @@ public void writeToFile(String sentinal, String input) throws IOException {
 			String line = reader.nextLine();
 			String[] input = line.split(",");
 			while (input[0].equals("+")) {
+				
+				System.out.println("Auction Class, parseBidders method, while loop here");
+				
 				String firstName = input[1];
 				String lastName = input[2];
 				String nickName = input[3];
@@ -549,15 +557,15 @@ public void writeToFile(String sentinal, String input) throws IOException {
 				bidder.setid(id);
 				
 				if (reader.hasNextLine()) {
-					line = reader.nextLine(); //eat the "-items bid on" line
+					line = reader.nextLine(); //eat the "items bid on" line
 					if (reader.hasNextLine()) {
-						line = reader.nextLine(); //read in the "-items won" line
+						line = reader.nextLine(); //read in the "items won" line
 						input = line.split(",");
 						if (input.length > 1) { //here read in items won only
 							for (int i = 1; i < input.length; i++) {
 								String[] input2 = input[i].split(":");
 								for (Item item : myItems) {
-									if (item.getQr() == Long.parseLong(input[1])) {
+									if (item.getQr() == Long.parseLong(input2[1])) {
 										bidder.addItemWon(item);
 										break;
 									}
@@ -565,8 +573,16 @@ public void writeToFile(String sentinal, String input) throws IOException {
 							}
 						}
 					}
-				}
+				} 
+				
 				myBidders.add(bidder);
+				
+				if (reader.hasNextLine()) {
+					line = reader.nextLine(); //grab the next line with Donor info, or the "#Bidders" line
+					input = line.split(",");
+				} else {
+					break;
+				}
 			}
 		}
 	}
