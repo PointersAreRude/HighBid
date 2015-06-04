@@ -103,7 +103,7 @@ public class StartScreen extends JPanel implements ActionListener {
 			if (new File(toOpen).exists()) {
 				try {
 					MainFrame._auction = new Auction(toOpen);
-					MainFrame._auction.importFile("output/AuctionFile.csv");
+					MainFrame._auction.importFile(toOpen);
 				} catch (IOException e1) {
 					System.out.println("Exception thrown");
 					e1.printStackTrace();
