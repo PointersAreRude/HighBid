@@ -347,6 +347,9 @@ public class OptionsAddPanel extends OptionsContext {
 				// Add info to the list in auction
 				MainFrame._auction.addDonor(donor);
 				
+				String fileWriteTo = "+," + first + "," + last + "," + phone + "," + email + "," + address;
+				MainFrame._auction.writeToFile("Donors", fileWriteTo);
+				
 				// Add info to the combo box in item panel
 				Donor temp = OptionsMain._helper.getDonor(donor);
 				OptionsMain._comboModel.addElement(temp.getFirstName() + " " 
@@ -361,9 +364,6 @@ public class OptionsAddPanel extends OptionsContext {
 			} else {
 				OptionsMain._infoLabel.setText("Donor already exists.");
 			}
-			
-			String fileWriteTo = "+," + first + "," + last + "," + phone + "," + email + "," + address;
-			MainFrame._auction.writeToFile("Donors", fileWriteTo);
 
 		} catch (Exception err) {
 			err.printStackTrace();
