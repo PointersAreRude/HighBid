@@ -427,29 +427,20 @@ public class OptionsAddPanel extends OptionsContext {
 			// if no donor is selected
 			if(_combo.getSelectedItem().equals("")) {
 				item = new Item(itemName, itemDescription, minIncrement, startPrice, qr, _image);
-				writeToFile += itemName + "," + itemDescription + "," + minIncrement + "," + startPrice + ",no donor added," + qr;
 				
 			// if  no image is uploaded	
 			} else if (_image == null) {
 				item = new Item(itemName, itemDescription, minIncrement, startPrice, donor, qr);
-				writeToFile += itemName + "," + itemDescription + "," + minIncrement + "," + startPrice + "," 
-						+ donor.getFirstName() + " " + donor.getLastName() + "," + qr;
-				//MainFrame._auction.editFile("Donors", donor.getFirstName() + "," + donor.getLastName(), 0, itemName, qr, "");
 				
 			// if no image is uploaded and no donor is selected	
 			} else if (_image == null && _combo.getSelectedItem().equals("")){
 				item = new Item(itemName, itemDescription, minIncrement, startPrice, qr);
-				writeToFile += itemName + "," + itemDescription + "," + minIncrement + "," + startPrice + ",no donor added," + qr;
 				
 			// If everything is filled out, selected, or uploaded	
 			} else {
 				item = new Item(itemName, itemDescription, minIncrement, startPrice, donor, qr, _image);
-				writeToFile += itemName + "," + itemDescription + "," + minIncrement + "," + startPrice + "," 
-						+ donor.getFirstName() + " " + donor.getLastName() + "," + qr;
-				//MainFrame._auction.editFile("Donors", donor.getFirstName() + "," + donor.getLastName(), 0, itemName, qr, "");
 			}
 			
-			MainFrame._auction.writeToFile("Items", writeToFile);
 			
 			if(item != null && minIncrement > 0 && !OptionsMain._helper.checkItem(item)) {
 				// Add to the list of item in auction class
@@ -462,9 +453,13 @@ public class OptionsAddPanel extends OptionsContext {
 					donor.add(item);
 					OptionsMain._IInfo.setText(itemName + " has been added for " + donor.getFirstName() 
 							+ " " + donor.getLastName() + ".");
+					writeToFile += itemName + "," + itemDescription + "," + minIncrement + "," + startPrice + "," 
+							+ donor.getFirstName() + " " + donor.getLastName() + "," + qr;
 			    } else {
 			    	OptionsMain._IInfo.setText(itemName + " has been added.");
-			    }	
+			    	writeToFile += itemName + "," + itemDescription + "," + minIncrement + "," + startPrice + ",no donor added," + qr;
+			    }
+				MainFrame._auction.writeToFile("Items", writeToFile);
 				OptionsMain._helper.clearText(OptionsMain.itemTF);
 			} else {
 				OptionsMain._IInfo.setText("Item already exists.");
