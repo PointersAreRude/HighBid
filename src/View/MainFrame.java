@@ -93,7 +93,7 @@ public class MainFrame<E> extends JFrame {
          * Auction icon for main frame.
          * source: http://www.veryicon.com/icons/system/fresh-addon/auction-1.html
          */
-        ImageIcon ImageIcon = new ImageIcon("input/images/Auction.png");
+        ImageIcon ImageIcon = new ImageIcon(getClass().getResource("/View/Auction.png"));
         Image image = ImageIcon.getImage();
         setIconImage(image);
 	}
