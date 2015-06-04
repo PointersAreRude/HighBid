@@ -83,12 +83,12 @@ public class OptionsMain extends JPanel implements ActionListener {
 	/**
 	 * Table to hold donors' data
 	 */
-	protected static JTable _donorTable;
+	public static JTable _donorTable;
 	
 	/**
 	 * Table to hold items' data
 	 */
-	protected static JTable _itemTable;
+	public static JTable _itemTable;
 	
 	/**
 	 * default dimension used in this panel

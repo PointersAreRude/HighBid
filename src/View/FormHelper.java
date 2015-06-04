@@ -3,6 +3,7 @@ package View;
 import java.awt.Image;
 import java.io.File;
 import java.util.List;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 import javax.swing.JComboBox;
@@ -34,21 +35,40 @@ public class FormHelper {
 		}
 	}
 	
+	public int getRandom() {
+		Random rand = new Random();
+		int randomNum = rand.nextInt((2 - 0 + 1) + 0);
+		return randomNum;
+	}
+	
 	public void donorForm() {
-		_arr[0].setText("John");
-		_arr[1].setText("Doe");
-		_arr[2].setText("JohnDoe@gmail.com");
-		_arr[3].setText("5555 55th Ave S");
-		_arr[4].setText("206 222 2222");
+		String[] first = {"John", "Average", "Jane"};
+		String[] last = {"Doe", "Doe", "Joe"};
+		String[] email = {"JohnDoe@gmail.com", "Average@gmail.com", "jane@gmail.com"};
+		String[] address = {"5555 55th Ave S", "1111 11th Ave N", "2222 22th Ave S"};
+		String[] phone = {"111 111 1111", "555 555 5555", "777 777 7777"};
+		int random = getRandom();
+		_arr[0].setText(first[random]);
+		_arr[1].setText(last[random]);
+		_arr[2].setText(email[random]);
+		_arr[3].setText(address[random]);
+		_arr[4].setText(phone[random]);
 	}
 	
 	public void itemForm() {
-		//JTextField[] itemTF = {_itemNameTF, _ItemDescriptionTF, _startPriceTF, _minIncrementTF, _qrTF};
-		_arr[0].setText("Apple iphone 5");
-		_arr[1].setText("A slim and stylish design makes the Apple iPhone 5 lightweight and easy to carry around.");
-		_arr[2].setText("50");
-		_arr[3].setText("5");
-		_arr[4].setText("123456789");
+		String[] itemName = {"Apple Iphone 5", "WW2 German Item", "Collectible Eagle Thimble"};
+		String[] itemDes = {"A slim and stylish design makes the Apple iPhone 5 lightweight and easy to carry around.",
+				"This is an original German Thors Hammer.",
+				"Collectible Eagle Thimble From Donohue Mint Condition Metal"};
+		String[] startingPrice = {"50", "275", "10"};
+		String[] min = {"5", "10", "2"};
+		String[] qr = {"123456789", "987654321", "112233445"};
+		int ran = getRandom();
+		_arr[0].setText(itemName[ran]);
+		_arr[1].setText(itemDes[ran]);
+		_arr[2].setText(startingPrice[ran]);
+		_arr[3].setText(min[ran]);
+		_arr[4].setText(qr[ran]);
 	}
 	
 	/**

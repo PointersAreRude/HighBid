@@ -11,6 +11,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Scanner;
 
+import javax.swing.table.DefaultTableModel;
+
 import View.OptionsMain;
 
 /**
@@ -482,6 +484,9 @@ public void writeToFile(String sentinal, String input) throws IOException {
 				Item item = new Item(name, description, minInc, startingPrice, qr);
 				myItems.add(item);
 				
+				DefaultTableModel model = (DefaultTableModel) OptionsMain._itemTable.getModel();
+				model.addRow(new Object[]{name, qr, "$" + startingPrice, "$" + minInc});
+				
 				if (reader.hasNextLine()) {
 					line = reader.nextLine(); //grab the next line with Items info, or the "#Donors" line
 					input = line.split(",");
@@ -520,6 +525,8 @@ public void writeToFile(String sentinal, String input) throws IOException {
 				}
 	            OptionsMain._comboModel.addElement(firstName + " " 
 				+ lastName + " - " + email);
+	            DefaultTableModel model = (DefaultTableModel) OptionsMain._donorTable.getModel();
+				model.addRow(new Object[]{firstName, lastName, email, address, phone});
 				myDonors.add(donor);
 				
 				if (reader.hasNextLine()) {

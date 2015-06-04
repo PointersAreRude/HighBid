@@ -46,7 +46,6 @@ public class OptionsContext extends JTabbedPane implements ActionListener {
 	 */
 	protected DefaultTableModel _donorModel;
 	
-	
 	public OptionsContext() {}
 
 

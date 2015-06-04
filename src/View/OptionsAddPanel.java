@@ -311,9 +311,9 @@ public class OptionsAddPanel extends OptionsContext {
 			//chage it to Image instead of bufferedImage
 			//Mark Ditianquin 6/3/15
 			Image img = OptionsMain._helper.uploadImage();
-			img = img.getScaledInstance(200, 200, Image.SCALE_DEFAULT);
 			
-			if(img != null) {
+			if(img != null && img instanceof Image) {
+				img = img.getScaledInstance(200, 200, Image.SCALE_DEFAULT);
 				_image = new ImageIcon(img);
 				OptionsMain._IInfo.setText("Image uploaded");
 			} else {
