@@ -85,6 +85,7 @@ public class RegisterScreen extends JPanel implements ActionListener  {
 	}
 	
 	private void addComponents(){
+		add(_infoLabel);  
 		add(_label);
 		add(_backBtn);
 		add(_gbag);
