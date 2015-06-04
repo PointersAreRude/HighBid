@@ -93,7 +93,7 @@ public class RegisterScreen extends JPanel implements ActionListener  {
 	
 	private void setComponents(){
 		_infoLabel = new JLabel();
-		_infoLabel.setBounds(350,MainFrame.HEIGHT - 100,800,100);
+		_infoLabel.setBounds(350,MainFrame.HEIGHT - 100,300,100);
 		_infoLabel.setForeground(Color.RED);
 		_infoLabel.setFont(new Font("Tahoma", 0, 23));
 		
