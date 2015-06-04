@@ -48,7 +48,7 @@ public class AuctionTest {
 	public void setUp() {
 
 		donor = new Donor(personFirstName, personLastName, personEmail, personAddress, personPhoneNumber);
-		auction = new Auction(date, startTime, endTime, facilitatorName);
+		auction = new Auction(date, startTime, endTime, facilitatorName, "output/AuctionFile.csv");
 		bidder = new Bidder(personFirstName, personLastName, personEmail, personAddress, nickName, personPhoneNumber,
 				biddersDeviceID);
 

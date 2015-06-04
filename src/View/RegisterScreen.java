@@ -63,6 +63,9 @@ public class RegisterScreen extends JPanel implements ActionListener  {
 	
 	/**	Phone number text box*/	
 	protected JTextField _phoneF;
+	
+	/** Confirmation text. */
+	protected JLabel _infoLabel;
 
 	private static final long serialVersionUID = 1L;
 
@@ -89,6 +92,11 @@ public class RegisterScreen extends JPanel implements ActionListener  {
 	}
 	
 	private void setComponents(){
+		_infoLabel = new JLabel();
+		_infoLabel.setBounds(350,MainFrame.HEIGHT - 100,800,100);
+		_infoLabel.setForeground(Color.RED);
+		_infoLabel.setFont(new Font("Tahoma", 0, 23));
+		
 		_label = new JLabel("<html>Registration Form</html>");
 		_label.setFont(new Font("Tahoma", 0, 50));
 		_label.setBounds((int)(MainFrame.WIDTH / 2.7), 20,300,100);
@@ -212,11 +220,15 @@ public class RegisterScreen extends JPanel implements ActionListener  {
 		JButton src = (JButton) e.getSource();
 		if (src == _createBtn) {
 			if(fieldsNotEmpty()){
-				Bidder aBidder = new Bidder(_fNameF.getText(), _lNameF.getText(),
+				String fName = _fNameF.getText();
+				String lName = _lNameF.getText();
+				
+				Bidder aBidder = new Bidder(fName, lName,
 						_emailF.getText(),_addressF.getText(), _nNameF.getText(),
 						_phoneF.getText(),	MainFrame._auction.assignID());
-				
 				MainFrame._auction.addBidder(aBidder);
+				_infoLabel.setText(fName + " " + lName + " has been added.");
+
 				flushFields();
 			} else {
 				JOptionPane.showMessageDialog(this, "Please enter the required fields.");
@@ -228,7 +240,7 @@ public class RegisterScreen extends JPanel implements ActionListener  {
 			if (choice == JOptionPane.OK_OPTION) {
 				MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "BidderChooser");
 				flushFields();
-				_chooser.createList();
+//				_chooser.createList();
 			}
 		}
 	}
