@@ -424,6 +424,7 @@ public class OptionsAddPanel extends OptionsContext {
 					donor.add(item);
 					OptionsMain._IInfo.setText(itemName + " has been added for " + donor.getFirstName() 
 							+ " " + donor.getLastName() + ".");
+					OptionsMain._helper.clearText(OptionsMain.itemTF);
 					writeToFile += itemName + "," + itemDescription + "," + minIncrement + "," + startPrice + "," 
 							+ donor.getFirstName() + " " + donor.getLastName() + "," + qr;
 					
@@ -432,6 +433,7 @@ public class OptionsAddPanel extends OptionsContext {
 					
 			    } else {
 			    	OptionsMain._IInfo.setText(itemName + " has been added.");
+			    	OptionsMain._helper.clearText(OptionsMain.itemTF);
 			    	writeToFile += itemName + "," + itemDescription + "," + minIncrement + "," + startPrice + ",no donor added," + qr;
 			    }
 				MainFrame._auction.writeToFile("Items", writeToFile);
