@@ -136,7 +136,7 @@ public class OptionsAddPanel extends OptionsContext {
 	private ImageIcon _image;
 	
 	public OptionsAddPanel() {
-		setAddPanel();
+		setAddPanel();	
 	}
 	
 	/**
@@ -171,9 +171,9 @@ public class OptionsAddPanel extends OptionsContext {
 		gc.gridy = 0;
 		gc.anchor = GridBagConstraints.LINE_END;
 		
+		// Labels for donor form
 		String[] labelName = {"First Name: ", "Last Name: "
-				, "Email: ", "Address: ", "Phone: "};
-		
+				, "Email: ", "Address: ", "Phone: "};		
 		for(int i = 0; i < labelName.length; i++) {
 			JLabel temp = new JLabel(labelName[i]);
 			temp.setFont(MainFrame.FORM_LABEL_FONT);
@@ -184,34 +184,19 @@ public class OptionsAddPanel extends OptionsContext {
 		gc.gridy = 0;
 		gc.gridx = 1;
 		
+		// Text fields for donor form
 		_firstTF = new JTextField(20);
-		_firstTF.setPreferredSize(MainFrame.TF_DIMENSION);
-		_firstTF.setFont(MainFrame.FORM_TF_FONT);
-		_donorPanel.add(_firstTF, gc);
-		
-		gc.gridy++;
 		_lastTF = new JTextField(20);
-		_lastTF.setPreferredSize(MainFrame.TF_DIMENSION);
-		_lastTF.setFont(MainFrame.FORM_TF_FONT);
-		_donorPanel.add(_lastTF, gc);
-		
-		gc.gridy++;
 		_emailTF = new JTextField(20);
-		_emailTF.setPreferredSize(MainFrame.TF_DIMENSION);
-		_emailTF.setFont(MainFrame.FORM_TF_FONT);
-		_donorPanel.add(_emailTF, gc);
-		
-		gc.gridy++;
 		_addressTF = new JTextField(20);
-		_addressTF.setPreferredSize(MainFrame.TF_DIMENSION);
-		_addressTF.setFont(MainFrame.FORM_TF_FONT);
-		_donorPanel.add(_addressTF, gc);
-		
-		gc.gridy++;
 		_phoneTF = new JTextField(20);
-		_phoneTF.setPreferredSize(MainFrame.TF_DIMENSION);
-		_phoneTF.setFont(MainFrame.FORM_TF_FONT);
-		_donorPanel.add(_phoneTF, gc);
+		JTextField[] temp = {_firstTF, _lastTF, _emailTF, _addressTF, _phoneTF};
+		for(int i = 0; i < temp.length; i++) {
+			temp[i].setPreferredSize(MainFrame.TF_DIMENSION);
+			temp[i].setFont(MainFrame.FORM_TF_FONT);
+			_donorPanel.add(temp[i],gc);
+			gc.gridy++;
+		}
 		
 		gc.gridy++;
 		_donorBtn = new JButton("Add");
@@ -252,10 +237,10 @@ public class OptionsAddPanel extends OptionsContext {
 		gc.gridy = 0;
 		gc.anchor = GridBagConstraints.LINE_END;
 		
+		// labels for item form
 		String[] labelName = {"Choose a donor (Optional)", "Item Name: "
 				, "Description: ", "Minimum Increment: "
-				, "Starting Price: ", "Item's QR: ", "Upload Image (Optional)"};
-		
+				, "Starting Price: ", "Item's QR: ", "Upload Image (Optional)"};		
 		for(int i = 0; i < labelName.length; i++) {
 			JLabel temp = new JLabel(labelName[i]);
 			temp.setFont(MainFrame.FORM_LABEL_FONT);
@@ -272,36 +257,20 @@ public class OptionsAddPanel extends OptionsContext {
 		_combo.setPrototypeDisplayValue("    this controls combobox's width    ");
 		_itemPanel.add(_combo,gc);
 
-		gc.gridy++;
+		// text fields for item form
 		_itemNameTF = new JTextField(20);
-		_itemNameTF.setPreferredSize(MainFrame.TF_DIMENSION);
-		_itemNameTF.setFont(MainFrame.FORM_TF_FONT);
-		_itemPanel.add(_itemNameTF, gc);
-		
-		gc.gridy++;
 		_ItemDescriptionTF = new JTextField(20);
-		_ItemDescriptionTF.setPreferredSize(MainFrame.TF_DIMENSION);
-		_ItemDescriptionTF.setFont(MainFrame.FORM_TF_FONT);
-		_itemPanel.add(_ItemDescriptionTF, gc);
-		
-		gc.gridy++;
 		_minIncrementTF = new JTextField(20);
-		_minIncrementTF.setPreferredSize(MainFrame.TF_DIMENSION);
-		_minIncrementTF.setFont(MainFrame.FORM_TF_FONT);
-		_itemPanel.add(_minIncrementTF, gc);
-		
-		gc.gridy++;
 		_startPriceTF = new JTextField(20);
-		_startPriceTF.setPreferredSize(MainFrame.TF_DIMENSION);
-		_startPriceTF.setFont(MainFrame.FORM_TF_FONT);
-		_itemPanel.add(_startPriceTF, gc);
-		
-		gc.gridy++;
 		_qrTF = new JTextField(20);
-		_qrTF.setPreferredSize(MainFrame.TF_DIMENSION);
-		_qrTF.setFont(MainFrame.FORM_TF_FONT);
-		_itemPanel.add(_qrTF, gc);
-
+		JTextField[] temp = {_itemNameTF, _ItemDescriptionTF, _minIncrementTF, _startPriceTF, _qrTF};
+		for(int i = 0; i < temp.length; i++) {
+			temp[i].setPreferredSize(MainFrame.TF_DIMENSION);
+			temp[i].setFont(MainFrame.FORM_TF_FONT);
+			gc.gridy++;
+			_itemPanel.add(temp[i], gc);
+		}
+	
 		gc.gridy++;
 		_upload = new JButton("Upload Image");
 		_upload.addActionListener(this);
@@ -377,19 +346,24 @@ public class OptionsAddPanel extends OptionsContext {
 			if(donor != null && !OptionsMain._helper.checkDonor(donor)) {
 				// Add info to the list in auction
 				MainFrame._auction.addDonor(donor);
+				
+				String fileWriteTo = "+," + first + "," + last + "," + phone + "," + email + "," + address;
+				MainFrame._auction.writeToFile("Donors", fileWriteTo);
+				
 				// Add info to the combo box in item panel
-				OptionsMain._comboModel.addElement(first + " " + last + " - " + email);
+				Donor temp = OptionsMain._helper.getDonor(donor);
+				OptionsMain._comboModel.addElement(temp.getFirstName() + " " 
+				+ temp.getLastName() + " - " + temp.getEmail());
+				
 				// Add info to donor table
 				DefaultTableModel model = (DefaultTableModel) OptionsMain._donorTable.getModel();
-				model.addRow(new Object[]{first, last, email, address, phone});
+				model.addRow(new Object[]{temp.getFirstName(), temp.getLastName(),
+						temp.getEmail(), temp.getAddress(), temp.getPhone()});
 				OptionsMain._helper.clearText(OptionsMain.donorTF);
 				OptionsMain._infoLabel.setText(first + " " + last + " has been added.");
 			} else {
 				OptionsMain._infoLabel.setText("Donor already exists.");
 			}
-			
-			String fileWriteTo = "+," + first + "," + last + "," + phone + "," + email + "," + address;
-			MainFrame._auction.writeToFile("Donors", fileWriteTo);
 
 		} catch (Exception err) {
 			err.printStackTrace();
@@ -420,7 +394,7 @@ public class OptionsAddPanel extends OptionsContext {
 		}
 		
 		Item item = null;
-		Donor donor = OptionsMain._helper.getDonor(_combo);
+		Donor donor = OptionsMain._helper.getDonorWithCombo(_combo);
 		try {
 			String writeToFile = "+,";
 			

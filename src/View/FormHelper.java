@@ -89,11 +89,20 @@ public class FormHelper {
 	 * 
 	 * @return a donor object
 	 */
-	public Donor getDonor(JComboBox<String> _combo) {
+	public Donor getDonorWithCombo(JComboBox<String> _combo) {
 		for(Donor donor: MainFrame._auction.getDonors()) {
 			String donorName = donor.getFirstName() + " " + donor.getLastName() + " - " + donor.getEmail();
 			if(_combo.getSelectedItem().toString().equals(donorName)) {
 				return donor;
+			}
+		}
+		return null;
+	}
+	
+	public Donor getDonor(Donor d) {
+		for(Donor don : MainFrame._auction.getDonors()) {
+			if(d.equals(don)) {
+				return don;
 			}
 		}
 		return null;

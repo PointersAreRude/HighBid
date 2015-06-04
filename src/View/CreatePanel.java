@@ -239,31 +239,31 @@ public class CreatePanel extends JPanel implements ActionListener {
 			} else {
 				JFileChooser chooser = new JFileChooser();
 				int result = chooser.showSaveDialog(this);
-				String saveTo = "";
+				
 				if (result == JFileChooser.APPROVE_OPTION) {
-					saveTo = chooser.getSelectedFile().getPath();
-				}
-				
-				MainFrame._auction = new Auction(date, startTime, endTime, facilitatorName, saveTo);
-				
-				try {
-					File file = new File(saveTo);
-					if (file.exists())  {
-						file.delete();
-						file = new File(saveTo);
+					String saveTo = chooser.getSelectedFile().getPath();
+					MainFrame._auction = new Auction(date, startTime, endTime, facilitatorName, saveTo);
+					
+					try {
+						File file = new File(saveTo);
+						if (file.exists())  {
+							file.delete();
+							file = new File(saveTo);
+						}
+						PrintWriter writeFile = new PrintWriter(new FileWriter(file, true));
+						writeFile.println("#,Auction Info");
+						writeFile.println("+," + facilitatorName + "," + date + "," + startTime + "," + endTime);
+						writeFile.println("#,Items");
+						writeFile.println("#,Donors");
+						writeFile.println("#,Bidders");
+						writeFile.close();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
 					}
-					PrintWriter writeFile = new PrintWriter(new FileWriter(file, true));
-					writeFile.println("#,Auction Info");
-					writeFile.println("+," + facilitatorName + "," + date + "," + startTime + "," + endTime);
-					writeFile.println("#,Items");
-					writeFile.println("#,Donors");
-					writeFile.println("#,Bidders");
-					writeFile.close();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "HomeScreen");
 				}
-				MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "HomeScreen");
+				
 			}
 			
 		}
