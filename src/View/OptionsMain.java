@@ -78,7 +78,7 @@ public class OptionsMain extends JPanel implements ActionListener {
 	/**
 	 * Combo box's model
 	 */
-	protected static final DefaultComboBoxModel<String> _comboModel = new DefaultComboBoxModel<String>();
+	public static final DefaultComboBoxModel<String> _comboModel = new DefaultComboBoxModel<String>();
 	
 	/**
 	 * Table to hold donors' data

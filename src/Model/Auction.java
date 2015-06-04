@@ -11,6 +11,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Scanner;
 
+import View.OptionsMain;
+
 /**
  * Auction class; 
  * Precondition: myDate must be of "mm/dd/yyyy" format, and myStartTime and myEndTime must be of "hh:mm" format.
@@ -513,6 +515,8 @@ public void writeToFile(String sentinal, String input) throws IOException {
 						}
 					}
 				}
+	            OptionsMain._comboModel.addElement(firstName + " " 
+				+ lastName + " - " + email);
 				myDonors.add(donor);
 				
 				if (reader.hasNextLine()) {
