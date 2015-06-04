@@ -224,11 +224,23 @@ public class Auction {
 		
 	}
 	
+	/**
+	 * Increments the current bidder ID number, and returns it.
+	 * 
+	 * @return the new Bidder's ID
+	 */
 	public int assignID() {
 		BidderID++;
 		return BidderID;
 	}
 	
+/**
+ * Takes in a new line and writes it to the jar file.
+ * 
+ * @param sentinal The String that designates what section in the file to write to, could be "Donors", "Items", or "Bidders"
+ * @param input The new line to write to the file.
+ * @throws IOException
+ */
 public void writeToFile(String sentinal, String input) throws IOException {
 		
 //		File file = new File("output/AuctionFile.csv");
@@ -280,6 +292,97 @@ public void writeToFile(String sentinal, String input) throws IOException {
 		writeFile.println(writeBack);
 		
 		writeFile.close();
+	}
+
+	public void editFile(String sentinal, String nameToFind, int codeToFind, String nameToAdd, long codeToAdd, String itemBW) throws IOException {
+		String writeBack = "";
+		Scanner scanner = new Scanner(Paths.get(FILE_PATH));
+		
+		String line = scanner.nextLine();
+		writeBack += line;
+		
+		while (!line.contains(sentinal) && scanner.hasNextLine()) {
+			line = scanner.nextLine();
+			writeBack += "\n" + line;
+		}
+		
+		line = scanner.nextLine();
+		String[] tokens = line.split(",");
+		String newline = line;
+		if (sentinal.equals("Items")) {		//modifying an Item line
+			while (!tokens[1].equals(nameToFind) && Integer.parseInt(tokens[6]) != codeToFind) {
+				writeBack += "\n" + newline;
+				newline += scanner.nextLine();
+				tokens = newline.split(",");
+			}
+			
+			String[] theName = nameToAdd.split(",");
+			if (theName.length > 1) {		//adding in a donor
+				newline = tokens[0];
+				for (int i = 1; i < tokens.length; i++) {
+					if (i == 5) {
+						newline += "," + nameToAdd;
+					} else {
+						newline += "," + tokens[i];
+					}
+				}
+			} else if (tokens.length == 1) {		//adding a bidder
+				newline += "," + nameToAdd + " : " + codeToAdd;
+			}
+		} else if (sentinal.equals("Donors")) {		//modifying a Donor line, adding a donated item
+			String[] toks = nameToFind.split(",");
+			while (!tokens[1].equals(toks[0]) && !tokens[2].equals(toks[1])) {
+				writeBack += "\n" + newline;
+				newline += scanner.nextLine();
+				tokens = newline.split(",");
+			}
+			
+			newline += "," + nameToAdd + " : " + codeToAdd;
+		} else {															//modifying a Bidder line
+			String[] toks = nameToFind.split(",");
+			while (!tokens[1].equals(toks[0]) && !tokens[2].equals(toks[1]) && Integer.parseInt(tokens[4]) != codeToFind) {
+				writeBack += "\n" + newline;
+				newline += scanner.nextLine();
+				tokens = newline.split(",");
+			}
+			
+			if (itemBW.equals("b")) { 										//adding an item that has been bid on
+				String nextline = scanner.nextLine();
+				if (nextline.contains("-")) {								//there is already a line of items bid on
+					newline += "\n" + nextline + "," + nameToAdd + " : " + codeToAdd;
+				} else {													//need to create a line of items bid on
+					newline += "\n-," + nameToAdd + " : " + codeToAdd + "\n" + nextline;
+				}
+			} else {														//adding an item won
+				newline = "\n" + scanner.nextLine();
+				String nextline = scanner.nextLine();
+				if (newline.contains("-")) {								//there is already a line of items won
+					newline += "\n" + nextline + "," + nameToAdd + " : " + codeToAdd;
+				} else {													//need to create a line of items won
+					newline += "\n-," + nameToAdd + " : " + codeToAdd + "\n" + nextline;
+				}
+			}
+			
+			writeBack += "\n" + newline;
+			
+			while (scanner.hasNextLine()) {
+				writeBack += scanner.nextLine();
+			}
+			
+			scanner.close();
+			
+			File writeTo = new File(FILE_PATH);
+			if (writeTo.exists()) {
+				writeTo.delete();
+				writeTo = new File(FILE_PATH);
+			}
+			
+			PrintWriter writeFile = new PrintWriter(new FileWriter(writeTo, true));
+			writeFile.println(writeBack);
+			
+			writeFile.close();
+		}
+		
 	}
 
 	
@@ -342,8 +445,6 @@ public void writeToFile(String sentinal, String input) throws IOException {
 					line = reader.nextLine(); //eat the "#Items" line
 					
 					parseItems(reader);
-					//have parseInts return a list of lists that gives proper bidding history, then after
-					//parseBidders, read in that list and "place the bids" as appropriate
 					parseDonors(reader);
 					parseBidders(reader);
 					
@@ -359,9 +460,12 @@ public void writeToFile(String sentinal, String input) throws IOException {
 	 * @param reader a Scanner to read through the file.
 	 */
 	private void parseItems(Scanner reader) {
-		if (reader.hasNext()) {
-			String line = reader.next(); //grab the next line, will either be a "+" or a "#" line
+		if (reader.hasNextLine()) {
+			String line = reader.nextLine(); //grab the next line, will either be a "+" or a "#" line
 			String[] input = line.split(",");
+			
+			//System.out.println("Auction class, parstItems method, line: " + line);
+			
 			while (input[0].equals("+")) { //the Items info
 				String name = input[1];
 				String description = input[2];
@@ -370,8 +474,8 @@ public void writeToFile(String sentinal, String input) throws IOException {
 				long qr = Long.parseLong(input[6]);
 				Item item = new Item(name, description, minInc, startingPrice, qr);
 				myItems.add(item);
-				if (reader.hasNext()) {
-					line = reader.next(); //grab the next line with Items info, or the "#Donors" line
+				if (reader.hasNextLine()) {
+					line = reader.nextLine(); //grab the next line with Items info, or the "#Donors" line
 					input = line.split(",");
 				}
 			}
@@ -384,8 +488,8 @@ public void writeToFile(String sentinal, String input) throws IOException {
 	 * @param reader a Scanner to read through the file.
 	 */
 	private void parseDonors(Scanner reader) {
-		if (reader.hasNext()) {
-			String line = reader.next();
+		if (reader.hasNextLine()) {
+			String line = reader.nextLine();
 			String[] input = line.split(",");
 			while (input[0].equals("+")) {
 				String firstName = input[1];
@@ -406,8 +510,8 @@ public void writeToFile(String sentinal, String input) throws IOException {
 				}
 				myDonors.add(donor);
 				
-				if (reader.hasNext()) {
-					line = reader.next(); //grab the next line with Donor info, or the "#Bidders" line
+				if (reader.hasNextLine()) {
+					line = reader.nextLine(); //grab the next line with Donor info, or the "#Bidders" line
 					input = line.split(",");
 				}
 			}
@@ -420,8 +524,8 @@ public void writeToFile(String sentinal, String input) throws IOException {
 	 * @param reader a Scanner to read through the file.
 	 */
 	private void parseBidders(Scanner reader) {
-		if (reader.hasNext()) {
-			String line = reader.next();
+		if (reader.hasNextLine()) {
+			String line = reader.nextLine();
 			String[] input = line.split(",");
 			while (input[0].equals("+")) {
 				String firstName = input[1];
@@ -435,10 +539,10 @@ public void writeToFile(String sentinal, String input) throws IOException {
 				Bidder bidder = new Bidder(firstName, lastName, email, address, nickName, phone);
 				bidder.setid(id);
 				
-				if (reader.hasNext()) {
-					line = reader.next(); //eat the "-items bid on" line
-					if (reader.hasNext()) {
-						line = reader.next(); //read in the "-items won" line
+				if (reader.hasNextLine()) {
+					line = reader.nextLine(); //eat the "-items bid on" line
+					if (reader.hasNextLine()) {
+						line = reader.nextLine(); //read in the "-items won" line
 						input = line.split(",");
 						if (input.length > 1) { //here read in items won only
 							for (int i = 1; i < input.length; i++) {
