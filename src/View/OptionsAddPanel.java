@@ -351,14 +351,11 @@ public class OptionsAddPanel extends OptionsContext {
 				MainFrame._auction.writeToFile("Donors", fileWriteTo);
 				
 				// Add info to the combo box in item panel
-				Donor temp = OptionsMain._helper.getDonor(donor);
-				OptionsMain._comboModel.addElement(temp.getFirstName() + " " 
-				+ temp.getLastName() + " - " + temp.getEmail());
+				OptionsMain._comboModel.addElement(first + " " + last + " - " + email);
 				
 				// Add info to donor table
 				DefaultTableModel model = (DefaultTableModel) OptionsMain._donorTable.getModel();
-				model.addRow(new Object[]{temp.getFirstName(), temp.getLastName(),
-						temp.getEmail(), temp.getAddress(), temp.getPhone()});
+				model.addRow(new Object[]{first, last, email, address, phone});
 				OptionsMain._helper.clearText(OptionsMain.donorTF);
 				OptionsMain._infoLabel.setText(first + " " + last + " has been added.");
 			} else {

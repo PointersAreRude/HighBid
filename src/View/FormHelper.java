@@ -99,15 +99,6 @@ public class FormHelper {
 		return null;
 	}
 	
-	public Donor getDonor(Donor d) {
-		for(Donor don : MainFrame._auction.getDonors()) {
-			if(d.equals(don)) {
-				return don;
-			}
-		}
-		return null;
-	}
-	
 	/*
 	 * Chage the return type to Image so Image can be resize.
 	 * Mark Ditianquin
