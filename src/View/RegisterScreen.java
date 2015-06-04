@@ -6,6 +6,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -218,6 +219,16 @@ public class RegisterScreen extends JPanel implements ActionListener  {
 						_emailF.getText(),_addressF.getText(), _nNameF.getText(),
 						_phoneF.getText(),	MainFrame._auction.assignID());
 				MainFrame._auction.addBidder(aBidder);
+				
+				String writeTo = "+," + fName + "," + lName + "," + _nNameF.getText() + "," + aBidder.getid()
+						+ "," + _phoneF.getText() + "," + _emailF.getText() + "," + _addressF.getText()
+						+ ",\nItems bid on,\nItems won,";
+				try {
+					MainFrame._auction.writeToFile("Bidders", writeTo);
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+				
 				_infoLabel.setText("<html>"+ fName + " " + lName + " has been added.</html>");
 				flushFields();
 			} else {
