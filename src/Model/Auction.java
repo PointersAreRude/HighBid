@@ -542,9 +542,6 @@ public void writeToFile(String sentinal, String input) throws IOException {
 			String line = reader.nextLine();
 			String[] input = line.split(",");
 			while (input[0].equals("+")) {
-				
-				System.out.println("Auction Class, parseBidders method, while loop here");
-				
 				String firstName = input[1];
 				String lastName = input[2];
 				String nickName = input[3];
