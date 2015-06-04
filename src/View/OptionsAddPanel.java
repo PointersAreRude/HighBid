@@ -426,18 +426,27 @@ public class OptionsAddPanel extends OptionsContext {
 		Donor donor = OptionsMain._helper.getDonor(_combo);
 		try {
 			// if no donor is selected
+			String writeToFile = "+,";
 			if(_combo.getSelectedItem().equals("")) {
 				item = new Item(itemName, itemDescription, minIncrement, startPrice, qr, _image);
+				writeToFile += itemName + "," + itemDescription + "," + minIncrement + "," + startPrice + ",no donor added," + qr;
 			// if  no image is uploaded	
 			} else if (_image == null) {
 				item = new Item(itemName, itemDescription, minIncrement, startPrice, donor, qr);
+				writeToFile += itemName + "," + itemDescription + "," + minIncrement + "," + startPrice + "," 
+						+ donor.getFirstName() + " " + donor.getLastName() + "," + qr;
 			// if no image is uploaded or no donor is selected	
 			} else if (_image == null && _combo.getSelectedItem().equals("")){
 				item = new Item(itemName, itemDescription, minIncrement, startPrice, qr);
+				writeToFile += itemName + "," + itemDescription + "," + minIncrement + "," + startPrice + ",no donor added," + qr;
 			// If everything is filled out, selected, or uploaded	
 			} else {
 				item = new Item(itemName, itemDescription, minIncrement, startPrice, donor, qr, _image);
+				writeToFile += itemName + "," + itemDescription + "," + minIncrement + "," + startPrice + "," 
+						+ donor.getFirstName() + " " + donor.getLastName() + "," + qr;
 			}
+			
+			MainFrame._auction.writeToFile("Items", writeToFile);
 			
 			if(item != null && minIncrement > 0 && !OptionsMain._helper.checkItem(item)) {
 				// Add to the list of item in auction class
