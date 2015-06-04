@@ -4,6 +4,8 @@ import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -112,6 +114,18 @@ public class MainFrame<E> extends JFrame {
 		final RegisterChooser regChoose = new RegisterChooser(edit);
 		final RegisterScreen reg = new RegisterScreen(regChoose);
 		
+		class myCardListener implements ComponentListener{
+
+			public void componentHidden(ComponentEvent e) {}
+			public void componentMoved(ComponentEvent e) {}
+			public void componentResized(ComponentEvent e) {}
+			public void componentShown(ComponentEvent e) {
+				regChoose.createList();
+			}
+		 }
+		regChoose.addComponentListener(new myCardListener());
+		
+		
 		// Setting up CardLayout
 		CONTAINER.setLayout(CLAYOUT);
 		CONTAINER.add(start, "StartScreen");
@@ -133,6 +147,26 @@ public class MainFrame<E> extends JFrame {
 		statsView = new StatsPanel<E>();
 		CONTAINER.add(statsView, "StatsView");
 		statsView.createList(list);
+		
+	}
+
+	public void componentHidden(ComponentEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void componentMoved(ComponentEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void componentResized(ComponentEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void componentShown(ComponentEvent arg0) {
+		// TODO Auto-generated method stub
 		
 	}
 
