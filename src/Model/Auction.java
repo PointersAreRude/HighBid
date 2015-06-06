@@ -263,31 +263,6 @@ public class Auction {
  * @throws IOException
  */
 public void writeToFile(String sentinal, String input) throws IOException {
-		
-//		File file = new File("output/AuctionFile.csv");
-//		
-//		//System.out.println(file.length());
-//		
-//		RandomAccessFile writeTo = new RandomAccessFile(file, "rw");
-//		String line = writeTo.readLine();
-//		
-//		
-//		//System.out.println(line);
-//		
-//		while (!line.contains(sentinal) && writeTo.getFilePointer() < writeTo.length()) {
-//			line = writeTo.readLine();
-//		}
-//		
-//		System.out.println("FilePointer: " + writeTo.getFilePointer() + " file length: " + writeTo.length());
-//		
-//		//byte[] bites = input.getBytes();
-//		//writeTo.write(bites, (int) writeTo.getFilePointer(), bites.length-1);
-//		writeTo.writeBytes(input);
-//		
-//		writeTo.close();
-		
-		
-		
 		String writeBack = "";
 
 		Scanner scanner = new Scanner(Paths.get(myFilePath));
@@ -305,9 +280,6 @@ public void writeToFile(String sentinal, String input) throws IOException {
 		
 		File writeTo = new File(myFilePath);
 		if (writeTo.exists() && writeTo.delete()) {
-			
-			//System.out.println("Auction class, writeFile method, here");
-			
 			writeTo = new File(myFilePath);
 		}
 		
@@ -317,6 +289,19 @@ public void writeToFile(String sentinal, String input) throws IOException {
 		writeFile.close();
 	}
 
+	/**
+	 * Edits a line in the file.
+	 * 
+	 * @param sentinal Indicates which Object the line being edited is, could either be "Items", "Donors", or "Bidders"
+	 * @param nameToFind The name of the object to be edited.
+	 * @param codeToFind If it exists, the code number for the object to be edited.
+	 * @param nameToAdd The name of the object to be added to this line, if it consists of two parts (first name & last Name), 
+	 * it must be comma separated (firstName,lastName), or if it is null, then an item is being removed from the line.
+	 * @param codeToAdd If it exists, the code to the new object being added.
+	 * @param itemBW Applies to an item being added to a Bidder line, must be "b" or "w", "b" indicates the item being added 
+	 * was bid on, "w" indicates the item being added was won.
+	 * @throws IOException
+	 */
 	public void editFile(String sentinal, String nameToFind, long codeToFind, String nameToAdd, long codeToAdd, String itemBW) throws IOException {
 		String writeBack = "";
 		Scanner scanner = new Scanner(Paths.get(myFilePath));
@@ -420,9 +405,6 @@ public void writeToFile(String sentinal, String input) throws IOException {
 		writeBack += "\n" + newline;
 		
 		while (scanner.hasNextLine()) {
-
-			//System.out.println("Auction class, editFile method, while loop5");
-			
 			writeBack += "\n" + scanner.nextLine();
 		}
 			
@@ -430,9 +412,6 @@ public void writeToFile(String sentinal, String input) throws IOException {
 			
 		File writeTo = new File(myFilePath);
 		if (writeTo.exists() && writeTo.delete()) {
-				
-			//System.out.println("Auction class, editFile method, here");
-				
 			writeTo = new File(myFilePath);
 		}
 			
@@ -442,6 +421,14 @@ public void writeToFile(String sentinal, String input) throws IOException {
 		writeFile.close();
 	}
 	
+	/**
+	 * Deletes an object from the file.
+	 * 
+	 * @param sentinal Indicates which Object the line being edited is, could either be "Items", "Donors", or "Bidders"
+	 * @param name The name of the object being deleted.
+	 * @param code If it exists, the code of the object being deleted.
+	 * @throws IOException
+	 */
 	public void deleteFromFile (String sentinal, String name, long code) throws IOException {
 		String writeBack = "";
 		Scanner scanner = new Scanner(Paths.get(myFilePath));
@@ -459,7 +446,7 @@ public void writeToFile(String sentinal, String input) throws IOException {
 			newline = scanner.nextLine();
 			String[] tokens = newline.split(",");
 			
-			if (sentinal.equals("Items")) {		//modifying an Item line
+			if (sentinal.equals("Items")) {
 				while (!tokens[1].equals(name) && Long.parseLong(tokens[6]) != code && scanner.hasNextLine()) {
 					writeBack += "\n" + newline;
 					newline = scanner.nextLine();
@@ -591,9 +578,6 @@ public void writeToFile(String sentinal, String input) throws IOException {
 		if (reader.hasNextLine()) {
 			String line = reader.nextLine(); //grab the next line, will either be a "+" or a "#" line
 			String[] input = line.split(",");
-			
-			//System.out.println("Auction class, parstItems method, line: " + line);
-			
 			while (input[0].equals("+")) { //the Items info
 				String name = input[1];
 				String description = input[2];
