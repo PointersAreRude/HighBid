@@ -598,9 +598,9 @@ public void writeToFile(String sentinal, String input) throws IOException {
 				String address = input[5];
 				Donor donor = new Donor(firstName, lastName, email, address, phone);
 				for (int i = 6; i < input.length; i++) {
-					String[] input2 = input[i].split(":");
+					String[] input2 = input[i].split(" : ");
 					for (Item item : myItems) {
-						if (item.getName().equals(input2[0]) && item.getQr() == Long.parseLong(input[1])) {
+						if (item.getName().equals(input2[0]) && item.getQr() == Long.parseLong(input2[1])) {
 							donor.add(item);
 							item.setDonor(donor);
 							break;
@@ -629,6 +629,7 @@ public void writeToFile(String sentinal, String input) throws IOException {
 	 * @param reader a Scanner to read through the file.
 	 */
 	private void parseBidders(Scanner reader) {
+		boolean firstBidder = true;
 		if (reader.hasNextLine()) {
 			String line = reader.nextLine();
 			String[] input = line.split(",");
@@ -643,6 +644,11 @@ public void writeToFile(String sentinal, String input) throws IOException {
 				
 				Bidder bidder = new Bidder(firstName, lastName, email, address, nickName, phone);
 				bidder.setid(id);
+				
+				if (firstBidder) {
+					BidderID = bidder.getid();
+					firstBidder = false;
+				}
 				
 				if (reader.hasNextLine()) {
 					line = reader.nextLine(); //eat the "items bid on" line
