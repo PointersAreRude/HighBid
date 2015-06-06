@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -214,6 +215,14 @@ public class RegisterChooser extends JPanel implements ActionListener {
 				int choice = JOptionPane.showConfirmDialog(null, "Are you sure you wish to delete this bidder?", "Warning", JOptionPane.OK_CANCEL_OPTION);
 				if (choice == JOptionPane.OK_OPTION) {
 				MainFrame._auction.deleteBidder(_selection);
+				
+				try {
+					MainFrame._auction.deleteFromFile("Bidders", _selection.getFirstName() + "," + _selection.getLastName(), _selection.getid());
+				} catch (IOException ex) {
+					// TODO Auto-generated catch block
+					ex.printStackTrace();
+				}
+				
 				createList();
 				}
 			} else {

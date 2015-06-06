@@ -1,6 +1,7 @@
 package View;
 
 import java.awt.event.ActionEvent;
+import java.io.IOException;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 
@@ -159,6 +160,12 @@ public class OptionsRemovePanel extends OptionsContext {
 		} else {
 			Item item = MainFrame._auction.getItems().get(index);
 			MainFrame._auction.deleteItem(item);
+			try {
+				MainFrame._auction.deleteFromFile("Items", item.getName(), item.getQr());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			_itemModel.removeRow(index);
 			Iterator<Item> itr = null;
 			for(Donor d : MainFrame._auction.getDonors()) {
@@ -186,6 +193,14 @@ public class OptionsRemovePanel extends OptionsContext {
 			Donor donor = MainFrame._auction.getDonors().get(index);
 			int comboIndex = OptionsMain._helper.getDonorIndex(donor)+1;
 			MainFrame._auction.deleteDonor(donor);
+			
+			try {
+				MainFrame._auction.deleteFromFile("Donors", donor.getFirstName() + "," + donor.getLastName(), 0);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 			OptionsMain._comboModel.removeElementAt(comboIndex);
 			_donorModel.removeRow(index);
 			OptionsMain._removeDonorWarning.setText(donor.getFirstName() + " " +donor.getLastName() + " has been removed.");

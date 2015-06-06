@@ -317,7 +317,7 @@ public void writeToFile(String sentinal, String input) throws IOException {
 		
 		while (!line.contains(sentinal) && scanner.hasNextLine()) {
 
-			System.out.println("Auction class, editFile method, while loop1");
+			//System.out.println("Auction class, editFile method, while loop1");
 			
 			line = scanner.nextLine();
 			writeBack += "\n" + line;
@@ -328,11 +328,11 @@ public void writeToFile(String sentinal, String input) throws IOException {
 		String newline = line;
 		if (sentinal.equals("Items")) {		//modifying an Item line
 
-			System.out.println("Auction class, editFile method, Sentinal == Items");
+			//System.out.println("Auction class, editFile method, Sentinal == Items");
 			
 			while (!tokens[1].equals(nameToFind) && Integer.parseInt(tokens[6]) != codeToFind) {
 
-				System.out.println("Auction class, editFile method, while loop2");
+				//System.out.println("Auction class, editFile method, while loop2");
 				
 				writeBack += "\n" + newline;
 				newline += scanner.nextLine();
@@ -344,7 +344,7 @@ public void writeToFile(String sentinal, String input) throws IOException {
 				newline = tokens[0];
 				for (int i = 1; i < tokens.length; i++) {
 
-					System.out.println("Auction class, editFile method, for loop1");
+					//System.out.println("Auction class, editFile method, for loop1");
 					
 					if (i == 5) {
 						newline += "," + nameToAdd;
@@ -358,11 +358,11 @@ public void writeToFile(String sentinal, String input) throws IOException {
 		} else if (sentinal.equals("Donors")) {		//modifying a Donor line, adding a donated item
 			String[] toks = nameToFind.split(",");
 
-			System.out.println("Auction class, editFile method, Sentinal == Donors");
+			//System.out.println("Auction class, editFile method, Sentinal == Donors");
 			
 			while (!tokens[1].equals(toks[0]) && !tokens[2].equals(toks[1])) {
 
-				System.out.println("Auction class, editFile method, while loop3");
+				//System.out.println("Auction class, editFile method, while loop3");
 				
 				writeBack += "\n" + newline;
 				newline += scanner.nextLine();
@@ -372,12 +372,12 @@ public void writeToFile(String sentinal, String input) throws IOException {
 			newline += "," + nameToAdd + " : " + codeToAdd;
 		} else {															//modifying a Bidder line
 
-			System.out.println("Auction class, editFile method, Sentinal == Bidders");
+			//System.out.println("Auction class, editFile method, Sentinal == Bidders");
 			
 			String[] toks = nameToFind.split(",");
 			while (!tokens[1].equals(toks[0]) && !tokens[2].equals(toks[1]) && Integer.parseInt(tokens[4]) != codeToFind) {
 
-				System.out.println("Auction class, editFile method, while loop4");
+				//System.out.println("Auction class, editFile method, while loop4");
 				
 				writeBack += "\n" + newline;
 				newline += scanner.nextLine();
@@ -406,9 +406,9 @@ public void writeToFile(String sentinal, String input) throws IOException {
 		
 		while (scanner.hasNextLine()) {
 
-			System.out.println("Auction class, editFile method, while loop5");
+			//System.out.println("Auction class, editFile method, while loop5");
 			
-			writeBack += scanner.nextLine();
+			writeBack += "\n" + scanner.nextLine();
 		}
 			
 		scanner.close();
@@ -416,8 +416,59 @@ public void writeToFile(String sentinal, String input) throws IOException {
 		File writeTo = new File(myFilePath);
 		if (writeTo.exists() && writeTo.delete()) {
 				
-			System.out.println("Auction class, editFile method, here");
+			//System.out.println("Auction class, editFile method, here");
 				
+			writeTo = new File(myFilePath);
+		}
+			
+		PrintWriter writeFile = new PrintWriter(new FileWriter(writeTo, true));
+		writeFile.println(writeBack);
+			 
+		writeFile.close();
+	}
+	
+	public void deleteFromFile (String sentinal, String name, long code) throws IOException {
+		String writeBack = "";
+		Scanner scanner = new Scanner(Paths.get(myFilePath));
+		
+		String line = scanner.nextLine();
+		writeBack += line;
+		while (!line.contains(sentinal) && scanner.hasNextLine()) {
+			line = scanner.nextLine();
+			writeBack += "\n" + line;
+		}
+		
+		String newline = "";
+		if (line.contains(sentinal) && scanner.hasNextLine()) {
+			String[] theName = name.split(",");
+			newline = scanner.nextLine();
+			String[] tokens = newline.split(",");
+			if ( (sentinal.equals("Items") && tokens[1].equals(theName[0]) && Long.parseLong(tokens[6]) == code)
+					|| (sentinal.equals("Donors") && tokens[1].equals(theName[0]) && tokens[2].equals(theName[1])) ) {
+				newline = scanner.nextLine();
+			} else if (sentinal.equals("Bidders") && tokens[1].equals(theName[0]) && tokens[2].equals(theName[1]) 
+					&& Long.parseLong(tokens[4]) == code) {
+				
+				int sent = 0;
+				while (scanner.hasNextLine() && sent < 2) {
+					scanner.nextLine();
+					sent++;
+				}
+				if (scanner.hasNextLine()) {
+					newline = scanner.nextLine();					
+				} else {
+					newline = "";
+				}
+			}
+		}
+		writeBack += "\n" + newline;
+		while (scanner.hasNextLine()) {
+			writeBack += "\n" + scanner.nextLine();
+		}
+		scanner.close();
+		
+		File writeTo = new File(myFilePath);
+		if (writeTo.exists() && writeTo.delete()) {
 			writeTo = new File(myFilePath);
 		}
 			
