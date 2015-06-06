@@ -163,6 +163,11 @@ public class Auction {
 		for (Item item : myItems) {
 			if (aDonor == item.getDonor()) {
 				item.setDonor(null);
+				try {
+					this.editFile("Items", item.getName(), item.getQr(), null, 0, "");
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 		myDonors.remove(aDonor);
@@ -180,6 +185,13 @@ public class Auction {
 			for (Item item : donor.getItemList()) {
 				if (item == anItem) {
 					donor.delete(item);
+					try {
+						this.editFile("Donors", donor.getFirstName() + "," + donor.getLastName(),
+								0, null, 0, "");
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					
 					breakLoop = true;
 					break;
 				}
@@ -305,10 +317,7 @@ public void writeToFile(String sentinal, String input) throws IOException {
 		writeFile.close();
 	}
 
-	public void editFile(String sentinal, String nameToFind, int codeToFind, String nameToAdd, long codeToAdd, String itemBW) throws IOException {
-		
-		//System.out.println("Auciton Class, editFile here");
-		
+	public void editFile(String sentinal, String nameToFind, long codeToFind, String nameToAdd, long codeToAdd, String itemBW) throws IOException {
 		String writeBack = "";
 		Scanner scanner = new Scanner(Paths.get(myFilePath));
 		
@@ -316,9 +325,6 @@ public void writeToFile(String sentinal, String input) throws IOException {
 		writeBack += line;
 		
 		while (!line.contains(sentinal) && scanner.hasNextLine()) {
-
-			//System.out.println("Auction class, editFile method, while loop1");
-			
 			line = scanner.nextLine();
 			writeBack += "\n" + line;
 		}
@@ -327,58 +333,67 @@ public void writeToFile(String sentinal, String input) throws IOException {
 		String[] tokens = line.split(",");
 		String newline = line;
 		if (sentinal.equals("Items")) {		//modifying an Item line
-
-			//System.out.println("Auction class, editFile method, Sentinal == Items");
-			
 			while (!tokens[1].equals(nameToFind) && Integer.parseInt(tokens[6]) != codeToFind) {
-
-				//System.out.println("Auction class, editFile method, while loop2");
-				
 				writeBack += "\n" + newline;
-				newline += scanner.nextLine();
+				newline = scanner.nextLine();
 				tokens = newline.split(",");
 			}
 			
-			String[] theName = nameToAdd.split(",");
-			if (theName.length > 1) {		//adding in a donor
+			if (nameToAdd == null) {
 				newline = tokens[0];
 				for (int i = 1; i < tokens.length; i++) {
-
-					//System.out.println("Auction class, editFile method, for loop1");
-					
 					if (i == 5) {
-						newline += "," + nameToAdd;
+						newline += ",no donor added";
 					} else {
 						newline += "," + tokens[i];
 					}
 				}
-			} else if (tokens.length == 1) {		//adding a bidder
-				newline += "," + nameToAdd + " : " + codeToAdd;
+			} else {
+				String[] theName = nameToAdd.split(",");
+			
+				if (theName.length > 1 || theName.length == 0) {		//adding or removing a donor
+					newline = tokens[0];
+					for (int i = 1; i < tokens.length; i++) {
+						if (i == 5) {
+							newline += "," + nameToAdd;
+						} else {
+							newline += "," + tokens[i];
+						}
+					}
+				} else if (tokens.length == 1) {		//adding a bidder
+					newline += "," + nameToAdd + " : " + codeToAdd;
+				}
 			}
 		} else if (sentinal.equals("Donors")) {		//modifying a Donor line, adding a donated item
 			String[] toks = nameToFind.split(",");
-
-			//System.out.println("Auction class, editFile method, Sentinal == Donors");
-			
 			while (!tokens[1].equals(toks[0]) && !tokens[2].equals(toks[1])) {
-
-				//System.out.println("Auction class, editFile method, while loop3");
-				
 				writeBack += "\n" + newline;
 				newline += scanner.nextLine();
 				tokens = newline.split(",");
 			}
 			
-			newline += "," + nameToAdd + " : " + codeToAdd;
-		} else {															//modifying a Bidder line
-
-			//System.out.println("Auction class, editFile method, Sentinal == Bidders");
-			
+			if (nameToAdd == null) {		//removing an item
+				for (Donor donor : myDonors) {
+					if (tokens[1].equals(donor.getFirstName()) && tokens[2].equals(donor.getLastName())) {
+						newline = tokens[0];
+						for (int i = 1; i < 6; i++) {
+							newline += "," + tokens[i];
+						}
+						ArrayList<Item> items = (ArrayList<Item>) donor.getItemList();
+						for (Item item : items) {
+							newline += "," + item.getName() + " : " + item.getQr();
+						}
+						
+						break;
+					}
+				}
+				
+			} else {
+				newline += "," + nameToAdd + " : " + codeToAdd;
+			}
+		} else if (sentinal.equals("Bidders")) {		//modifying a Bidder line
 			String[] toks = nameToFind.split(",");
 			while (!tokens[1].equals(toks[0]) && !tokens[2].equals(toks[1]) && Integer.parseInt(tokens[4]) != codeToFind) {
-
-				//System.out.println("Auction class, editFile method, while loop4");
-				
 				writeBack += "\n" + newline;
 				newline += scanner.nextLine();
 				tokens = newline.split(",");
@@ -439,16 +454,35 @@ public void writeToFile(String sentinal, String input) throws IOException {
 		}
 		
 		String newline = "";
+		
 		if (line.contains(sentinal) && scanner.hasNextLine()) {
-			String[] theName = name.split(",");
 			newline = scanner.nextLine();
 			String[] tokens = newline.split(",");
-			if ( (sentinal.equals("Items") && tokens[1].equals(theName[0]) && Long.parseLong(tokens[6]) == code)
-					|| (sentinal.equals("Donors") && tokens[1].equals(theName[0]) && tokens[2].equals(theName[1])) ) {
+			
+			if (sentinal.equals("Items")) {		//modifying an Item line
+				while (!tokens[1].equals(name) && Long.parseLong(tokens[6]) != code && scanner.hasNextLine()) {
+					writeBack += "\n" + newline;
+					newline = scanner.nextLine();
+					tokens = newline.split(",");
+				}
 				newline = scanner.nextLine();
-			} else if (sentinal.equals("Bidders") && tokens[1].equals(theName[0]) && tokens[2].equals(theName[1]) 
-					&& Long.parseLong(tokens[4]) == code) {
 				
+			} else if (sentinal.equals("Donors")) {
+				String[] toks = name.split(",");
+				while (!tokens[1].equals(toks[0]) && !tokens[2].equals(toks[1])) {
+					writeBack += "\n" + newline;
+					newline += scanner.nextLine();
+					tokens = newline.split(",");
+				}
+				newline = scanner.nextLine();
+				
+			} else if (sentinal.equals("Bidders")) {
+				String[] toks = name.split(",");
+				while (!tokens[1].equals(toks[0]) && !tokens[2].equals(toks[1]) && Integer.parseInt(tokens[4]) != code) {
+					writeBack += "\n" + newline;
+					newline += scanner.nextLine();
+					tokens = newline.split(",");
+				}
 				int sent = 0;
 				while (scanner.hasNextLine() && sent < 2) {
 					scanner.nextLine();
@@ -459,6 +493,7 @@ public void writeToFile(String sentinal, String input) throws IOException {
 				} else {
 					newline = "";
 				}
+				
 			}
 		}
 		writeBack += "\n" + newline;

@@ -196,6 +196,7 @@ public class OptionsRemovePanel extends OptionsContext {
 			
 			try {
 				MainFrame._auction.deleteFromFile("Donors", donor.getFirstName() + "," + donor.getLastName(), 0);
+				System.out.println("here");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
