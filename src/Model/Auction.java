@@ -292,8 +292,10 @@ public void writeToFile(String sentinal, String input) throws IOException {
 		scanner.close();
 		
 		File writeTo = new File(myFilePath);
-		if (writeTo.exists()) {
-			writeTo.delete();
+		if (writeTo.exists() && writeTo.delete()) {
+			
+			//System.out.println("Auction class, writeFile method, here");
+			
 			writeTo = new File(myFilePath);
 		}
 		
@@ -304,6 +306,9 @@ public void writeToFile(String sentinal, String input) throws IOException {
 	}
 
 	public void editFile(String sentinal, String nameToFind, int codeToFind, String nameToAdd, long codeToAdd, String itemBW) throws IOException {
+		
+		//System.out.println("Auciton Class, editFile here");
+		
 		String writeBack = "";
 		Scanner scanner = new Scanner(Paths.get(myFilePath));
 		
@@ -311,6 +316,9 @@ public void writeToFile(String sentinal, String input) throws IOException {
 		writeBack += line;
 		
 		while (!line.contains(sentinal) && scanner.hasNextLine()) {
+
+			System.out.println("Auction class, editFile method, while loop1");
+			
 			line = scanner.nextLine();
 			writeBack += "\n" + line;
 		}
@@ -319,7 +327,13 @@ public void writeToFile(String sentinal, String input) throws IOException {
 		String[] tokens = line.split(",");
 		String newline = line;
 		if (sentinal.equals("Items")) {		//modifying an Item line
+
+			System.out.println("Auction class, editFile method, Sentinal == Items");
+			
 			while (!tokens[1].equals(nameToFind) && Integer.parseInt(tokens[6]) != codeToFind) {
+
+				System.out.println("Auction class, editFile method, while loop2");
+				
 				writeBack += "\n" + newline;
 				newline += scanner.nextLine();
 				tokens = newline.split(",");
@@ -329,6 +343,9 @@ public void writeToFile(String sentinal, String input) throws IOException {
 			if (theName.length > 1) {		//adding in a donor
 				newline = tokens[0];
 				for (int i = 1; i < tokens.length; i++) {
+
+					System.out.println("Auction class, editFile method, for loop1");
+					
 					if (i == 5) {
 						newline += "," + nameToAdd;
 					} else {
@@ -340,7 +357,13 @@ public void writeToFile(String sentinal, String input) throws IOException {
 			}
 		} else if (sentinal.equals("Donors")) {		//modifying a Donor line, adding a donated item
 			String[] toks = nameToFind.split(",");
+
+			System.out.println("Auction class, editFile method, Sentinal == Donors");
+			
 			while (!tokens[1].equals(toks[0]) && !tokens[2].equals(toks[1])) {
+
+				System.out.println("Auction class, editFile method, while loop3");
+				
 				writeBack += "\n" + newline;
 				newline += scanner.nextLine();
 				tokens = newline.split(",");
@@ -348,8 +371,14 @@ public void writeToFile(String sentinal, String input) throws IOException {
 			
 			newline += "," + nameToAdd + " : " + codeToAdd;
 		} else {															//modifying a Bidder line
+
+			System.out.println("Auction class, editFile method, Sentinal == Bidders");
+			
 			String[] toks = nameToFind.split(",");
 			while (!tokens[1].equals(toks[0]) && !tokens[2].equals(toks[1]) && Integer.parseInt(tokens[4]) != codeToFind) {
+
+				System.out.println("Auction class, editFile method, while loop4");
+				
 				writeBack += "\n" + newline;
 				newline += scanner.nextLine();
 				tokens = newline.split(",");
@@ -371,27 +400,31 @@ public void writeToFile(String sentinal, String input) throws IOException {
 					newline += "\n-," + nameToAdd + " : " + codeToAdd + "\n" + nextline;
 				}
 			}
-			
-			writeBack += "\n" + newline;
-			
-			while (scanner.hasNextLine()) {
-				writeBack += scanner.nextLine();
-			}
-			
-			scanner.close();
-			
-			File writeTo = new File(myFilePath);
-			if (writeTo.exists()) {
-				writeTo.delete();
-				writeTo = new File(myFilePath);
-			}
-			
-			PrintWriter writeFile = new PrintWriter(new FileWriter(writeTo, true));
-			writeFile.println(writeBack);
-			
-			writeFile.close();
 		}
+			
+		writeBack += "\n" + newline;
 		
+		while (scanner.hasNextLine()) {
+
+			System.out.println("Auction class, editFile method, while loop5");
+			
+			writeBack += scanner.nextLine();
+		}
+			
+		scanner.close();
+			
+		File writeTo = new File(myFilePath);
+		if (writeTo.exists() && writeTo.delete()) {
+				
+			System.out.println("Auction class, editFile method, here");
+				
+			writeTo = new File(myFilePath);
+		}
+			
+		PrintWriter writeFile = new PrintWriter(new FileWriter(writeTo, true));
+		writeFile.println(writeBack);
+			 
+		writeFile.close();
 	}
 
 	
