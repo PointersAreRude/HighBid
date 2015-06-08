@@ -227,7 +227,6 @@ public class RegisterChooser extends JPanel implements ActionListener {
 				try {
 					MainFrame._auction.deleteFromFile("Bidders", _selection.getFirstName() + "," + _selection.getLastName(), _selection.getid());
 				} catch (IOException ex) {
-					// TODO Auto-generated catch block
 					ex.printStackTrace();
 				}
 				
