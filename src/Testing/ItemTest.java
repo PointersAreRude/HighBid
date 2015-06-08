@@ -40,22 +40,6 @@ private final int incr = 1;
 	}
 
 	/**
-	 * Test method for {@link Model.Item#Item(java.lang.String, java.lang.String, int, int, long)}.
-	 */
-	@Test
-	public void testItemStringStringIntIntLong() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for {@link Model.Item#Item(java.lang.String, java.lang.String, int, int, Model.Donor, long, javax.swing.ImageIcon)}.
-	 */
-	@Test
-	public void testItemStringStringIntIntDonorLongImageIcon() {
-		fail("Not yet implemented");
-	}
-
-	/**
 	 * Test method for {@link Model.Item#addBidder(Model.Bidder)}. Tests adding a regular Bidder.
 	 * No null or error checking.
 	 */
@@ -75,9 +59,6 @@ private final int incr = 1;
 	public void testGetBidderListEmpty() {
 		List<Bidder> bidders = testItem.getBidderList();
 		assertEquals("Empty list -- should be size 0", 0,bidders.size());
-		
-		testItem.addBidder(testBidder);
-		assertEquals("Added one bidder list -- should be size 1", 1,bidders.size());
 		
 	}
 	
@@ -202,31 +183,6 @@ private final int incr = 1;
 		assertEquals("QR should equal new QR set in setQR method.", newQR, testItem.getQr());	
 		}
 
-
-	//How do you test for images without adding images?
-	/**
-	 * Test method for {@link Model.Item#getImage()}.
-	 */
-	@Test
-	public void testGetImage() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for {@link Model.Item#setImage(javax.swing.ImageIcon)}.
-	 */
-	@Test
-	public void testSetImage() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for {@link Model.Item#toString()}.
-	 */
-	@Test
-	public void testToString() {
-		fail("Not yet implemented");
-	}
 
 	/**
 	 * Test method for {@link Model.Item#compareTo(Model.Item)}.
