@@ -82,7 +82,10 @@ public class RegisterScreen extends JPanel implements ActionListener  {
 		add(_gbag);
 		add(_createBtn);
 	}
-	
+	 
+	/**
+	 * Helper method that sets components' size, location, and contents.
+	 */
 	private void setComponents(){
 		_infoLabel = new JLabel();
 		_infoLabel.setBounds((int)(MainFrame.WIDTH / 2.7) ,MainFrame.HEIGHT - 150,400,100);
@@ -112,7 +115,9 @@ public class RegisterScreen extends JPanel implements ActionListener  {
 
 		add(reqd);
 	}
-	
+	/**
+	 * Helper method that sets form locations and contents
+	 */
 	private void setupForm(){
 		_gbag = new JPanel(new GridBagLayout());
 		_gbag.setBorder(BorderFactory.createTitledBorder("<html>Registration Fields</html>"));

@@ -20,7 +20,6 @@ public class RegisterEditScreen extends RegisterScreen {
 	/** The bidder to edit.*/
 	private Bidder _bidder;
 	
-	
 	public RegisterEditScreen(){
 		super();
 		_bidder = null;
@@ -87,8 +86,7 @@ public class RegisterEditScreen extends RegisterScreen {
 				flushFields();
 				MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "BidderChooser");
 			}
-		} else { //exiting screen
-			//this dialog is verbatim from Abbie's code
+		} else {
 			int choice = JOptionPane.showConfirmDialog(null, "Your information in this form "
 					+ "will not be saved.  Continue back?", "Warning", JOptionPane.OK_CANCEL_OPTION);
 			if (choice == JOptionPane.OK_OPTION) {

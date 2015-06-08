@@ -79,7 +79,6 @@ public class Bidder extends Person implements Comparable<Bidder>{
 	 * @return The nickname of the Bidder.
 	 */
 	public String getNickName(){
-		//test by assigning multiple nicknames.
 		return _nickName;
 	}
 	
@@ -91,8 +90,6 @@ public class Bidder extends Person implements Comparable<Bidder>{
 	public void placeBid(Item theItem){
 		_itemsBidOn.add(theItem);
 		theItem.addBidder(this);
-		//Test in conjunction with Item class. Place bids on Items and test both the Item and _itemsBidOn.
-		//SOMETHING
 	}
 	
 	/**
@@ -127,7 +124,11 @@ public class Bidder extends Person implements Comparable<Bidder>{
 			set.add(it);
 		return set;
 	}
-	
+	/**
+	 * Returns a string representation of a bidder.
+	 * 
+	 * @return a string representation of a bidder.
+	 */
 	public String toString() {
 		String toReturn = getFirstName() + " " + getLastName() + "," + _nickName + "," + _id + ","
 				+ getPhone() + "," + getEmail() + "," + getAddress() + "\n";
@@ -169,7 +170,6 @@ public class Bidder extends Person implements Comparable<Bidder>{
 		}
 	}
 	
-	//should this and compareTo be modified to test the object ids/mem addresses instead of field data?
 	/**
 	 * Returns true if the two bidders being compared are the same.
 	 * 

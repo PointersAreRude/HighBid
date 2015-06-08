@@ -78,7 +78,12 @@ public class RegisterChooser extends JPanel implements ActionListener {
 		_isEmpty = true;
 		setComponents();
 	}
-	
+	/**
+	 * Generates a lists of currently registered Bidders or a new empty
+	 * list if there are no bidders.
+	 * 
+	 * If there are no bidders the field _isEmpty is set to true.
+	 */
 	public void createList(){
 		if(MainFrame._auction != null){
 			ArrayList<Bidder> theList = MainFrame._auction.getBidders();
@@ -98,6 +103,9 @@ public class RegisterChooser extends JPanel implements ActionListener {
 		update();
 	}
 	
+	/**
+	 * Helper method to set the components' location and contents.
+	 */
 	public void setComponents(){
 		JLabel title = new JLabel("<html>Bidder Edit</html>");
 		title.setFont(new Font("Tahoma", 0, 70));
