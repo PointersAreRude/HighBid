@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -65,6 +66,8 @@ public class AuctionTest {
 		
 		auction.placeBid(biddersDeviceID, id);	
 		assertEquals(id, item.getQr());
+		Set<Item> test = bidder.getItemsBidOn();
+		assertTrue("place Bid failed", test.contains(item));
 		
 	}
 	@Test
