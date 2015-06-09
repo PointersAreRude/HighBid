@@ -99,9 +99,6 @@ public class Auction {
 			myFile.delete();
 			myFile = new File(aFilePath);
 		}
-		
-		System.out.println("Auction constructor, myFile.path(): " + myFile.getPath());
-		
 		myDonors = new ArrayList<Donor>();
 		myItems = new ArrayList<Item>();
 		myBidders = new ArrayList<Bidder>();
@@ -314,7 +311,6 @@ public void writeToFile(String sentinal, String input) throws IOException {
 	public void editFile(String sentinal, String nameToFind, long codeToFind, String nameToAdd, long codeToAdd, String itemBW) throws IOException {
 		String writeBack = "";
 		Scanner scanner = new Scanner(Paths.get(myFile.getPath()));
-		
 		String line = scanner.nextLine();
 		writeBack += line;
 		
