@@ -241,16 +241,11 @@ public class CreatePanel extends JPanel implements ActionListener {
 				int result = chooser.showSaveDialog(this);
 				
 				if (result == JFileChooser.APPROVE_OPTION) {
-					String saveTo = chooser.getSelectedFile().getPath();
-					MainFrame._auction = new Auction(date, startTime, endTime, facilitatorName, saveTo);
+					File saveTo = chooser.getSelectedFile();
 					
 					try {
-						File file = new File(saveTo);
-						if (file.exists())  {
-							file.delete();
-							file = new File(saveTo);
-						}
-						PrintWriter writeFile = new PrintWriter(new FileWriter(file, true));
+						MainFrame._auction = new Auction(date, startTime, endTime, facilitatorName, saveTo.getPath());	
+						PrintWriter writeFile = new PrintWriter(new FileWriter(saveTo, true));
 						writeFile.println("#,Auction Info");
 						writeFile.println("+," + facilitatorName + "," + date + "," + startTime + "," + endTime);
 						writeFile.println("#,Items");

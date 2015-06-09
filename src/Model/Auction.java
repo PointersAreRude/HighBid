@@ -68,7 +68,8 @@ public class Auction {
 	private int BidderID;
 	
 	//public static final String FILE_PATH = "output/AuctionFile.csv";
-	private String myFilePath;
+	//private String myFile;
+	private File myFile;
 	
 	/**
 	 * And empty constructor, used when opening up a previously saved file.
@@ -91,7 +92,15 @@ public class Auction {
 		myEndTime = anEndTime;
 		myFacilitator = aFacilitator;
 		BidderID = 0;
-		myFilePath = aFilePath;
+		//myFile = aFilePath;
+		
+		myFile = new File(aFilePath);
+		if (!myFile.exists())  {
+			myFile.delete();
+			myFile = new File(aFilePath);
+		}
+		
+		System.out.println("Auction constructor, myFile.path(): " + myFile.getPath());
 		
 		myDonors = new ArrayList<Donor>();
 		myItems = new ArrayList<Item>();
@@ -265,7 +274,7 @@ public class Auction {
 public void writeToFile(String sentinal, String input) throws IOException {
 		String writeBack = "";
 
-		Scanner scanner = new Scanner(Paths.get(myFilePath));
+		Scanner scanner = new Scanner(Paths.get(myFile.getPath()));
 		String line = scanner.nextLine();
 		writeBack += line;
 		while (!line.contains(sentinal) && scanner.hasNextLine()) {
@@ -278,9 +287,9 @@ public void writeToFile(String sentinal, String input) throws IOException {
 		}
 		scanner.close();
 		
-		File writeTo = new File(myFilePath);
+		File writeTo = new File(myFile.getPath());
 		if (writeTo.exists() && writeTo.delete()) {
-			writeTo = new File(myFilePath);
+			writeTo = new File(myFile.getPath());
 		}
 		
 		PrintWriter writeFile = new PrintWriter(new FileWriter(writeTo, true));
@@ -304,7 +313,7 @@ public void writeToFile(String sentinal, String input) throws IOException {
 	 */
 	public void editFile(String sentinal, String nameToFind, long codeToFind, String nameToAdd, long codeToAdd, String itemBW) throws IOException {
 		String writeBack = "";
-		Scanner scanner = new Scanner(Paths.get(myFilePath));
+		Scanner scanner = new Scanner(Paths.get(myFile.getPath()));
 		
 		String line = scanner.nextLine();
 		writeBack += line;
@@ -410,9 +419,9 @@ public void writeToFile(String sentinal, String input) throws IOException {
 			
 		scanner.close();
 			
-		File writeTo = new File(myFilePath);
+		File writeTo = new File(myFile.getPath());
 		if (writeTo.exists() && writeTo.delete()) {
-			writeTo = new File(myFilePath);
+			writeTo = new File(myFile.getPath());
 		}
 			
 		PrintWriter writeFile = new PrintWriter(new FileWriter(writeTo, true));
@@ -431,7 +440,7 @@ public void writeToFile(String sentinal, String input) throws IOException {
 	 */
 	public void deleteFromFile (String sentinal, String name, long code) throws IOException {
 		String writeBack = "";
-		Scanner scanner = new Scanner(Paths.get(myFilePath));
+		Scanner scanner = new Scanner(Paths.get(myFile.getPath()));
 		
 		String line = scanner.nextLine();
 		writeBack += line;
@@ -489,9 +498,9 @@ public void writeToFile(String sentinal, String input) throws IOException {
 		}
 		scanner.close();
 		
-		File writeTo = new File(myFilePath);
+		File writeTo = new File(myFile.getPath());
 		if (writeTo.exists() && writeTo.delete()) {
-			writeTo = new File(myFilePath);
+			writeTo = new File(myFile.getPath());
 		}
 			
 		PrintWriter writeFile = new PrintWriter(new FileWriter(writeTo, true));
