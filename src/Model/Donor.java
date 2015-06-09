@@ -72,14 +72,18 @@ public class Donor extends Person {
     	return toReturn;
     }
     
+    @Override
     public boolean equals(Object o) {
-
-    	Donor donor = (Donor) o;
-    	return this.getFirstName().equals(donor.getFirstName()) 
-    			&& this.getPhone().equals(donor.getPhone())
-    			&& this.getEmail().equals(donor.getEmail())
-    			&& this.getAddress().equals(donor.getAddress())
-    			&& this.getLastName().equals(donor.getLastName());
+    	boolean isEquals = false;
+    	if (o != null && o instanceof Donor) {
+    		Donor donor = (Donor) o;
+    		isEquals = this.getFirstName().equals(donor.getFirstName()) 
+        			&& this.getPhone().equals(donor.getPhone())
+        			&& this.getEmail().equals(donor.getEmail())
+        			&& this.getAddress().equals(donor.getAddress())
+        			&& this.getLastName().equals(donor.getLastName());
+    	}
+    	return isEquals;
     }
-    
+     
 }

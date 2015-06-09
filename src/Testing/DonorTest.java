@@ -7,7 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import Model.Donor;
 import Model.Item;
@@ -20,6 +22,7 @@ import Model.Item;
  */
 public class DonorTest {
 
+	@Rule public ExpectedException exceptionRule = ExpectedException.none();
 	private Donor donor;
 	private List<Item> list;
 	private Item item;
@@ -56,21 +59,43 @@ public class DonorTest {
 		assertEquals("Size is not the same", sizeExpected, size);
 	}
 	
-	@Test(expected=IndexOutOfBoundsException.class)
+	@Test
 	public void testIndexOutOfBOunds() {
 		// Should throw an exception if the user
 		// query any of the item from an empty list.
-		list.removeAll(donor.getItemList());
-		@SuppressWarnings("unused")
-		Object o = donor.getItemList().get(0);
+		List<Item> temp = new ArrayList<Item>(donor.getItemList());
+		Exception outOfBounds = null;
+		try {
+			temp.get(1);
+		} catch (IndexOutOfBoundsException e) {
+			outOfBounds = e;
+		}
+		assertNotNull("No expected exception", outOfBounds);
 	}
 	
-	@Test(expected=IllegalArgumentException.class)
-	public void testNullArgument() {
+	@Test
+	public void testAddNullArgument() {
 		// Should throw an exception when adding a null object
-		donor.add(null);
-		// Should throw an exception when deleting a null object
-		donor.delete(null);
+		Exception illegalArg = null;
+		Item i = null;
+		try {
+			donor.add(i);
+		} catch (IllegalArgumentException e){
+			illegalArg = e;
+		}
+		assertNotNull("No expected exception", illegalArg);
+	}
+	
+	@Test
+	public void testDeleteNullArgument() {
+		Exception illegalArgument = null;
+		Item i = null;
+		try {
+			donor.delete(i);
+		} catch (IllegalArgumentException e){
+			illegalArgument = e;
+		}
+		assertNotNull("No expected exception", illegalArgument);
 	}
 	
 	@Test
@@ -94,6 +119,12 @@ public class DonorTest {
 		String item = list.get(0).getName() + ":" + list.get(0).getQr();
 		String expected = "First Name Last Name, 111-111-1111, Email, 2222 22th Ave S, " + item;
 		assertEquals("Two strings are not the same", expected, donor.toString());
+	}
+	
+	@Test
+	public void testEquals() {
+		Donor donor = new Donor("First", "Last", "Email", "Address", "Phone");
+		assertTrue("Should return true", donor.equals(donor));
 	}
 
 }
