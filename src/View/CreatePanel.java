@@ -18,6 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import Model.Auction;
 
@@ -238,25 +239,39 @@ public class CreatePanel extends JPanel implements ActionListener {
 				_warningLabel.setText("Please enter all required fields.");
 			} else {
 				JFileChooser chooser = new JFileChooser();
+				FileNameExtensionFilter filter = new FileNameExtensionFilter(".csv", "csv"); 
+				chooser.setFileFilter(filter);
+				
 				int result = chooser.showSaveDialog(this);
+				
+				boolean cont = true;
 				
 				if (result == JFileChooser.APPROVE_OPTION) {
 					File saveTo = chooser.getSelectedFile();
-					
-					try {
-						MainFrame._auction = new Auction(date, startTime, endTime, facilitatorName, saveTo.getPath());	
-						PrintWriter writeFile = new PrintWriter(new FileWriter(saveTo, true));
-						writeFile.println("#,Auction Info");
-						writeFile.println("+," + facilitatorName + "," + date + "," + startTime + "," + endTime);
-						writeFile.println("#,Items");
-						writeFile.println("#,Donors");
-						writeFile.println("#,Bidders");
-						writeFile.close();
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
+					while (!filter.accept(saveTo)) {
+						JOptionPane.showMessageDialog(this, "File must be a .csv extension", "Warning", JOptionPane.OK_OPTION);
+						result = chooser.showSaveDialog(this);
+						if (result == JFileChooser.CANCEL_OPTION) {
+							cont = false;
+							break;
+						}
+						saveTo = chooser.getSelectedFile();
 					}
-					MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "HomeScreen");
+					if (cont) {
+						try {
+							MainFrame._auction = new Auction(date, startTime, endTime, facilitatorName, saveTo.getPath());	
+							PrintWriter writeFile = new PrintWriter(new FileWriter(saveTo, true));
+							writeFile.println("#,Auction Info");
+							writeFile.println("+," + facilitatorName + "," + date + "," + startTime + "," + endTime);
+							writeFile.println("#,Items");
+							writeFile.println("#,Donors");
+							writeFile.println("#,Bidders");
+							writeFile.close();
+						} catch (IOException e1) {
+							e1.printStackTrace();
+						}
+						MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "HomeScreen");
+					}
 				}
 				
 			}
