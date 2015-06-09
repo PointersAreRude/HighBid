@@ -95,7 +95,7 @@ public class Auction {
 		//myFile = aFilePath;
 		
 		myFile = new File(aFilePath);
-		if (!myFile.exists())  {
+		if (myFile.exists())  {
 			myFile.delete();
 			myFile = new File(aFilePath);
 		}
