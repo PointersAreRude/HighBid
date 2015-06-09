@@ -97,11 +97,11 @@ public class AuctionTest {
 	
 	@Test
 	public void testDeleteDonor(){
-		List<Donor> list = new ArrayList<Donor>();
-		
-		list = auction.getDonors();
-		auction.deleteDonor(donor);
-		assertFalse("addDonor failed", list.contains(donor));
+	    Donor temp = new Donor("first", "last", "email", "address", "phone");
+		auction.addDonor(temp);
+		auction.deleteDonor(temp);
+		List<Donor> list = new ArrayList<Donor>(auction.getDonors());
+		assertFalse("addDonor failed", list.contains(temp));
 	}
 	
 	@Test
