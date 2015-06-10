@@ -247,19 +247,33 @@ public class CreatePanel extends JPanel implements ActionListener {
 				boolean cont = true;
 				
 				if (result == JFileChooser.APPROVE_OPTION) {
-					File saveTo = chooser.getSelectedFile();
-					while (!filter.accept(saveTo)) {
+					String saveTo = chooser.getSelectedFile().getPath();
+					while (!filter.accept(new File(saveTo))) {
 						JOptionPane.showMessageDialog(this, "File must be a .csv extension", "Warning", JOptionPane.OK_OPTION);
 						result = chooser.showSaveDialog(this);
 						if (result == JFileChooser.CANCEL_OPTION) {
 							cont = false;
 							break;
 						}
-						saveTo = chooser.getSelectedFile();
+						saveTo = chooser.getSelectedFile().getPath();
 					}
+					
+					File file = new File(saveTo);
+					if (file.exists()) {
+						
+						int choice = JOptionPane.showConfirmDialog(this, "This File already exists, override it?", "Warning", JOptionPane.OK_CANCEL_OPTION);
+						if (choice == JOptionPane.CANCEL_OPTION) {
+							cont = false;
+						} else {
+							file.delete();
+							file = new File(saveTo);	
+						}
+						
+					}
+					
 					if (cont) {
 						try {
-							MainFrame._auction = new Auction(date, startTime, endTime, facilitatorName, saveTo.getPath());	
+							MainFrame._auction = new Auction(date, startTime, endTime, facilitatorName, saveTo);	
 							PrintWriter writeFile = new PrintWriter(new FileWriter(saveTo, true));
 							writeFile.println("#,Auction Info");
 							writeFile.println("+," + facilitatorName + "," + date + "," + startTime + "," + endTime);

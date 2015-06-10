@@ -96,24 +96,24 @@ public class StartScreen extends JPanel implements ActionListener {
 //			}
 			JFileChooser chooser = new JFileChooser();
 			int result = chooser.showOpenDialog(this);
-			String toOpen = "";
 			if (result == JFileChooser.APPROVE_OPTION) {
-				toOpen = chooser.getSelectedFile().getPath();
-			}
-			if (new File(toOpen).exists()) {
-				try {
-					MainFrame._auction = new Auction(toOpen);
-					MainFrame._auction.importFile(toOpen);
-				} catch (IOException e1) {
-					System.out.println("Exception thrown");
-					e1.printStackTrace();
+				String toOpen = chooser.getSelectedFile().getPath();
+				if (new File(toOpen).exists()) {
+					try {
+						MainFrame._auction = new Auction(toOpen);
+						MainFrame._auction.importFile(toOpen);
+					} catch (IOException e1) {
+						System.out.println("Exception thrown");
+						e1.printStackTrace();
+					}
+					JOptionPane.showMessageDialog(null, "File has been loaded. Please click OK to continue...");
+					MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "HomeScreen");
+				} else {
+					JOptionPane.showMessageDialog(null, "There is no previous auction file, you will be returned to the previous screen.");
+					MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "StartScreen");
 				}
-				JOptionPane.showMessageDialog(null, "File has been loaded. Please click OK to continue...");
-				MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "HomeScreen");
-			} else {
-				JOptionPane.showMessageDialog(null, "There is no previous auction file, you will be returned to the previous screen.");
-				MainFrame.CLAYOUT.show(MainFrame.CONTAINER, "StartScreen");
 			}
+			
 			
 			// TODO: add import file functionality here
 			
