@@ -12,6 +12,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import Model.Auction;
 
@@ -95,6 +96,9 @@ public class StartScreen extends JPanel implements ActionListener {
 //				File file = fc.getSelectedFile();
 //			}
 			JFileChooser chooser = new JFileChooser();
+			FileNameExtensionFilter filter = new FileNameExtensionFilter(".csv", "csv"); 
+			chooser.setFileFilter(filter);
+			
 			int result = chooser.showOpenDialog(this);
 			if (result == JFileChooser.APPROVE_OPTION) {
 				String toOpen = chooser.getSelectedFile().getPath();
