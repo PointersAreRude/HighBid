@@ -428,8 +428,8 @@ public class OptionsAddPanel extends OptionsContext {
 					writeToFile += itemName + "," + itemDescription + "," + minIncrement + "," + startPrice + "," 
 							+ donor.getFirstName() + " " + donor.getLastName() + "," + qr;
 					
-//					MainFrame._auction.editFile("Donors", donor.getFirstName() + "," + donor.getLastName(), 0, 
-//							itemName, qr, "");
+					MainFrame._auction.editFile("Donors", donor.getFirstName() + "," + donor.getLastName(), 0, 
+						itemName, qr, "");
 					
 			    } else {
 			    	OptionsMain._IInfo.setText(itemName + " has been added.");
