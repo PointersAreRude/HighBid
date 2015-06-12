@@ -2,6 +2,7 @@ package View;
 
 
 import java.awt.event.ActionEvent;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -42,23 +43,44 @@ public class RegisterEditScreen extends RegisterScreen {
 	 */
 	private void detectChanges(){
 		if(_bidder != null && fieldsNotEmpty()){
-			if(!_fNameF.getText().equals(_bidder.getLastName()))
+			String bName = _bidder.getFirstName() + "," + _bidder.getLastName();
+			Bidder after = _bidder;
+			if(!_fNameF.getText().equals(_bidder.getLastName())) {
+				after.setFirstName(_fNameF.getText());
 				_bidder.setFirstName(_fNameF.getText());
+			}
 					
-			if(!_lNameF.getText().equals(_bidder.getLastName()))
+			if(!_lNameF.getText().equals(_bidder.getLastName())) {
+				after.setLastName(_lNameF.getText());
 				_bidder.setLastName(_lNameF.getText());
+			}
 			
-			if(!_emailF.getText().equals(_bidder.getEmail()))
+			if(!_emailF.getText().equals(_bidder.getEmail())) {
+				after.setEmail(_emailF.getText());
 				_bidder.setEmail(_emailF.getText());
+			}
 				
-			if(!_addressF.getText().equals(_bidder.getAddress()))
+			if(!_addressF.getText().equals(_bidder.getAddress())) {
+				after.setAddress(_addressF.getText());
 				_bidder.setAddress(_addressF.getText());
+			}
 				
-			if(!_nNameF.getText().equals(_bidder.getNickName()))
+			if(!_nNameF.getText().equals(_bidder.getNickName())) {
+				after.setNickName(_nNameF.getText());
 				_bidder.setNickName(_nNameF.getText());
+			}
 				
-			if (!_phoneF.getText().equals(_bidder.getPhone()))
+			if (!_phoneF.getText().equals(_bidder.getPhone())) {
+				after.setPhone(_phoneF.getText());
 				_bidder.setPhone(_phoneF.getText());
+			}
+			try {
+				MainFrame._auction.editFileBidder(bName, _bidder.getid(), 
+						after.getFirstName() + "," + after.getLastName(), after.getNickName(), 
+						after.getPhone(), after.getEmail(), after.getAddress(), 0, "");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	

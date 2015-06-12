@@ -439,12 +439,16 @@ public void writeToFile(String sentinal, String input) throws IOException {
 			newline += scanner.nextLine();
 			tokens = newline.split(",");
 		}
-		
 		if (itemBW.equals("")) {		//modifying the Bidder info itself
-			scanner.nextLine();
+			//System.out.println(scanner.nextLine());
 			String[] newName = nameToAdd.split(",");
-			newline += "+," + newName[0] + "," + newName[1] + "," + nickName + "," + codeToFind + "," 
+			newline = "+," + newName[0] + "," + newName[1] + "," + nickName + "," + codeToFind + "," 
 					+ phone + "," + email + "," + address;
+			int count = 0;
+			while (scanner.hasNextLine() && count < 2) {
+				newline += "\n" + scanner.nextLine();
+				count++;
+			}
 		} else if (itemBW.equals("b")) { 										//adding an item that has been bid on
 			String nextline = scanner.nextLine();
 			if (nextline.contains("-")) {								//there is already a line of items bid on
@@ -504,6 +508,9 @@ public void writeToFile(String sentinal, String input) throws IOException {
 		
 		if (line.contains(sentinal) && scanner.hasNextLine()) {
 			newline = scanner.nextLine();
+			
+			System.out.println("newline: " + newline);
+			
 			String[] tokens = newline.split(",");
 			
 			if (sentinal.equals("Items")) {
@@ -516,7 +523,7 @@ public void writeToFile(String sentinal, String input) throws IOException {
 				
 			} else if (sentinal.equals("Donors")) {
 				String[] toks = name.split(",");
-				while (!tokens[1].equals(toks[0]) && !tokens[2].equals(toks[1])) {
+				while (!tokens[1].equals(toks[0]) && !tokens[2].equals(toks[1]) && scanner.hasNextLine()) {
 					writeBack += "\n" + newline;
 					newline += scanner.nextLine();
 					tokens = newline.split(",");
@@ -525,27 +532,52 @@ public void writeToFile(String sentinal, String input) throws IOException {
 				
 			} else if (sentinal.equals("Bidders")) {
 				String[] toks = name.split(",");
-				while (!tokens[1].equals(toks[0]) && !tokens[2].equals(toks[1]) && Integer.parseInt(tokens[4]) != code) {
+				while (scanner.hasNextLine() && !tokens[1].equals(toks[0]) && !tokens[2].equals(toks[1]) && Integer.parseInt(tokens[4]) != code) {
+					System.out.println("tokens[1] + toks[0]: " + tokens[1] + " " + toks[0] + " tokens[2] + toks[1]: " + tokens[2] + " " + toks[1]
+							+ " tokens[4] + code: " + tokens[4] + " " + code);
+					
 					writeBack += "\n" + newline;
-					newline += scanner.nextLine();
-					tokens = newline.split(",");
+					writeBack += "\n" + scanner.nextLine();
+					writeBack += "\n" + scanner.nextLine();
+					line = scanner.nextLine();
+					
+					System.out.println("inside while: " + line);
+					
+					newline = line;
+					tokens = line.split(",");
 				}
-				int sent = 0;
-				while (scanner.hasNextLine() && sent < 2) {
-					scanner.nextLine();
-					sent++;
+				int count = 0;
+				while (scanner.hasNextLine() && count < 2) {
+					newline = "";
+					System.out.println("2nd while: " + scanner.nextLine());
+					count++;
 				}
 				if (scanner.hasNextLine()) {
+					
+					System.out.println("if");
+					
 					newline = scanner.nextLine();					
 				} else {
+					
+					System.out.println("else");
+					
 					newline = "";
 				}
 				
 			}
 		}
-		writeBack += "\n" + newline;
+		if (!newline.equals("")) {
+			
+			System.out.println("newline == \"\": " + newline);
+			
+			writeBack += "\n" + newline;
+		}
 		while (scanner.hasNextLine()) {
-			writeBack += "\n" + scanner.nextLine();
+			line = scanner.nextLine();
+			
+			System.out.println("last while: " + line);
+			
+			writeBack += "\n" + line;
 		}
 		scanner.close();
 		
