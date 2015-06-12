@@ -429,7 +429,7 @@ public class OptionsAddPanel extends OptionsContext {
 							+ donor.getFirstName() + " " + donor.getLastName() + "," + qr;
 					
 					MainFrame._auction.editFile("Donors", donor.getFirstName() + "," + donor.getLastName(), 0, 
-						itemName, qr, "");
+						itemName, qr);
 					
 			    } else {
 			    	OptionsMain._IInfo.setText(itemName + " has been added.");
