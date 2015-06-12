@@ -170,7 +170,7 @@ public class Auction {
 			if (aDonor == item.getDonor()) {
 				item.setDonor(null);
 				try {
-					this.editFile("Items", item.getName(), item.getQr(), null, 0, "");
+					this.editFile("Items", item.getName(), item.getQr(), null, 0);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -193,7 +193,7 @@ public class Auction {
 					donor.delete(item);
 					try {
 						this.editFile("Donors", donor.getFirstName() + "," + donor.getLastName(),
-								0, null, 0, "");
+								0, null, 0);
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
@@ -298,17 +298,16 @@ public void writeToFile(String sentinal, String input) throws IOException {
 	/**
 	 * Edits a line in the file.
 	 * 
-	 * @param sentinal Indicates which Object the line being edited is, could either be "Items", "Donors", or "Bidders"
+	 * @param sentinal Indicates which Object the line being edited is, could either be "Items" or "Donors"
 	 * @param nameToFind The name of the object to be edited.
 	 * @param codeToFind If it exists, the code number for the object to be edited.
 	 * @param nameToAdd The name of the object to be added to this line, if it consists of two parts (first name & last Name), 
 	 * it must be comma separated (firstName,lastName), or if it is null, then an item is being removed from the line.
 	 * @param codeToAdd If it exists, the code to the new object being added.
-	 * @param itemBW Applies to an item being added to a Bidder line, must be "b" or "w", "b" indicates the item being added 
 	 * was bid on, "w" indicates the item being added was won.
 	 * @throws IOException
 	 */
-	public void editFile(String sentinal, String nameToFind, long codeToFind, String nameToAdd, long codeToAdd, String itemBW) throws IOException {
+	public void editFile(String sentinal, String nameToFind, long codeToFind, String nameToAdd, long codeToAdd) throws IOException {
 		String writeBack = "";
 		Scanner scanner = new Scanner(Paths.get(myFilePath));
 		String line = scanner.nextLine();
@@ -381,32 +380,88 @@ public void writeToFile(String sentinal, String input) throws IOException {
 			} else {
 				newline += "," + nameToAdd + " : " + codeToAdd;
 			}
-		} else if (sentinal.equals("Bidders")) {		//modifying a Bidder line
-			String[] toks = nameToFind.split(",");
-			while (!tokens[1].equals(toks[0]) && !tokens[2].equals(toks[1]) && Integer.parseInt(tokens[4]) != codeToFind) {
-				writeBack += "\n" + newline;
-				newline += scanner.nextLine();
-				tokens = newline.split(",");
-			}
-			
-			if (itemBW.equals("b")) { 										//adding an item that has been bid on
-				String nextline = scanner.nextLine();
-				if (nextline.contains("-")) {								//there is already a line of items bid on
-					newline += "\n" + nextline + "," + nameToAdd + " : " + codeToAdd;
-				} else {													//need to create a line of items bid on
-					newline += "\n-," + nameToAdd + " : " + codeToAdd + "\n" + nextline;
-				}
-			} else {														//adding an item won
-				newline = "\n" + scanner.nextLine();
-				String nextline = scanner.nextLine();
-				if (newline.contains("-")) {								//there is already a line of items won
-					newline += "\n" + nextline + "," + nameToAdd + " : " + codeToAdd;
-				} else {													//need to create a line of items won
-					newline += "\n-," + nameToAdd + " : " + codeToAdd + "\n" + nextline;
-				}
-			}
 		}
 			
+		writeBack += "\n" + newline;
+		
+		while (scanner.hasNextLine()) {
+			writeBack += "\n" + scanner.nextLine();
+		}
+			
+		scanner.close();
+			
+		File writeTo = new File(myFilePath);
+		if (writeTo.exists() && writeTo.delete()) {
+			writeTo = new File(myFilePath);
+		}
+			
+		PrintWriter writeFile = new PrintWriter(new FileWriter(writeTo, true));
+		writeFile.println(writeBack);
+			 
+		writeFile.close();
+	}
+	
+	
+	/**
+	 * @param nameToFind
+	 * @param codeToFind
+	 * @param nameToAdd
+	 * @param nickName
+	 * @param phone
+	 * @param address
+	 * @param email
+	 * @param codeToAdd
+	 * @param itemBW Applies to an item being added to a Bidder line, must be "", "b" or "w"; "b" indicates the item being added has been bid on, 
+	 * "w" indicates the item being added has been won, and "" indicates there isn't an item being added at all, 
+	 * but instead the bidder info itself is being changed.
+	 * @throws IOException
+	 */
+	public void editFileBidder(String nameToFind, long codeToFind, String nameToAdd, String nickName, 
+			String phone, String address, String email, long codeToAdd, String itemBW) throws IOException {
+		
+		String writeBack = "";
+		Scanner scanner = new Scanner(Paths.get(myFilePath));
+		String line = scanner.nextLine();
+		writeBack += line;
+		
+		while (!line.contains("Bidders") && scanner.hasNextLine()) {
+			line = scanner.nextLine();
+			writeBack += "\n" + line;
+		}
+		
+		line = scanner.nextLine();
+		String[] tokens = line.split(",");
+		String newline = line;
+		
+		String[] toks = nameToFind.split(",");
+		while (!tokens[1].equals(toks[0]) && !tokens[2].equals(toks[1]) && Integer.parseInt(tokens[4]) != codeToFind) {
+			writeBack += "\n" + newline;
+			newline += scanner.nextLine();
+			tokens = newline.split(",");
+		}
+		
+		if (itemBW.equals("")) {		//modifying the Bidder info itself
+			scanner.nextLine();
+			String[] newName = nameToAdd.split(",");
+			newline += "+," + newName[0] + "," + newName[1] + "," + nickName + "," + codeToFind + "," 
+					+ phone + "," + email + "," + address;
+		} else if (itemBW.equals("b")) { 										//adding an item that has been bid on
+			String nextline = scanner.nextLine();
+			if (nextline.contains("-")) {								//there is already a line of items bid on
+				newline += "\n" + nextline + "," + nameToAdd + " : " + codeToAdd;
+			} else {													//need to create a line of items bid on
+				newline += "\n-," + nameToAdd + " : " + codeToAdd + "\n" + nextline;
+			}
+		} else if (itemBW.equals("w")) {														//adding an item won
+			newline = "\n" + scanner.nextLine();
+			String nextline = scanner.nextLine();
+			if (newline.contains("-")) {								//there is already a line of items won
+				newline += "\n" + nextline + "," + nameToAdd + " : " + codeToAdd;
+			} else {													//need to create a line of items won
+				newline += "\n-," + nameToAdd + " : " + codeToAdd + "\n" + nextline;
+			}
+		}
+		
 		writeBack += "\n" + newline;
 		
 		while (scanner.hasNextLine()) {
